@@ -15,9 +15,8 @@
   "bin": "NvStrapsReBar.exe",
   "persist": "NvStrapsReBar.ffs",
   "checkver": {
-    "github": "https://github.com/terminatorul/NvStrapsReBar",
-    "preRelease": true,
-    "regex": "v(?<version>\\d+(?:\\.\\d+)*-rc\\d+)"   // ONLY tags that contain “-rc”
+    "url": "https://api.github.com/repos/terminatorul/NvStrapsReBar/releases",
+    "regex": "\"tag_name\"\\s*:\\s*\"v(?<version>[^\"]*-rc\\d+)\""
   },
   "autoupdate": {
     "architecture": {
