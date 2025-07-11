@@ -1,6 +1,6 @@
 {
   "version": "0.3",
-  "description": "Patch NVIDIA BIOS straps to enable Resizable BAR (stable releases).",
+  "description": "Patch NVIDIA BIOS straps to enable Resizable BAR",
   "homepage": "https://github.com/terminatorul/NvStrapsReBar",
   "license": "GPL-3.0",
   "architecture": {
