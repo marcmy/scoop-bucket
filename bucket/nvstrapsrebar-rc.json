@@ -1,6 +1,6 @@
 {
   "version": "0.4-rc1",
-  "description": "NvStrapsReBar – release-candidate channel",
+  "description": "NvStrapsReBar (release-candidate channel).",
   "homepage": "https://github.com/terminatorul/NvStrapsReBar",
   "license": "GPL-3.0",
   "architecture": {
@@ -9,7 +9,7 @@
         "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.exe",
         "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.ffs"
       ],
-      "hash": ["autoupdate", "autoupdate"]
+      "hash": [ "autoupdate", "autoupdate" ]
     }
   },
   "bin": "NvStrapsReBar.exe",
