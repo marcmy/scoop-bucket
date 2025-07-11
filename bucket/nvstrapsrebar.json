@@ -9,14 +9,13 @@
         "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.exe",
         "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.ffs"
       ],
-      "hash": [ "autoupdate", "autoupdate" ]
+      "hash": [ "skip", "skip" ]
     }
   },
   "bin": "NvStrapsReBar.exe",
   "persist": "NvStrapsReBar.ffs",
   "checkver": {
-    "github": "https://github.com/terminatorul/NvStrapsReBar",
-    "preRelease": false
+    "github": "https://github.com/terminatorul/NvStrapsReBar"
   },
   "autoupdate": {
     "architecture": {
