@@ -15,7 +15,7 @@
   "bin": "NvStrapsReBar.exe",
   "persist": "NvStrapsReBar.ffs",
   "checkver": {
-    "url": "https://api.github.com/repos/terminatorul/NvStrapsReBar/releases",
+    "github": "https://github.com/terminatorul/NvStrapsReBar",
     "preRelease": false
   },
   "autoupdate": {
