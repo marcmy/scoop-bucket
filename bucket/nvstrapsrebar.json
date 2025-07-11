@@ -1,0 +1,31 @@
+{
+  "version": "0.3",
+  "description": "NvStrapsReBar – stable channel",
+  "homepage": "https://github.com/terminatorul/NvStrapsReBar",
+  "license": "GPL-3.0",
+  "architecture": {
+    "64bit": {
+      "url": [
+        "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.exe",
+        "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.ffs"
+      ],
+      "hash": ["autoupdate", "autoupdate"]
+    }
+  },
+  "bin": "NvStrapsReBar.exe",
+  "persist": "NvStrapsReBar.ffs",
+  "checkver": {
+    "github": "https://github.com/terminatorul/NvStrapsReBar",
+    "preRelease": false              // ignore rc/beta tags
+  },
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": [
+          "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.exe",
+          "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.ffs"
+        ]
+      }
+    }
+  }
+}
