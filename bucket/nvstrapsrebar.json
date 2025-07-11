@@ -1,31 +1,31 @@
 {
   "version": "0.3",
-  "description": "Patch NVIDIA BIOS straps to enable Resizable BAR",
+  "description": "Patch NVIDIA BIOS straps to enable Resizable BAR (stable).",
   "homepage": "https://github.com/terminatorul/NvStrapsReBar",
   "license": "GPL-3.0",
   "architecture": {
     "64bit": {
-      "url": "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.exe",
-      "hash": "CC2CF4FDECC0442FE4B98DD2D253DDD42B91817F95DFE21FD7097FF309E172FE"
+      "url": [
+        "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.exe",
+        "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.ffs"
+      ],
+      "hash": [ "autoupdate", "autoupdate" ]
     }
   },
-  "installer": {
-    "script": [
-      "Invoke-WebRequest \"https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.ffs\" -OutFile \"$dir\\NvStrapsReBar.ffs\"",
-      "$expected = 'BC05D92B214D663A3B8D637A9F72CA694105151E467E24D18E2B25FBF6ECD3C3'",
-      "$actual = (Get-FileHash \"$dir\\NvStrapsReBar.ffs\" -Algorithm SHA256).Hash.ToUpper()",
-      "if ($actual -ne $expected) { throw \"NvStrapsReBar.ffs hash mismatch!`nExpected: $expected`nActual: $actual\" }"
-    ]
-  },
   "bin": "NvStrapsReBar.exe",
-  "persist": "NvStrapsReBar.ffs",
+  "persist": [ "NvStrapsReBar.ffs" ],
   "checkver": {
-    "github": "https://github.com/terminatorul/NvStrapsReBar"
+    "github": "https://github.com/terminatorul/NvStrapsReBar",
+    "preRelease": false
   },
   "autoupdate": {
     "architecture": {
       "64bit": {
-        "url": "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.exe"
+        "url": [
+          "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.exe",
+          "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.ffs"
+        ],
+        "hash": [ "autoupdate", "autoupdate" ]
       }
     }
   }
