@@ -16,7 +16,7 @@
   "persist": "NvStrapsReBar.ffs",
   "checkver": {
     "github": "https://github.com/terminatorul/NvStrapsReBar",
-    "preRelease": false              // ignore rc/beta tags
+    "preRelease": false
   },
   "autoupdate": {
     "architecture": {
