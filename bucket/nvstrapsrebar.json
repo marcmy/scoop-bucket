@@ -9,7 +9,10 @@
         "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.exe",
         "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.ffs"
       ],
-      "hash": "skip"
+      "hash": [
+        "CC2CF4FDECC0442FE4B98DD2D253DDD42B91817F95DFE21FD7097FF309E172FE",
+        "BC05D92B214D663A3B8D637A9F72CA694105151E467E24D18E2B25FBF6ECD3C3"
+      ]
     }
   },
   "bin": "NvStrapsReBar.exe",
