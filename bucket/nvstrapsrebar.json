@@ -1,6 +1,6 @@
 {
   "version": "0.3",
-  "description": "NvStrapsReBar – stable channel",
+  "description": "Patch NVIDIA BIOS straps to enable Resizable BAR (stable releases).",
   "homepage": "https://github.com/terminatorul/NvStrapsReBar",
   "license": "GPL-3.0",
   "architecture": {
@@ -9,7 +9,7 @@
         "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.exe",
         "https://github.com/terminatorul/NvStrapsReBar/releases/download/v$version/NvStrapsReBar.ffs"
       ],
-      "hash": ["autoupdate", "autoupdate"]
+      "hash": [ "autoupdate", "autoupdate" ]
     }
   },
   "bin": "NvStrapsReBar.exe",
