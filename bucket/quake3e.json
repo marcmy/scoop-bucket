@@ -1,0 +1,146 @@
+{
+  "version": "0.0.0.0",
+  "description": "Quake III engine fork focused on performance, fixes and QoL (Quake3e).",
+  "homepage": "https://github.com/ec-/Quake3e",
+  "license": "GPL-2.0-or-later",
+
+  "architecture": {
+    "64bit": {
+      "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin64",
+      "hash": "sha256"
+    },
+    "32bit": {
+      "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin32",
+      "hash": "sha256"
+    },
+    "arm64": {
+      "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWinArm64",
+      "hash": "sha256"
+    }
+  },
+
+  "bin": [
+    // Optional: shims that launch from Scoop (kept for convenience)
+    // They don't interfere with your link-based workflow.
+    ["quake3e.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
+    ["quake3e-vulkan.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
+    ["quake3e.ded.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"],
+    ["quake3.x64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
+    ["quake3e-vulkan.x64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
+    ["quake3e.ded.x64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"],
+    ["quake3.arm64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
+    ["quake3e-vulkan.arm64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
+    ["quake3.ded.arm64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
+  ],
+
+  "persist": [
+    // Keep these so the Scoop-shim path still persists configs if used
+    "baseq3",
+    "missionpack",
+    "link_target.txt"
+  ],
+
+  "installer": {
+    "script": [
+      "$ErrorActionPreference = 'SilentlyContinue'",
+      "$cfg = Join-Path $persist_dir 'link_target.txt'",
+
+      "if (!(Test-Path $persist_dir)) { New-Item -ItemType Directory -Path $persist_dir | Out-Null }",
+      "$target = $null",
+      "if (Test-Path $cfg) {",
+      "  $target = Get-Content $cfg -Raw",
+      "}",
+
+      "if (-not $target) {",
+      "  $target = Read-Host 'Enter full path to your Quake III install (folder that contains baseq3)'",
+      "  if (-not (Test-Path $target)) {",
+      "    Write-Host 'Path does not exist. Skipping link setup this time. You can re-run: scoop uninstall quake3e; scoop install quake3e' -ForegroundColor Yellow",
+      "  } else {",
+      "    Set-Content -Path $cfg -Value $target",
+      "  }",
+      "}",
+
+      "if ($target -and (Test-Path $target)) {",
+      "  $names = @(",
+      "    'quake3e.exe','quake3e-vulkan.exe','quake3e.ded.exe',",
+      "    'quake3.x64.exe','quake3e-vulkan.x64.exe','quake3e.ded.x64.exe',",
+      "    'quake3.arm64.exe','quake3e-vulkan.arm64.exe','quake3.ded.arm64.exe'",
+      "  ) | Where-Object { Test-Path (Join-Path $dir $_) }",
+
+      "  foreach ($n in $names) {",
+      "    $src = Join-Path $dir $n",
+      "    $dst = Join-Path $target $n",
+      "    if (Test-Path $dst) { Remove-Item $dst -Force }",
+      "    $sameDrive = ([System.IO.Path]::GetPathRoot($src)) -eq ([System.IO.Path]::GetPathRoot($dst))",
+      "    try {",
+      "      if ($sameDrive) {",
+      "        New-Item -ItemType HardLink -Path $dst -Target $src | Out-Null",
+      "      } else {",
+      "        New-Item -ItemType SymbolicLink -Path $dst -Target $src | Out-Null",
+      "      }",
+      "    } catch {",
+      "      Copy-Item $src $dst -Force",
+      "    }",
+      "  }",
+
+      "  Write-Host ('Linked {0} binaries into: {1}' -f $names.Count, $target) -ForegroundColor Green",
+      "  Write-Host 'Note: Symlinks across drives may require Windows Developer Mode or admin rights. Falling back to copy if needed.' -ForegroundColor DarkGray",
+      "}"
+    ]
+  },
+
+  "uninstaller": {
+    "script": [
+      "$cfg = Join-Path $persist_dir 'link_target.txt'",
+      "if (Test-Path $cfg) {",
+      "  $target = Get-Content $cfg -Raw",
+      "  if (Test-Path $target) {",
+      "    $names = @(",
+      "      'quake3e.exe','quake3e-vulkan.exe','quake3e.ded.exe',",
+      "      'quake3.x64.exe','quake3e-vulkan.x64.exe','quake3e.ded.x64.exe',",
+      "      'quake3.arm64.exe','quake3e-vulkan.arm64.exe','quake3.ded.arm64.exe'",
+      "    )",
+      "    foreach ($n in $names) {",
+      "      $dst = Join-Path $target $n",
+      "      if (Test-Path $dst) {",
+      "        try { Remove-Item $dst -Force } catch {}",
+      "      }",
+      "    }",
+      "  }",
+      "}"
+    ]
+  },
+
+  "checkver": {
+    "url": "https://api.github.com/repos/ec-/Quake3e/releases/tags/latest",
+    "regex": "(?is)\"published_at\"\\s*:\\s*\"(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}).*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*win[^\"/]*(?:x86_64|64)[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*win[^\"/]*(?:x86(?!_64)|32)[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*win[^\"/]*arm64[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*linux[^\"/]*x86_64[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*linux[^\"/]*(?:x86(?!_64)|32)[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*linux[^\"/]*arm64[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*mac[^\"/]*(?:x86_64|x64)[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*mac[^\"/]*(?:aarch64|arm64)[^\"/]*\\.zip)",
+    "replace": "${1}.${2}.${3}.${4}",
+    "github": "ec-/Quake3e"
+  },
+
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$match2",
+        "hash": {
+          "url": "https://api.github.com/repos/ec-/Quake3e/releases/tags/latest",
+          "regex": "(?is)$match2\\s*\\r?\\nsha256:([a-f0-9]{64})"
+        }
+      },
+      "32bit": {
+        "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$match3",
+        "hash": {
+          "url": "https://api.github.com/repos/ec-/Quake3e/releases/tags/latest",
+          "regex": "(?is)$match3\\s*\\r?\\nsha256:([a-f0-9]{64})"
+        }
+      },
+      "arm64": {
+        "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$match4",
+        "hash": {
+          "url": "https://api.github.com/repos/ec-/Quake3e/releases/tags/latest",
+          "regex": "(?is)$match4\\s*\\r?\\nsha256:([a-f0-9]{64})"
+        }
+      }
+    }
+  }
+}
