@@ -32,7 +32,7 @@
       ["quake3.ded.arm64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
     ]
   }
-}
+},
 
   "persist": [
     // Keep these so the Scoop-shim path still persists configs if used
@@ -123,7 +123,7 @@
       # emit version as YYYY.MM.DD.HH
       "($ver).ToString('yyyy.MM.dd.HH')"
     ]
-  }
+  },
 
   "autoupdate": {
     "architecture": {
