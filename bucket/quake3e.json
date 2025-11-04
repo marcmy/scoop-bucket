@@ -4,38 +4,37 @@
   "homepage": "https://github.com/ec-/Quake3e",
   "license": "GPL-2.0-or-later",
 
-"architecture": {
-  "64bit": {
-    "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin64",
-    "hash": "sha256",
-    "bin": [
-      ["quake3.x64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
-      ["quake3e-vulkan.x64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
-      ["quake3e.ded.x64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
-    ]
+  "architecture": {
+    "64bit": {
+      "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin64",
+      "hash": "sha256",
+      "bin": [
+        ["quake3.x64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
+        ["quake3e-vulkan.x64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
+        ["quake3e.ded.x64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
+      ]
+    },
+    "32bit": {
+      "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin32",
+      "hash": "sha256",
+      "bin": [
+        ["quake3e.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
+        ["quake3e-vulkan.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
+        ["quake3e.ded.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
+      ]
+    },
+    "arm64": {
+      "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWinArm64",
+      "hash": "sha256",
+      "bin": [
+        ["quake3.arm64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
+        ["quake3e-vulkan.arm64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
+        ["quake3.ded.arm64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
+      ]
+    }
   },
-  "32bit": {
-    "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin32",
-    "hash": "sha256",
-    "bin": [
-      ["quake3e.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
-      ["quake3e-vulkan.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
-      ["quake3e.ded.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
-    ]
-  },
-  "arm64": {
-    "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWinArm64",
-    "hash": "sha256",
-    "bin": [
-      ["quake3.arm64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
-      ["quake3e-vulkan.arm64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
-      ["quake3.ded.arm64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
-    ]
-  }
-},
 
   "persist": [
-    // Keep these so the Scoop-shim path still persists configs if used
     "baseq3",
     "missionpack",
     "link_target.txt"
@@ -45,13 +44,9 @@
     "script": [
       "$ErrorActionPreference = 'SilentlyContinue'",
       "$cfg = Join-Path $persist_dir 'link_target.txt'",
-
       "if (!(Test-Path $persist_dir)) { New-Item -ItemType Directory -Path $persist_dir | Out-Null }",
       "$target = $null",
-      "if (Test-Path $cfg) {",
-      "  $target = Get-Content $cfg -Raw",
-      "}",
-
+      "if (Test-Path $cfg) { $target = Get-Content $cfg -Raw }",
       "if (-not $target) {",
       "  $target = Read-Host 'Enter full path to your Quake III install (folder that contains baseq3)'",
       "  if (-not (Test-Path $target)) {",
@@ -60,14 +55,12 @@
       "    Set-Content -Path $cfg -Value $target",
       "  }",
       "}",
-
       "if ($target -and (Test-Path $target)) {",
       "  $names = @(",
       "    'quake3e.exe','quake3e-vulkan.exe','quake3e.ded.exe',",
       "    'quake3.x64.exe','quake3e-vulkan.x64.exe','quake3e.ded.x64.exe',",
       "    'quake3.arm64.exe','quake3e-vulkan.arm64.exe','quake3.ded.arm64.exe'",
       "  ) | Where-Object { Test-Path (Join-Path $dir $_) }",
-
       "  foreach ($n in $names) {",
       "    $src = Join-Path $dir $n",
       "    $dst = Join-Path $target $n",
@@ -83,7 +76,6 @@
       "      Copy-Item $src $dst -Force",
       "    }",
       "  }",
-
       "  Write-Host ('Linked {0} binaries into: {1}' -f $names.Count, $target) -ForegroundColor Green",
       "  Write-Host 'Note: Symlinks across drives may require Windows Developer Mode or admin rights. Falling back to copy if needed.' -ForegroundColor DarkGray",
       "}"
@@ -103,9 +95,7 @@
       "    )",
       "    foreach ($n in $names) {",
       "      $dst = Join-Path $target $n",
-      "      if (Test-Path $dst) {",
-      "        try { Remove-Item $dst -Force } catch {}",
-      "      }",
+      "      if (Test-Path $dst) { try { Remove-Item $dst -Force } catch {} }",
       "    }",
       "  }",
       "}"
@@ -116,11 +106,14 @@
     "script": [
       "$r = Invoke-RestMethod -UseBasicParsing https://api.github.com/repos/ec-/Quake3e/releases/tags/latest",
       "$ver = [datetime]$r.published_at",
-      # capture the actual Windows asset names
-      "$global:matchWin64   = ($r.assets | Where-Object { $_.name -match 'win.*(x86_64|64).*\\.zip' }).name",
-      "$global:matchWin32   = ($r.assets | Where-Object { $_.name -match 'win.*(x86(?!_64)|32).*\\.zip' }).name",
-      "$global:matchWinArm64= ($r.assets | Where-Object { $_.name -match 'win.*arm64.*\\.zip' }).name",
-      # emit version as YYYY.MM.DD.HH
+      "$global:matchWin64    = ($r.assets | Where-Object { $_.name -match 'win.*(x86_64|64).*\\.zip' }).name",
+      "$global:matchWin32    = ($r.assets | Where-Object { $_.name -match 'win.*(x86(?!_64)|32).*\\.zip' }).name",
+      "$global:matchWinArm64 = ($r.assets | Where-Object { $_.name -match 'win.*arm64.*\\.zip' }).name",
+      "$global:matchLinux64  = ($r.assets | Where-Object { $_.name -match 'linux.*(x86_64|64).*\\.zip' }).name",
+      "$global:matchLinux32  = ($r.assets | Where-Object { $_.name -match 'linux.*(x86(?!_64)|32).*\\.zip' }).name",
+      "$global:matchLinuxArm = ($r.assets | Where-Object { $_.name -match 'linux.*arm64.*\\.zip' }).name",
+      "$global:matchMac64    = ($r.assets | Where-Object { $_.name -match 'mac.*(x86_64|x64).*\\.zip' }).name",
+      "$global:matchMacArm   = ($r.assets | Where-Object { $_.name -match 'mac.*(aarch64|arm64).*\\.zip' }).name",
       "($ver).ToString('yyyy.MM.dd.HH')"
     ]
   },
@@ -150,3 +143,4 @@
       }
     }
   }
+}
