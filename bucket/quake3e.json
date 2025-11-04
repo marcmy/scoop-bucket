@@ -32,8 +32,8 @@
         ["quake3e.ded.arm64.exe", "quake3e-ded"]
       ]
     }
-  }, 
-    
+  },
+
   "persist": ["link_target.txt"],
 
   "installer": {
