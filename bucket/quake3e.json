@@ -7,7 +7,7 @@
   "architecture": {
     "64bit": {
       "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin64",
-      "hash": "sha256",
+      "hash": "",
       "bin": [
         ["quake3.x64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
         ["quake3e-vulkan.x64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
@@ -16,7 +16,7 @@
     },
     "32bit": {
       "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin32",
-      "hash": "sha256",
+      "hash": "",
       "bin": [
         ["quake3e.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
         ["quake3e-vulkan.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
@@ -25,7 +25,7 @@
     },
     "arm64": {
       "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWinArm64",
-      "hash": "sha256",
+      "hash": "",
       "bin": [
         ["quake3.arm64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
         ["quake3e-vulkan.arm64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
