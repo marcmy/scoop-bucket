@@ -4,34 +4,35 @@
   "homepage": "https://github.com/ec-/Quake3e",
   "license": "GPL-2.0-or-later",
 
-  "architecture": {
-    "64bit": {
-      "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin64",
-      "hash": "sha256"
-    },
-    "32bit": {
-      "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin32",
-      "hash": "sha256"
-    },
-    "arm64": {
-      "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWinArm64",
-      "hash": "sha256"
-    }
+"architecture": {
+  "64bit": {
+    "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin64",
+    "hash": "sha256",
+    "bin": [
+      ["quake3.x64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
+      ["quake3e-vulkan.x64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
+      ["quake3e.ded.x64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
+    ]
   },
-
-  "bin": [
-    // Optional: shims that launch from Scoop (kept for convenience)
-    // They don't interfere with your link-based workflow.
-    ["quake3e.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
-    ["quake3e-vulkan.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
-    ["quake3e.ded.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"],
-    ["quake3.x64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
-    ["quake3e-vulkan.x64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
-    ["quake3e.ded.x64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"],
-    ["quake3.arm64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
-    ["quake3e-vulkan.arm64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
-    ["quake3.ded.arm64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
-  ],
+  "32bit": {
+    "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWin32",
+    "hash": "sha256",
+    "bin": [
+      ["quake3e.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
+      ["quake3e-vulkan.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
+      ["quake3e.ded.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
+    ]
+  },
+  "arm64": {
+    "url": "https://github.com/ec-/Quake3e/releases/download/latest/$matchWinArm64",
+    "hash": "sha256",
+    "bin": [
+      ["quake3.arm64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
+      ["quake3e-vulkan.arm64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
+      ["quake3.ded.arm64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
+    ]
+  }
+}
 
   "persist": [
     // Keep these so the Scoop-shim path still persists configs if used
@@ -112,35 +113,40 @@
   },
 
   "checkver": {
-    "url": "https://api.github.com/repos/ec-/Quake3e/releases/tags/latest",
-    "regex": "(?is)\"published_at\"\\s*:\\s*\"(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}).*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*win[^\"/]*(?:x86_64|64)[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*win[^\"/]*(?:x86(?!_64)|32)[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*win[^\"/]*arm64[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*linux[^\"/]*x86_64[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*linux[^\"/]*(?:x86(?!_64)|32)[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*linux[^\"/]*arm64[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*mac[^\"/]*(?:x86_64|x64)[^\"/]*\\.zip)\".*?\"name\"\\s*:\\s*\"(quake3e[^\"/]*mac[^\"/]*(?:aarch64|arm64)[^\"/]*\\.zip)",
-    "replace": "${1}.${2}.${3}.${4}",
-    "github": "ec-/Quake3e"
-  },
+    "script": [
+      "$r = Invoke-RestMethod -UseBasicParsing https://api.github.com/repos/ec-/Quake3e/releases/tags/latest",
+      "$ver = [datetime]$r.published_at",
+      # capture the actual Windows asset names
+      "$global:matchWin64   = ($r.assets | Where-Object { $_.name -match 'win.*(x86_64|64).*\\.zip' }).name",
+      "$global:matchWin32   = ($r.assets | Where-Object { $_.name -match 'win.*(x86(?!_64)|32).*\\.zip' }).name",
+      "$global:matchWinArm64= ($r.assets | Where-Object { $_.name -match 'win.*arm64.*\\.zip' }).name",
+      # emit version as YYYY.MM.DD.HH
+      "($ver).ToString('yyyy.MM.dd.HH')"
+    ]
+  }
 
   "autoupdate": {
     "architecture": {
       "64bit": {
-        "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$match2",
+        "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$matchWin64",
         "hash": {
           "url": "https://api.github.com/repos/ec-/Quake3e/releases/tags/latest",
-          "regex": "(?is)$match2\\s*\\r?\\nsha256:([a-f0-9]{64})"
+          "regex": "(?is)$matchWin64\\s*\\r?\\nsha256:([a-f0-9]{64})"
         }
       },
       "32bit": {
-        "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$match3",
+        "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$matchWin32",
         "hash": {
           "url": "https://api.github.com/repos/ec-/Quake3e/releases/tags/latest",
-          "regex": "(?is)$match3\\s*\\r?\\nsha256:([a-f0-9]{64})"
+          "regex": "(?is)$matchWin32\\s*\\r?\\nsha256:([a-f0-9]{64})"
         }
       },
       "arm64": {
-        "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$match4",
+        "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$matchWinArm64",
         "hash": {
           "url": "https://api.github.com/repos/ec-/Quake3e/releases/tags/latest",
-          "regex": "(?is)$match4\\s*\\r?\\nsha256:([a-f0-9]{64})"
+          "regex": "(?is)$matchWinArm64\\s*\\r?\\nsha256:([a-f0-9]{64})"
         }
       }
     }
   }
-}
