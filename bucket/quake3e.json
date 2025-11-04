@@ -103,11 +103,6 @@
       "$global:matchWin64    = ($assets | Where-Object { $_.name -match 'win.*(x86_64|64).*\\.zip' }).name",
       "$global:matchWin32    = ($assets | Where-Object { $_.name -match 'win.*(x86(?!_64)|32).*\\.zip' }).name",
       "$global:matchWinArm64 = ($assets | Where-Object { $_.name -match 'win.*arm64.*\\.zip' }).name",
-      "$global:matchLinux64  = ($assets | Where-Object { $_.name -match 'linux.*(x86_64|64).*\\.zip' }).name",
-      "$global:matchLinux32  = ($assets | Where-Object { $_.name -match 'linux.*(x86(?!_64)|32).*\\.zip' }).name",
-      "$global:matchLinuxArm = ($assets | Where-Object { $_.name -match 'linux.*arm64.*\\.zip' }).name",
-      "$global:matchMac64    = ($assets | Where-Object { $_.name -match 'mac.*(x86_64|x64).*\\.zip' }).name",
-      "$global:matchMacArm   = ($assets | Where-Object { $_.name -match 'mac.*(aarch64|arm64).*\\.zip' }).name",
       "($ver).ToString('yyyy.MM.dd.HH')"
     ]
   },
