@@ -9,7 +9,7 @@
       "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-mingw-x86_64.zip",
       "hash": "807f0fc5fe5583c4ab2f633aa53eb1b0279f4784649cf6b75250b16ff4d733f7",
       "bin": [
-        ["quake3.x64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
+        ["quake3e.x64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
         ["quake3e-vulkan.x64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
         ["quake3e.ded.x64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
       ]
@@ -27,9 +27,9 @@
       "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-msvc-arm64.zip",
       "hash": "787e2f952c07e91bd63baa20cff279876f7caeb93bfd04430b72888a104e69fa",
       "bin": [
-        ["quake3.arm64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
+        ["quake3e.arm64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
         ["quake3e-vulkan.arm64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
-        ["quake3.ded.arm64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
+        ["quake3e.ded.arm64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
       ]
     }
   },
@@ -58,8 +58,8 @@
       "if ($target -and (Test-Path $target)) {",
       "  $names = @(",
       "    'quake3e.exe','quake3e-vulkan.exe','quake3e.ded.exe',",
-      "    'quake3.x64.exe','quake3e-vulkan.x64.exe','quake3e.ded.x64.exe',",
-      "    'quake3.arm64.exe','quake3e-vulkan.arm64.exe','quake3.ded.arm64.exe'",
+      "    'quake3e.x64.exe','quake3e-vulkan.x64.exe','quake3e.ded.x64.exe',",
+      "    'quake3e.arm64.exe','quake3e-vulkan.arm64.exe','quake3e.ded.arm64.exe'",
       "  ) | Where-Object { Test-Path (Join-Path $dir $_) }",
       "  foreach ($n in $names) {",
       "    $src = Join-Path $dir $n",
@@ -85,8 +85,8 @@
       "  if (Test-Path $target) {",
       "    $names = @(",
       "      'quake3e.exe','quake3e-vulkan.exe','quake3e.ded.exe',",
-      "      'quake3.x64.exe','quake3e-vulkan.x64.exe','quake3e.ded.x64.exe',",
-      "      'quake3.arm64.exe','quake3e-vulkan.arm64.exe','quake3.ded.arm64.exe'",
+      "      'quake3e.x64.exe','quake3e-vulkan.x64.exe','quake3e.ded.x64.exe',",
+      "      'quake3e.arm64.exe','quake3e-vulkan.arm64.exe','quake3e.ded.arm64.exe'",
       "    )",
       "    foreach ($n in $names) {",
       "      $dst = Join-Path $target $n",
