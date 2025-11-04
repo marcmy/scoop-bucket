@@ -114,8 +114,7 @@
     "$global:matchMacArm   = ($assets | Where-Object { $_.name -match 'mac.*(aarch64|arm64).*\\.zip' }).name",
     "($ver).ToString('yyyy.MM.dd.HH')"
   ]
-}
-
+},
 
   "autoupdate": {
     "architecture": {
