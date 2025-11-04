@@ -5,7 +5,7 @@
 
 Just a little bucket I made to keep up with some projects as conveniently as possible.
 
-## How do I install these apps?
+## How to install these apps
 
 ```pwsh
 scoop bucket add marcmy https://github.com/marcmy/scoop-bucket
