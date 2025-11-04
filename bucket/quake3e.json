@@ -1,5 +1,5 @@
 {
-  "version": "0.0.0.0",
+  "version": "2025.11.01.16",
   "description": "Quake III engine fork focused on performance, fixes and QoL (Quake3e).",
   "homepage": "https://github.com/ec-/Quake3e",
   "license": "GPL-2.0-or-later",
@@ -10,8 +10,16 @@
       "hash": "807f0fc5fe5583c4ab2f633aa53eb1b0279f4784649cf6b75250b16ff4d733f7",
       "bin": [
         ["quake3e.x64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
-        ["quake3e-vulkan.x64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
-        ["quake3e.ded.x64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
+        [
+          "quake3e-vulkan.x64.exe",
+          "quake3e-vulkan",
+          "+set fs_homepath \"$persist_dir\""
+        ],
+        [
+          "quake3e.ded.x64.exe",
+          "quake3e-ded",
+          "+set fs_homepath \"$persist_dir\" +set dedicated 1"
+        ]
       ]
     },
     "32bit": {
@@ -19,8 +27,16 @@
       "hash": "4b6db62f1d65b56539cd4765a175b562937c6697cb6894520b9f1fc70c51a9a1",
       "bin": [
         ["quake3e.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
-        ["quake3e-vulkan.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
-        ["quake3e.ded.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
+        [
+          "quake3e-vulkan.exe",
+          "quake3e-vulkan",
+          "+set fs_homepath \"$persist_dir\""
+        ],
+        [
+          "quake3e.ded.exe",
+          "quake3e-ded",
+          "+set fs_homepath \"$persist_dir\" +set dedicated 1"
+        ]
       ]
     },
     "arm64": {
@@ -28,17 +44,21 @@
       "hash": "787e2f952c07e91bd63baa20cff279876f7caeb93bfd04430b72888a104e69fa",
       "bin": [
         ["quake3e.arm64.exe", "quake3e", "+set fs_homepath \"$persist_dir\""],
-        ["quake3e-vulkan.arm64.exe", "quake3e-vulkan", "+set fs_homepath \"$persist_dir\""],
-        ["quake3e.ded.arm64.exe", "quake3e-ded", "+set fs_homepath \"$persist_dir\" +set dedicated 1"]
+        [
+          "quake3e-vulkan.arm64.exe",
+          "quake3e-vulkan",
+          "+set fs_homepath \"$persist_dir\""
+        ],
+        [
+          "quake3e.ded.arm64.exe",
+          "quake3e-ded",
+          "+set fs_homepath \"$persist_dir\" +set dedicated 1"
+        ]
       ]
     }
   },
 
-  "persist": [
-    "baseq3",
-    "missionpack",
-    "link_target.txt"
-  ],
+  "persist": ["baseq3", "missionpack", "link_target.txt"],
 
   "installer": {
     "script": [
@@ -97,24 +117,24 @@
     ]
   },
 
-"checkver": {
-  "script": [
-    "$ErrorActionPreference = 'Stop'",
-    "$headers = @{ 'User-Agent' = 'Scoop-Checkver'; 'Accept' = 'application/vnd.github+json' }",
-    "$r = Invoke-RestMethod -Headers $headers -Uri 'https://api.github.com/repos/ec-/Quake3e/releases/tags/latest'",
-    "$ver = [datetime]$r.published_at",
-    "$assets = $r.assets",
-    "$global:matchWin64    = ($assets | Where-Object { $_.name -match 'win.*(x86_64|64).*\\.zip' }).name",
-    "$global:matchWin32    = ($assets | Where-Object { $_.name -match 'win.*(x86(?!_64)|32).*\\.zip' }).name",
-    "$global:matchWinArm64 = ($assets | Where-Object { $_.name -match 'win.*arm64.*\\.zip' }).name",
-    "$global:matchLinux64  = ($assets | Where-Object { $_.name -match 'linux.*(x86_64|64).*\\.zip' }).name",
-    "$global:matchLinux32  = ($assets | Where-Object { $_.name -match 'linux.*(x86(?!_64)|32).*\\.zip' }).name",
-    "$global:matchLinuxArm = ($assets | Where-Object { $_.name -match 'linux.*arm64.*\\.zip' }).name",
-    "$global:matchMac64    = ($assets | Where-Object { $_.name -match 'mac.*(x86_64|x64).*\\.zip' }).name",
-    "$global:matchMacArm   = ($assets | Where-Object { $_.name -match 'mac.*(aarch64|arm64).*\\.zip' }).name",
-    "($ver).ToString('yyyy.MM.dd.HH')"
-  ]
-},
+  "checkver": {
+    "script": [
+      "$ErrorActionPreference = 'Stop'",
+      "$headers = @{ 'User-Agent' = 'Scoop-Checkver'; 'Accept' = 'application/vnd.github+json' }",
+      "$r = Invoke-RestMethod -Headers $headers -Uri 'https://api.github.com/repos/ec-/Quake3e/releases/tags/latest'",
+      "$ver = [datetime]$r.published_at",
+      "$assets = $r.assets",
+      "$global:matchWin64    = ($assets | Where-Object { $_.name -match 'win.*(x86_64|64).*\\.zip' }).name",
+      "$global:matchWin32    = ($assets | Where-Object { $_.name -match 'win.*(x86(?!_64)|32).*\\.zip' }).name",
+      "$global:matchWinArm64 = ($assets | Where-Object { $_.name -match 'win.*arm64.*\\.zip' }).name",
+      "$global:matchLinux64  = ($assets | Where-Object { $_.name -match 'linux.*(x86_64|64).*\\.zip' }).name",
+      "$global:matchLinux32  = ($assets | Where-Object { $_.name -match 'linux.*(x86(?!_64)|32).*\\.zip' }).name",
+      "$global:matchLinuxArm = ($assets | Where-Object { $_.name -match 'linux.*arm64.*\\.zip' }).name",
+      "$global:matchMac64    = ($assets | Where-Object { $_.name -match 'mac.*(x86_64|x64).*\\.zip' }).name",
+      "$global:matchMacArm   = ($assets | Where-Object { $_.name -match 'mac.*(aarch64|arm64).*\\.zip' }).name",
+      "($ver).ToString('yyyy.MM.dd.HH')"
+    ]
+  },
 
   "autoupdate": {
     "architecture": {
