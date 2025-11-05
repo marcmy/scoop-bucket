@@ -17,12 +17,29 @@ jobs:
     steps:
       - name: Checkout bucket
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Install Scoop
+      - name: Install Scoop (idempotent)
         shell: pwsh
         run: |
-          iwr get.scoop.sh -useb | iex
-          scoop bucket add main
+          $ErrorActionPreference = 'Stop'
+          # Install scoop only if not already installed
+          if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+            iwr get.scoop.sh -useb | iex
+            Write-Host "Scoop installed"
+          } else {
+            Write-Host "Scoop already installed"
+          }
+
+          # Add main bucket only if missing
+          $buckets = & scoop bucket list 2>&1 | Out-String
+          if ($buckets -notmatch '\bmain\b') {
+            Write-Host "Adding main bucket"
+            & scoop bucket add main
+          } else {
+            Write-Host "main bucket already present; skipping add"
+          }
 
       - name: Prepare bucket dir for checkver
         shell: pwsh
