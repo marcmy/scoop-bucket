@@ -24,7 +24,6 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          # Install scoop only if not already installed
           if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
             iwr get.scoop.sh -useb | iex
             Write-Host "Scoop installed"
@@ -32,7 +31,6 @@ jobs:
             Write-Host "Scoop already installed"
           }
 
-          # Add main bucket only if missing
           $buckets = & scoop bucket list 2>&1 | Out-String
           if ($buckets -notmatch '\bmain\b') {
             Write-Host "Adding main bucket"
@@ -44,6 +42,9 @@ jobs:
       - name: Prepare bucket dir for checkver
         shell: pwsh
         run: |
+          # ensure scoop shims are available in this step's PATH
+          $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
+
           $ScoopRoot = "$env:USERPROFILE\scoop"
           if (Test-Path "$ScoopRoot\buckets\marcmy") { Remove-Item -Recurse -Force "$ScoopRoot\buckets\marcmy" }
           New-Item -ItemType Directory -Force -Path "$ScoopRoot\buckets\marcmy\bucket" | Out-Null
@@ -52,6 +53,9 @@ jobs:
       - name: checkver -u (stamp version/URLs/hashes)
         shell: pwsh
         run: |
+          # ensure scoop shims are available in this step's PATH
+          $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
+
           $ScoopRoot = "$env:USERPROFILE\scoop"
           Set-Location "$ScoopRoot\buckets\marcmy"
           & "$ScoopRoot\buckets\main\bin\checkver.ps1" quake3e -u -Force -Verbose
