@@ -103,8 +103,9 @@
       "$global:matchWin64    = ($assets.name | ? { $_ -match 'win.*(?:x86_64|64).*\\.zip$' } | Select-Object -First 1)",
       "$global:matchWin32    = ($assets.name | ? { $_ -match 'win.*(?:x86(?!_64)|32).*\\.zip$' } | Select-Object -First 1)",
       "$global:matchWinArm64 = ($assets.name | ? { $_ -match 'win.*arm64.*\\.zip$' } | Select-Object -First 1)",
-      "([datetimeoffset]$r.published_at).UtcDateTime.ToString('yyyy.MM.dd.HH')"
-    ]
+      "([datetime]$r.published_at).ToString('yyyy.MM.dd.HH')"
+    ],
+    "regex": "^(?<version>\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{2})$"
   },
 
   "autoupdate": {
