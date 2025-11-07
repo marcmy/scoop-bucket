@@ -106,7 +106,7 @@
       "([datetimeoffset]$r.published_at).UtcDateTime.ToString('yyyy.MM.dd.HH')"
     ]
   },
-  
+
   "autoupdate": {
     "architecture": {
       "64bit": {
