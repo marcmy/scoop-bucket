@@ -97,40 +97,38 @@
     "script": [
       "$ErrorActionPreference = 'Stop'",
       "$headers = @{ 'User-Agent' = 'Scoop-Checkver'; 'Accept' = 'application/vnd.github+json' }",
-      "$r = Invoke-RestMethod -Headers $headers -Uri 'https://api.github.com/repos/ec-/Quake3e/releases/tags/latest'",
-      "$global:tag = $r.tag_name",
+      "$r = Invoke-RestMethod -Headers $headers -Uri 'https://api.github.com/repos/ec-/Quake3e/releases/latest'",
       "$assets = $r.assets",
-      "$global:matchWin64    = ($assets | Where-Object { $_.name -match 'win.*(x86_64|64).*\\.zip$' }).name",
-      "$global:matchWin32    = ($assets | Where-Object { $_.name -match 'win.*(x86(?!_64)|32).*\\.zip$' }).name",
-      "$global:matchWinArm64 = ($assets | Where-Object { $_.name -match 'win.*arm64.*\\.zip$' }).name",
-      "$ver = ([datetimeoffset]$r.published_at).UtcDateTime.ToString('yyyy.MM.dd.HH')",
-      "Write-Output $ver"
+      "$global:tag          = $r.tag_name",
+      "$global:matchWin64   = ($assets.name | ? { $_ -match 'win.*(?:x86_64|64).*\\.zip$' } | Select-Object -First 1)",
+      "$global:matchWin32   = ($assets.name | ? { $_ -match 'win.*(?:x86(?!_64)|32).*\\.zip$' } | Select-Object -First 1)",
+      "$global:matchWinArm64= ($assets.name | ? { $_ -match 'win.*arm64.*\\.zip$' } | Select-Object -First 1)",
+      "([datetime]$r.published_at).ToString('yyyy.MM.dd.HH')"
     ]
   },
-  
+
   "autoupdate": {
     "architecture": {
       "64bit": {
         "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$matchWin64",
         "hash": {
-          "url": "https://github.com/ec-/Quake3e/releases/tag/latest",
-          "regex": "(?is)$matchWin64.*?sha256:([a-f0-9]{64})"
+          "url": "https://github.com/ec-/Quake3e/releases/tag/$tag",
+          "find": "$basename[\\s\\S]+?sha256:($sha256)"
         }
       },
       "32bit": {
         "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$matchWin32",
         "hash": {
-          "url": "https://github.com/ec-/Quake3e/releases/tag/latest",
-          "regex": "(?is)$matchWin32.*?sha256:([a-f0-9]{64})"
+          "url": "https://github.com/ec-/Quake3e/releases/tag/$tag",
+          "find": "$basename[\\s\\S]+?sha256:($sha256)"
         }
       },
       "arm64": {
         "url": "https://github.com/ec-/Quake3e/releases/download/$tag/$matchWinArm64",
         "hash": {
-          "url": "https://github.com/ec-/Quake3e/releases/tag/latest",
-          "regex": "(?is)$matchWinArm64.*?sha256:([a-f0-9]{64})"
+          "url": "https://github.com/ec-/Quake3e/releases/tag/$tag",
+          "find": "$basename[\\s\\S]+?sha256:($sha256)"
         }
       }
     }
   }
-}
