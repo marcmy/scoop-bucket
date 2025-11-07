@@ -103,11 +103,11 @@
       "$global:matchWin64    = ($assets | Where-Object { $_.name -match 'win.*(x86_64|64).*\\.zip$' }).name",
       "$global:matchWin32    = ($assets | Where-Object { $_.name -match 'win.*(x86(?!_64)|32).*\\.zip$' }).name",
       "$global:matchWinArm64 = ($assets | Where-Object { $_.name -match 'win.*arm64.*\\.zip$' }).name",
-      "$ver = [datetime]$r.published_at",
-      "($ver).ToString('yyyy.MM.dd.HH')"
+      "$ver = ([datetimeoffset]$r.published_at).UtcDateTime.ToString('yyyy.MM.dd.HH')",
+      "Write-Output $ver"
     ]
   },
-
+  
   "autoupdate": {
     "architecture": {
       "64bit": {
