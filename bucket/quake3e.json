@@ -95,17 +95,17 @@
 
   "checkver": {
     "script": [
-      "$ErrorActionPreference = 'Stop'",
-      "$h = @{ 'User-Agent'='Scoop-Checkver'; 'Accept'='application/vnd.github+json' }",
-      "$r = Invoke-RestMethod -Headers $h -Uri 'https://api.github.com/repos/ec-/Quake3e/releases/latest'",
-      "$assets = $r.assets",
-      "$win64 = ($assets | ? { $_.name -match 'win.*(?:x86_64|64).*\\.zip$' } | Select-Object -ExpandProperty name -First 1)",
-      "$win32 = ($assets | ? { $_.name -match 'win.*(?:x86(?!_64)|32).*\\.zip$' } | Select-Object -ExpandProperty name -First 1)",
-      "$arm64 = ($assets | ? { $_.name -match 'win.*arm64.*\\.zip$' } | Select-Object -ExpandProperty name -First 1)",
-      "$ver   = ([datetimeoffset]$r.published_at).UtcDateTime.ToString('yyyy.MM.dd.HH')",
+      "$ErrorActionPreference='Stop'",
+      "$h=@{ 'User-Agent'='Scoop-Checkver'; 'Accept'='application/vnd.github+json' }",
+      "$r=Invoke-RestMethod -Headers $h -Uri 'https://api.github.com/repos/ec-/Quake3e/releases/latest'",
+      "$assets=$r.assets",
+      "$win64=($assets.name | ?{$_ -match 'win.*(?:x86_64|64).*\\.zip$'} | Select-Object -First 1)",
+      "$win32=($assets.name | ?{$_ -match 'win.*(?:x86(?!_64)|32).*\\.zip$'} | Select-Object -First 1)",
+      "$arm64=($assets.name | ?{$_ -match 'arm64.*\\.zip$'} | Select-Object -First 1)",
+      "$ver=([datetimeoffset]$r.published_at).UtcDateTime.ToString('yyyy.MM.dd.HH')",
       "('{0}|{1}|{2}|{3}|{4}' -f $ver,$r.tag_name,$win64,$win32,$arm64)"
     ],
-    "regex": "^(?<version>\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{2})\\|(?<Tag>[^|]+)\\|(?<Win64>[^|]+)\\|(?<Win32>[^|]+)\\|(?<WinArm64>[^|]+)$"
+    "regex": "^(?<version>\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{2})\\|(?<Tag>[^|]+)\\|(?<Win64>[^|]+)\\|(?<Win32>[^|]+)\\|(?<WinArm64>[^|]*)$"
   },
 
   "autoupdate": {
