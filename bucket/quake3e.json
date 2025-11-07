@@ -98,14 +98,11 @@
       "$ErrorActionPreference = 'Stop'",
       "$headers = @{ 'User-Agent' = 'Scoop-Checkver'; 'Accept' = 'application/vnd.github+json' }",
       "$r = Invoke-RestMethod -Headers $headers -Uri 'https://api.github.com/repos/ec-/Quake3e/releases/tags/latest'",
-      # tag for autoupdate placeholders
       "$global:tag = $r.tag_name",
-      # pick asset filenames for each arch
       "$assets = $r.assets",
       "$global:matchWin64    = ($assets | Where-Object { $_.name -match 'win.*(x86_64|64).*\\.zip$' }).name",
       "$global:matchWin32    = ($assets | Where-Object { $_.name -match 'win.*(x86(?!_64)|32).*\\.zip$' }).name",
       "$global:matchWinArm64 = ($assets | Where-Object { $_.name -match 'win.*arm64.*\\.zip$' }).name",
-      # version from published timestamp — stable, monotonic
       "$ver = [datetime]$r.published_at",
       "($ver).ToString('yyyy.MM.dd.HH')"
     ]
