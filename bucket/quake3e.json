@@ -101,7 +101,7 @@
       "$assets=$r.assets",
       "$win64=($assets.name | ?{$_ -match 'win.*(?:x86_64|64).*\\.zip$'} | Select-Object -First 1)",
       "$win32=($assets.name | ?{$_ -match 'win.*(?:x86(?!_64)|32).*\\.zip$'} | Select-Object -First 1)",
-      "$arm64=($assets.name | ?{$_ -match 'arm64.*\\.zip$'} | Select-Object -First 1)",
+      "$arm64=($assets.name | ?{$_ -match 'win(dows)?[-_.].*arm64.*.zip$'} | Select-Object -First 1)",
       "$ver=([datetimeoffset]$r.published_at).UtcDateTime.ToString('yyyy.MM.dd.HH')",
       "('{0}|{1}|{2}|{3}|{4}' -f $ver,$r.tag_name,$win64,$win32,$arm64)"
     ],
