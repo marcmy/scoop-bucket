@@ -114,8 +114,8 @@
         "url": "https://github.com/ec-/Quake3e/releases/download/$matchTag/$matchWin64",
         "hash": {
           "mode": "json",
-          "url": "https://api.github.com/repos/ec-/Quake3e/releases/tags/$matchTag",
-          "jsonpath": "$.assets[?(@.name=='$basename')].digest",
+          "url": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
+          "jsonpath": "$..assets[?(@.name=='$basename')].digest",
           "regex": "sha256:([a-f0-9]{64})"
         }
       },
@@ -123,8 +123,8 @@
         "url": "https://github.com/ec-/Quake3e/releases/download/$matchTag/$matchWin32",
         "hash": {
           "mode": "json",
-          "url": "https://api.github.com/repos/ec-/Quake3e/releases/tags/$matchTag",
-          "jsonpath": "$.assets[?(@.name=='$basename')].digest",
+          "url": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
+          "jsonpath": "$..assets[?(@.name=='$basename')].digest",
           "regex": "sha256:([a-f0-9]{64})"
         }
       },
@@ -132,8 +132,8 @@
         "url": "https://github.com/ec-/Quake3e/releases/download/$matchTag/$matchWinArm64",
         "hash": {
           "mode": "json",
-          "url": "https://api.github.com/repos/ec-/Quake3e/releases/tags/$matchTag",
-          "jsonpath": "$.assets[?(@.name=='$basename')].digest",
+          "url": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
+          "jsonpath": "$..assets[?(@.name=='$basename')].digest",
           "regex": "sha256:([a-f0-9]{64})"
         }
       }
