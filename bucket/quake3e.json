@@ -23,16 +23,6 @@
         ["quake3e.ded.exe", "quake3e-ded"]
       ]
     },
-    "arm64": {
-      "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-msvc-arm64.zip",
-      "hash": "787e2f952c07e91bd63baa20cff279876f7caeb93bfd04430b72888a104e69fa",
-      "bin": [
-        ["quake3e.arm64.exe", "quake3e"],
-        ["quake3e-vulkan.arm64.exe", "quake3e-vulkan"],
-        ["quake3e.ded.arm64.exe", "quake3e-ded"]
-      ]
-    }
-  },
 
   "persist": ["link_target.txt"],
 
@@ -101,9 +91,8 @@
       "$assets=$r.assets",
       "$win64=($assets.name | ?{$_ -match 'win.*(?:x86_64|64).*\\.zip$'} | Select-Object -First 1)",
       "$win32=($assets.name | ?{$_ -match 'win.*(?:x86(?!_64)|32).*\\.zip$'} | Select-Object -First 1)",
-      "$arm64=($assets.name | ?{$_ -match 'win.*(?:arm64|arm64).*\\.zip$'} | Select-Object -First 1)",
       "$ver=([datetimeoffset]$r.published_at).UtcDateTime.ToString('yyyy.MM.dd.HH')",
-      "('{0}|{1}|{2}|{3}|{4}' -f $ver,$r.tag_name,$win64,$win32,$arm64)"
+      "('{0}|{1}|{2}|{3}|{4}' -f $ver,$r.tag_name,$win64,$win32,$arm)"
     ],
     "regex": "^(?<version>\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{2})\\|(?<Tag>[^|]+)\\|(?<Win64>[^|]+)\\|(?<Win32>[^|]+)\\|(?<WinArm64>[^|]*)$"
   },
@@ -121,15 +110,6 @@
       },
       "32bit": {
         "url": "https://github.com/ec-/Quake3e/releases/download/$matchTag/$matchWin32",
-        "hash": {
-          "mode": "json",
-          "url": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
-          "jsonpath": "$..assets[?(@.name=='$basename')].digest",
-          "regex": "sha256:([a-f0-9]{64})"
-        }
-      },
-      "arm64": {
-        "url": "https://github.com/ec-/Quake3e/releases/download/$matchTag/$matchWinArm64",
         "hash": {
           "mode": "json",
           "url": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
