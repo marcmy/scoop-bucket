@@ -1,121 +1,133 @@
 {
-  "version": "2025.11.01.16",
-  "description": "Quake III engine fork focused on performance, fixes and QoL (Quake3e).",
-  "homepage": "https://github.com/ec-/Quake3e",
-  "license": "GPL-2.0-or-later",
-
-  "architecture": {
-    "64bit": {
-      "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-mingw-x86_64.zip",
-      "hash": "807f0fc5fe5583c4ab2f633aa53eb1b0279f4784649cf6b75250b16ff4d733f7",
-      "bin": [
-        ["quake3e.x64.exe", "quake3e"],
-        ["quake3e-vulkan.x64.exe", "quake3e-vulkan"],
-        ["quake3e.ded.x64.exe", "quake3e-ded"]
-      ]
-    },
-    "32bit": {
-      "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-mingw-x86.zip",
-      "hash": "4b6db62f1d65b56539cd4765a175b562937c6697cb6894520b9f1fc70c51a9a1",
-      "bin": [
-        ["quake3e.exe", "quake3e"],
-        ["quake3e-vulkan.exe", "quake3e-vulkan"],
-        ["quake3e.ded.exe", "quake3e-ded"]
-      ]
-    }
-  },
-
-  "persist": ["link_target.txt"],
-
-  "installer": {
-    "script": [
-      "$ErrorActionPreference = 'SilentlyContinue'",
-      "$cfg = Join-Path $persist_dir 'link_target.txt'",
-      "if (!(Test-Path $persist_dir)) { New-Item -ItemType Directory -Path $persist_dir | Out-Null }",
-      "$target = $null",
-      "if (Test-Path $cfg) { $target = Get-Content $cfg -Raw }",
-      "if (-not $target) {",
-      "  $target = Read-Host 'Enter full path to your Quake III install (folder that contains baseq3)'",
-      "  if (-not (Test-Path $target)) {",
-      "    Write-Host 'Path does not exist. Skipping link setup this time. Re-run install to try again.' -ForegroundColor Yellow",
-      "  } else {",
-      "    Set-Content -Path $cfg -Value $target",
-      "  }",
-      "}",
-      "if ($target -and (Test-Path $target)) {",
-      "  $names = @(",
-      "    'quake3e.exe','quake3e-vulkan.exe','quake3e.ded.exe',",
-      "    'quake3e.x64.exe','quake3e-vulkan.x64.exe','quake3e.ded.x64.exe'",
-      "  ) | Where-Object { Test-Path (Join-Path $dir $_) }",
-      "  foreach ($n in $names) {",
-      "    $src = Join-Path $dir $n",
-      "    $dst = Join-Path $target $n",
-      "    if (Test-Path $dst) { Remove-Item $dst -Force }",
-      "    $sameDrive = ([System.IO.Path]::GetPathRoot($src)) -eq ([System.IO.Path]::GetPathRoot($dst))",
-      "    try {",
-      "      if ($sameDrive) { New-Item -ItemType HardLink -Path $dst -Target $src | Out-Null }",
-      "      else { New-Item -ItemType SymbolicLink -Path $dst -Target $src | Out-Null }",
-      "    } catch { Copy-Item $src $dst -Force }",
-      "  }",
-      "  Write-Host ('Linked {0} binaries into: {1}' -f $names.Count, $target) -ForegroundColor Green",
-      "  Write-Host 'Note: Symlinks across drives may need Developer Mode/admin; fallback is copy.' -ForegroundColor DarkGray",
-      "}"
-    ]
-  },
-
-  "uninstaller": {
-    "script": [
-      "$cfg = Join-Path $persist_dir 'link_target.txt'",
-      "if (Test-Path $cfg) {",
-      "  $target = Get-Content $cfg -Raw",
-      "  if (Test-Path $target) {",
-      "    $names = @(",
-      "      'quake3e.exe','quake3e-vulkan.exe','quake3e.ded.exe',",
-      "      'quake3e.x64.exe','quake3e-vulkan.x64.exe','quake3e.ded.x64.exe'",
-      "    )",
-      "    foreach ($n in $names) {",
-      "      $dst = Join-Path $target $n",
-      "      if (Test-Path $dst) { try { Remove-Item $dst -Force } catch {} }",
-      "    }",
-      "  }",
-      "}"
-    ]
-  },
-
-  "checkver": {
-    "script": [
-      "$ErrorActionPreference='Stop'",
-      "$h=@{ 'User-Agent'='Scoop-Checkver'; 'Accept'='application/vnd.github+json' }",
-      "$r=Invoke-RestMethod -Headers $h -Uri 'https://api.github.com/repos/ec-/Quake3e/releases/latest'",
-      "$assets=$r.assets",
-      "$win64=($assets.name | ?{$_ -match 'win.*(?:x86_64|64).*\\.zip$'} | Select-Object -First 1)",
-      "$win32=($assets.name | ?{$_ -match 'win.*(?:x86(?!_64)|32).*\\.zip$'} | Select-Object -First 1)",
-      "$ver=([datetimeoffset]$r.published_at).UtcDateTime.ToString('yyyy.MM.dd.HH')",
-      "('{0}|{1}|{2}|{3}' -f $ver,$r.tag_name,$win64,$win32)"
-    ],
-    "regex": "^(?<version>\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{2})\\|(?<Tag>[^|]+)\\|(?<Win64>[^|]+)\\|(?<Win32>[^|]+)$"
-  },
-
-  "autoupdate": {
+    "version": "2025.11.08.14",
+    "description": "Quake III engine fork focused on performance, fixes and QoL (Quake3e).",
+    "homepage": "https://github.com/ec-/Quake3e",
+    "license": "GPL-2.0-or-later",
     "architecture": {
-      "64bit": {
-        "url": "https://github.com/ec-/Quake3e/releases/download/$matchTag/$matchWin64",
-        "hash": {
-          "mode": "json",
-          "url": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
-          "jsonpath": "$..assets[?(@.name=='$basename')].digest",
-          "regex": "sha256:([a-f0-9]{64})"
+        "64bit": {
+            "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-mingw-x86_64.zip",
+            "hash": "a727a2caf3d3fcb9ceef2c06a7a9ce4aba2ab281002dbbb195d91289a21f9ccf",
+            "bin": [
+                [
+                    "quake3e.x64.exe",
+                    "quake3e"
+                ],
+                [
+                    "quake3e-vulkan.x64.exe",
+                    "quake3e-vulkan"
+                ],
+                [
+                    "quake3e.ded.x64.exe",
+                    "quake3e-ded"
+                ]
+            ]
+        },
+        "32bit": {
+            "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-mingw-x86.zip",
+            "hash": "3fb378a24f6fec7c5eee412cceafeb6a73879dd68aa9eab1bbf0d85eebe89dcd",
+            "bin": [
+                [
+                    "quake3e.exe",
+                    "quake3e"
+                ],
+                [
+                    "quake3e-vulkan.exe",
+                    "quake3e-vulkan"
+                ],
+                [
+                    "quake3e.ded.exe",
+                    "quake3e-ded"
+                ]
+            ]
         }
-      },
-      "32bit": {
-        "url": "https://github.com/ec-/Quake3e/releases/download/$matchTag/$matchWin32",
-        "hash": {
-          "mode": "json",
-          "url": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
-          "jsonpath": "$..assets[?(@.name=='$basename')].digest",
-          "regex": "sha256:([a-f0-9]{64})"
+    },
+    "persist": "link_target.txt",
+    "installer": {
+        "script": [
+            "$ErrorActionPreference = 'SilentlyContinue'",
+            "$cfg = Join-Path $persist_dir 'link_target.txt'",
+            "if (!(Test-Path $persist_dir)) { New-Item -ItemType Directory -Path $persist_dir | Out-Null }",
+            "$target = $null",
+            "if (Test-Path $cfg) { $target = Get-Content $cfg -Raw }",
+            "if (-not $target) {",
+            "  $target = Read-Host 'Enter full path to your Quake III install (folder that contains baseq3)'",
+            "  if (-not (Test-Path $target)) {",
+            "    Write-Host 'Path does not exist. Skipping link setup this time. Re-run install to try again.' -ForegroundColor Yellow",
+            "  } else {",
+            "    Set-Content -Path $cfg -Value $target",
+            "  }",
+            "}",
+            "if ($target -and (Test-Path $target)) {",
+            "  $names = @(",
+            "    'quake3e.exe','quake3e-vulkan.exe','quake3e.ded.exe',",
+            "    'quake3e.x64.exe','quake3e-vulkan.x64.exe','quake3e.ded.x64.exe'",
+            "  ) | Where-Object { Test-Path (Join-Path $dir $_) }",
+            "  foreach ($n in $names) {",
+            "    $src = Join-Path $dir $n",
+            "    $dst = Join-Path $target $n",
+            "    if (Test-Path $dst) { Remove-Item $dst -Force }",
+            "    $sameDrive = ([System.IO.Path]::GetPathRoot($src)) -eq ([System.IO.Path]::GetPathRoot($dst))",
+            "    try {",
+            "      if ($sameDrive) { New-Item -ItemType HardLink -Path $dst -Target $src | Out-Null }",
+            "      else { New-Item -ItemType SymbolicLink -Path $dst -Target $src | Out-Null }",
+            "    } catch { Copy-Item $src $dst -Force }",
+            "  }",
+            "  Write-Host ('Linked {0} binaries into: {1}' -f $names.Count, $target) -ForegroundColor Green",
+            "  Write-Host 'Note: Symlinks across drives may need Developer Mode/admin; fallback is copy.' -ForegroundColor DarkGray",
+            "}"
+        ]
+    },
+    "uninstaller": {
+        "script": [
+            "$cfg = Join-Path $persist_dir 'link_target.txt'",
+            "if (Test-Path $cfg) {",
+            "  $target = Get-Content $cfg -Raw",
+            "  if (Test-Path $target) {",
+            "    $names = @(",
+            "      'quake3e.exe','quake3e-vulkan.exe','quake3e.ded.exe',",
+            "      'quake3e.x64.exe','quake3e-vulkan.x64.exe','quake3e.ded.x64.exe'",
+            "    )",
+            "    foreach ($n in $names) {",
+            "      $dst = Join-Path $target $n",
+            "      if (Test-Path $dst) { try { Remove-Item $dst -Force } catch {} }",
+            "    }",
+            "  }",
+            "}"
+        ]
+    },
+    "checkver": {
+        "script": [
+            "$ErrorActionPreference='Stop'",
+            "$h=@{ 'User-Agent'='Scoop-Checkver'; 'Accept'='application/vnd.github+json' }",
+            "$r=Invoke-RestMethod -Headers $h -Uri 'https://api.github.com/repos/ec-/Quake3e/releases/latest'",
+            "$assets=$r.assets",
+            "$win64=($assets.name | ?{$_ -match 'win.*(?:x86_64|64).*\\.zip$'} | Select-Object -First 1)",
+            "$win32=($assets.name | ?{$_ -match 'win.*(?:x86(?!_64)|32).*\\.zip$'} | Select-Object -First 1)",
+            "$ver=([datetimeoffset]$r.published_at).UtcDateTime.ToString('yyyy.MM.dd.HH')",
+            "('{0}|{1}|{2}|{3}' -f $ver,$r.tag_name,$win64,$win32)"
+        ],
+        "regex": "^(?<version>\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{2})\\|(?<Tag>[^|]+)\\|(?<Win64>[^|]+)\\|(?<Win32>[^|]+)$"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/ec-/Quake3e/releases/download/$matchTag/$matchWin64",
+                "hash": {
+                    "mode": "json",
+                    "url": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
+                    "jsonpath": "$..assets[?(@.name=='$basename')].digest",
+                    "regex": "sha256:([a-f0-9]{64})"
+                }
+            },
+            "32bit": {
+                "url": "https://github.com/ec-/Quake3e/releases/download/$matchTag/$matchWin32",
+                "hash": {
+                    "mode": "json",
+                    "url": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
+                    "jsonpath": "$..assets[?(@.name=='$basename')].digest",
+                    "regex": "sha256:([a-f0-9]{64})"
+                }
+            }
         }
-      }
     }
-  }
 }
