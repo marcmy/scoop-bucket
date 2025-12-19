@@ -1,57 +1,53 @@
 {
-  "homepage": "https://github.com/0x90d/videoduplicatefinder",
-  "description": "Video Duplicate Finder is a cross-platform software to find duplicated video (and image) files on hard disk based on similiarity",
-  "version": "3.0.0-git",
-  "architecture": {
-    "64bit": {
-      "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/App-win-x64.zip",
-      "hash": "aeaf537cb1e04c28b9a4d5ffc16def357d8a5f7029cdc4fcf7503ed65b54130f"
-    }
-  },
-  "shortcuts": [
-    [
-      "VDF.GUI.exe",
-      "Video Duplicate Finder"
-    ]
-  ],
-  "persist": [
-    "Settings.json",
-    "bin",
-    "BlacklistedGroups.json",
-    "ScannedFiles.db",
-    "log.txt"
-  ],
-  "pre_install": [
-    "if (!(Test-Path \"$dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$dir\\Settings.json\" -Value \"{}\" }",
-  
-    "if (!(Test-Path \"$persist_dir\\bin\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\\bin\" | Out-Null }",
-  
-    "if (!(Test-Path \"$persist_dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$dir\\BlacklistedGroups.json\" -Value \"[]\" }",
-    "if (!(Test-Path \"$persist_dir\\ScannedFiles.db\")) { New-Item -ItemType File -Force -Path \"$dir\\ScannedFiles.db\" | Out-Null }",
-    "if (!(Test-Path \"$persist_dir\\log.txt\")) { New-Item -ItemType File -Force -Path \"$dir\\log.txt\" | Out-Null }"
-  ],
-  "notes": [
-    "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
-    "If native FFmpeg binding fails, place FFmpeg *shared* DLLs into the persisted `bin` folder:",
-    "  $env:SCOOP\\persist\\videoduplicatefinder\\bin",
-    "Suggested FFmpeg (LGPL shared, 7.1):",
-    "  https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n7.1-latest-win64-lgpl-shared-7.1.zip"
-  ],
-  "suggest": {
-    "FFmpeg shared DLLs (alternative)": [
-      "ffmpeg-shared"
-    ]
-  },
-  "checkver": {
-    "url": "https://github.com/0x90d/videoduplicatefinder/releases",
-    "regex": "Last build based on\\s*[\\r\\n\\s]*.*?([0-9a-f]{7})",
-    "replace": "3.0.0-git-${1}"
-  },
-  "autoupdate": {
+    "homepage": "https://github.com/0x90d/videoduplicatefinder",
+    "description": "Video Duplicate Finder is a cross-platform software to find duplicated video (and image) files on hard disk based on similiarity",
+    "version": "3.0.0-git-1808f81",
     "architecture": {
-      "64bit": {
-        "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/App-win-x64.zip"
-      }
+        "64bit": {
+            "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/App-win-x64.zip",
+            "hash": "aeaf537cb1e04c28b9a4d5ffc16def357d8a5f7029cdc4fcf7503ed65b54130f"
+        }
+    },
+    "shortcuts": [
+        [
+            "VDF.GUI.exe",
+            "Video Duplicate Finder"
+        ]
+    ],
+    "persist": [
+        "Settings.json",
+        "bin",
+        "BlacklistedGroups.json",
+        "ScannedFiles.db",
+        "log.txt"
+    ],
+    "pre_install": [
+        "if (!(Test-Path \"$dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$dir\\Settings.json\" -Value \"{}\" }",
+        "if (!(Test-Path \"$persist_dir\\bin\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\\bin\" | Out-Null }",
+        "if (!(Test-Path \"$persist_dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$dir\\BlacklistedGroups.json\" -Value \"[]\" }",
+        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db\")) { New-Item -ItemType File -Force -Path \"$dir\\ScannedFiles.db\" | Out-Null }",
+        "if (!(Test-Path \"$persist_dir\\log.txt\")) { New-Item -ItemType File -Force -Path \"$dir\\log.txt\" | Out-Null }"
+    ],
+    "notes": [
+        "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
+        "If native FFmpeg binding fails, place FFmpeg *shared* DLLs into the persisted `bin` folder:",
+        "  $env:SCOOP\\persist\\videoduplicatefinder\\bin",
+        "Suggested FFmpeg (LGPL shared, 7.1):",
+        "  https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n7.1-latest-win64-lgpl-shared-7.1.zip"
+    ],
+    "suggest": {
+        "FFmpeg shared DLLs (alternative)": "ffmpeg-shared"
+    },
+    "checkver": {
+        "url": "https://github.com/0x90d/videoduplicatefinder/releases",
+        "regex": "Last build based on\\s*[\\r\\n\\s]*.*?([0-9a-f]{7})",
+        "replace": "3.0.0-git-${1}"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/App-win-x64.zip"
+            }
+        }
     }
-  }
 }
