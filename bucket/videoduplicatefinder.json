@@ -21,13 +21,12 @@
     "if (!(Test-Path \"$persist_dir\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\" | Out-Null }",
     "if (!(Test-Path \"$persist_dir\\bin\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\\bin\" | Out-Null }",
   
-    "# Always make $dir\\bin point to persisted bin (junction) so FFmpeg survives -f",
     "$bin = Join-Path $dir 'bin'; $pbin = Join-Path $persist_dir 'bin';",
     "if (Test-Path -LiteralPath $bin) {",
     "  $i = Get-Item -LiteralPath $bin -Force;",
     "  if (-not $i.Attributes.HasFlag([IO.FileAttributes]::ReparsePoint)) { Remove-Item -LiteralPath $bin -Recurse -Force }",
     "}",
-    "if (!(Test-Path -LiteralPath $bin)) { cmd /c \"mklink /J \\\"$bin\\\" \\\"$pbin\\\"\" | Out-Null }",
+    "if (!(Test-Path -LiteralPath $bin)) { New-Item -ItemType Junction -Path $bin -Target $pbin | Out-Null }",
   
     "if (!(Test-Path \"$persist_dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\Settings.json\" -Value \"{}\" }",
     "if (!(Test-Path \"$persist_dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\BlacklistedGroups.json\" -Value \"[]\" }",
