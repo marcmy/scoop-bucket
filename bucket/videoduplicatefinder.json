@@ -15,18 +15,24 @@
         ]
     ],
     "persist": [
-        "Settings.json",
-        "bin",
-        "BlacklistedGroups.json",
-        "ScannedFiles.db",
-        "log.txt"
+      "Settings.json",
+      "BlacklistedGroups.json",
+      "ScannedFiles.db",
+      "log.txt",
+    
+      "bin\\avcodec-61.dll",
+      "bin\\avformat-61.dll",
+      "bin\\avutil-59.dll",
+      "bin\\swresample-5.dll",
+      "bin\\swscale-8.dll"
     ],
     "pre_install": [
-        "if (!(Test-Path \"$dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$dir\\Settings.json\" -Value \"{}\" }",
-        "if (!(Test-Path \"$persist_dir\\bin\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\\bin\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$dir\\BlacklistedGroups.json\" -Value \"[]\" }",
-        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db\")) { New-Item -ItemType File -Force -Path \"$dir\\ScannedFiles.db\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\log.txt\")) { New-Item -ItemType File -Force -Path \"$dir\\log.txt\" | Out-Null }"
+      "if (!(Test-Path \"$dir\\bin\")) { New-Item -ItemType Directory -Force -Path \"$dir\\bin\" | Out-Null }",
+    
+      "if (!(Test-Path \"$dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$dir\\Settings.json\" -Value \"{}\" }",
+      "if (!(Test-Path \"$dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$dir\\BlacklistedGroups.json\" -Value \"[]\" }",
+      "if (!(Test-Path \"$dir\\ScannedFiles.db\")) { New-Item -ItemType File -Force -Path \"$dir\\ScannedFiles.db\" | Out-Null }",
+      "if (!(Test-Path \"$dir\\log.txt\")) { New-Item -ItemType File -Force -Path \"$dir\\log.txt\" | Out-Null }"
     ],
     "notes": [
         "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
