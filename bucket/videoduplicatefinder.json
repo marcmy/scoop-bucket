@@ -34,13 +34,15 @@
     ],
     "pre_install": [
       "if (!(Test-Path \"$persist_dir\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\" | Out-Null }",
-    
-      "if (!(Test-Path \"$persist_dir\\bin\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\\bin\" | Out-Null }",
+      "if (!(Test-Path \"$dir\\bin\")) { New-Item -ItemType Directory -Force -Path \"$dir\\bin\" | Out-Null }",
     
       "if (!(Test-Path \"$persist_dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\Settings.json\" -Value \"{}\" }",
       "if (!(Test-Path \"$persist_dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\BlacklistedGroups.json\" -Value \"[]\" }",
       "if (!(Test-Path \"$persist_dir\\ScannedFiles.db\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db\" | Out-Null }",
       "if (!(Test-Path \"$persist_dir\\log.txt\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\log.txt\" | Out-Null }"
+    ],
+    "post_install": [
+      "if (!(Test-Path \"$dir\\bin\\ffmpeg.exe\")) { Write-Host \"FFmpeg binaries missing. Put GPL shared build contents into $persist_dir\\bin (persisted).\" -ForegroundColor Yellow }"
     ],
     "notes": [
         "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
@@ -50,8 +52,10 @@
         "  https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n7.1-latest-win64-gpl-shared-7.1.zip"
     ],
     "suggest": {
-        "FFmpeg shared DLLs (alternative)": "ffmpeg-shared"
-    },
+      "FFmpeg shared (alternative)": [
+        "ffmpeg-shared"
+      ]
+    }
     "checkver": {
         "url": "https://github.com/0x90d/videoduplicatefinder/releases",
         "regex": "Last build based on\\s*[\\r\\n\\s]*.*?([0-9a-f]{7})",
