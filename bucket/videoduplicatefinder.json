@@ -31,8 +31,7 @@
   ],
   "pre_install": [
     "if (!(Test-Path \"$persist_dir\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\" | Out-Null }",
-    "$persistBin = Join-Path $persist_dir 'bin'; if (!(Test-Path $persistBin)) { New-Item -ItemType Directory -Force -Path $persistBin | Out-Null }",
-    "$ff = @('avcodec-61.dll','avdevice-61.dll','avfilter-10.dll','avformat-61.dll','avutil-59.dll','postproc-58.dll','swresample-5.dll','swscale-8.dll','ffmpeg.exe','ffprobe.exe','ffplay.exe'); foreach ($f in $ff) { $p = Join-Path $persistBin $f; if (Test-Path $p -PathType Container) { Remove-Item $p -Recurse -Force }; if (!(Test-Path $p -PathType Leaf)) { New-Item -ItemType File -Force -Path $p | Out-Null } }",
+    "if (!(Test-Path \"$persist_dir\\bin\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\\bin\" | Out-Null }",
   
     "if (!(Test-Path \"$persist_dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\Settings.json\" -Value \"{}\" }",
     "if (!(Test-Path \"$persist_dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\BlacklistedGroups.json\" -Value \"[]\" }",
