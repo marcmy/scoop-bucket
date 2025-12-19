@@ -19,20 +19,40 @@
       "BlacklistedGroups.json",
       "ScannedFiles.db",
       "log.txt",
-    
-      "bin\\avcodec-61.dll",
-      "bin\\avformat-61.dll",
-      "bin\\avutil-59.dll",
-      "bin\\swresample-5.dll",
-      "bin\\swscale-8.dll"
+      "ffmpeg"
+    ],
+    "persist": [
+      "Settings.json",
+      "BlacklistedGroups.json",
+      "ScannedFiles.db",
+      "log.txt",
+      "ffmpeg"
     ],
     "pre_install": [
       "if (!(Test-Path \"$dir\\bin\")) { New-Item -ItemType Directory -Force -Path \"$dir\\bin\" | Out-Null }",
+      "if (!(Test-Path \"$persist_dir\\ffmpeg\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\\ffmpeg\" | Out-Null }",
     
       "if (!(Test-Path \"$dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$dir\\Settings.json\" -Value \"{}\" }",
       "if (!(Test-Path \"$dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$dir\\BlacklistedGroups.json\" -Value \"[]\" }",
       "if (!(Test-Path \"$dir\\ScannedFiles.db\")) { New-Item -ItemType File -Force -Path \"$dir\\ScannedFiles.db\" | Out-Null }",
       "if (!(Test-Path \"$dir\\log.txt\")) { New-Item -ItemType File -Force -Path \"$dir\\log.txt\" | Out-Null }"
+    ],
+    "post_install": [
+      "$src = Join-Path $persist_dir 'ffmpeg'",
+      "$dst = Join-Path $dir 'bin'",
+      "$need = @('avcodec-61.dll','avformat-61.dll','avutil-59.dll','swresample-5.dll','swscale-8.dll')",
+      "foreach ($n in $need) {",
+      "  $s = Join-Path $src $n",
+      "  $d = Join-Path $dst $n",
+      "  if (Test-Path $s) {",
+      "    if (Test-Path $d) { Remove-Item -Force $d }",
+      "    New-Item -ItemType HardLink -Path $d -Target $s | Out-Null",
+      "  }",
+      "}",
+      "if (-not (Get-ChildItem -LiteralPath $dst -Filter 'avcodec-*.dll' -ErrorAction SilentlyContinue)) {",
+      "  Write-Host 'FFmpeg DLLs not present. Put the required DLL files into:'",
+      "  Write-Host \"  $src\"",
+      "}"
     ],
     "notes": [
         "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
