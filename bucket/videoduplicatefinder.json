@@ -16,10 +16,21 @@
     ],
     "persist": [
       "Settings.json",
-      "bin",
       "BlacklistedGroups.json",
       "ScannedFiles.db",
-      "log.txt"
+      "log.txt",
+
+      "bin\\avcodec-61.dll",
+      "bin\\avfilter-10.dll",
+      "bin\\avformat-61.dll",
+      "bin\\ffplay.exe",
+      "bin\\avdevice-61.dll",      
+      "bin\\avutil-59.dll",
+      "bin\\swscale-8.dll",
+      "bin\\swresample-5.dll",      
+      "bin\\ffmpeg.exe",
+      "bin\\ffprobe.exe",
+      "bin\\postproc-58.dll"
     ],
     "pre_install": [
       "if (!(Test-Path \"$persist_dir\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\" | Out-Null }",
