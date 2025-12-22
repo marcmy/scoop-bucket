@@ -6,7 +6,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/App-win-x64.zip",
-            "hash": "aeaf537cb1e04c28b9a4d5ffc16def357d8a5f7029cdc4fcf7503ed65b54130f"
+            "hash": ["aeaf537cb1e04c28b9a4d5ffc16def357d8a5f7029cdc4fcf7503ed65b54130f"]
         }
     },
     "shortcuts": [
