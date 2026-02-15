@@ -19,37 +19,22 @@
         "Settings.json",
         "BlacklistedGroups.json",
         "ScannedFiles.db",
+        "ScannedFiles.db-wal",
+        "ScannedFiles.db-shm",
         "log.txt"
     ],
     "pre_install": [
         "if (!(Test-Path \"$persist_dir\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\bin\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\\bin\" | Out-Null }",
         "if (!(Test-Path \"$persist_dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\Settings.json\" -Value \"{}\" }",
         "if (!(Test-Path \"$persist_dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\BlacklistedGroups.json\" -Value \"[]\" }",
         "if (!(Test-Path \"$persist_dir\\ScannedFiles.db\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db\" | Out-Null }",
+        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db-shm\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db-shm\" | Out-Null }",
+        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db-wal\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db-wal\" | Out-Null }",
         "if (!(Test-Path \"$persist_dir\\log.txt\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\log.txt\" | Out-Null }"
     ],
-    "post_install": [
-        "$pbin = Join-Path $persist_dir 'bin'; if (!(Test-Path -LiteralPath $pbin)) { New-Item -ItemType Directory -Force -Path $pbin | Out-Null }",
-        "$bin = Join-Path $dir 'bin';",
-        "# If persist bin is empty but extracted app bin has ffmpeg.exe, import everything from app bin into persist bin",
-        "$persistHasFfmpeg = Test-Path -LiteralPath (Join-Path $pbin 'ffmpeg.exe');",
-        "$appHasFfmpeg = Test-Path -LiteralPath (Join-Path $bin 'ffmpeg.exe');",
-        "if (-not $persistHasFfmpeg -and $appHasFfmpeg) { Copy-Item -Force -Recurse (Join-Path $bin '*') $pbin }",
-        "# Replace app bin with a junction to persist bin",
-        "if (Test-Path -LiteralPath $bin) { Remove-Item -LiteralPath $bin -Recurse -Force }",
-        "New-Item -ItemType Junction -Path $bin -Target $pbin | Out-Null"
-    ],
     "notes": [
-        "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
-        "If native FFmpeg binding fails, place FFmpeg shared binaries (dlls/exes) into the persisted bin folder:",
-        "  %SCOOP%\\persist\\videoduplicatefinder\\bin",
-        "Suggested FFmpeg (GPL shared, 7.1):",
-        "  https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n7.1-latest-win64-gpl-shared-7.1.zip"
+        "This upstream release tag is always 3.0.x and the asset is replaced in-place."
     ],
-    "suggest": {
-        "FFmpeg shared (alternative)": "ffmpeg-shared"
-    },
     "checkver": {
         "url": "https://api.github.com/repos/0x90d/videoduplicatefinder/releases/tags/3.0.x",
         "jsonpath": "$.assets[?(@.name=='App-win-x64.zip')].updated_at",
