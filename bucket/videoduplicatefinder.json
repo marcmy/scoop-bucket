@@ -23,9 +23,17 @@
         "ScannedFiles.db-shm",
         "log.txt"
     ],
+    "pre_install": [
+        "if (!(Test-Path \"$persist_dir\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\" | Out-Null }",
+        "if (!(Test-Path \"$persist_dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\Settings.json\" -Value \"{}\" }",
+        "if (!(Test-Path \"$persist_dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\BlacklistedGroups.json\" -Value \"[]\" }",
+        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db\" | Out-Null }",
+        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db-shm\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db-shm\" | Out-Null }",
+        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db-wal\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db-wal\" | Out-Null }",
+        "if (!(Test-Path \"$persist_dir\\log.txt\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\log.txt\" | Out-Null }"
+    ],
     "notes": [
-        "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
-        "If a previous forced update left empty persisted files, copy them once from the latest _*.old install folder into %SCOOP%\\persist\\videoduplicatefinder."
+        "This upstream release tag is always 3.0.x and the asset is replaced in-place."
     ],
     "checkver": {
         "url": "https://api.github.com/repos/0x90d/videoduplicatefinder/releases/tags/3.0.x",
