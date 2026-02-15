@@ -23,34 +23,9 @@
         "ScannedFiles.db-shm",
         "log.txt"
     ],
-    "pre_install": [
-        "if (!(Test-Path \"$persist_dir\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\Settings.json\" -Value \"{}\" }",
-        "if (!(Test-Path \"$persist_dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\BlacklistedGroups.json\" -Value \"[]\" }",
-        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db-shm\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db-shm\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db-wal\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db-wal\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\log.txt\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\log.txt\" | Out-Null }"
-    ],
-    "post_install": [
-        "$files = @('Settings.json','BlacklistedGroups.json','ScannedFiles.db','ScannedFiles.db-wal','ScannedFiles.db-shm','log.txt')",
-        "$root = Split-Path $dir -Parent",
-        "$oldDir = Get-ChildItem -LiteralPath $root -Directory | Where-Object { $_.Name -like '_*.old' } | Sort-Object LastWriteTime -Descending | Select-Object -First 1",
-        "if ($null -ne $oldDir) {",
-        "  foreach ($f in $files) {",
-        "    $src = Join-Path $oldDir.FullName $f",
-        "    $dst = Join-Path $persist_dir $f",
-        "    if (Test-Path -LiteralPath $src) {",
-        "      $copy = $false",
-        "      if (!(Test-Path -LiteralPath $dst)) { $copy = $true }",
-        "      elseif ((Get-Item -LiteralPath $dst).Length -eq 0 -and (Get-Item -LiteralPath $src).Length -gt 0) { $copy = $true }",
-        "      if ($copy) { Copy-Item -LiteralPath $src -Destination $dst -Force }",
-        "    }",
-        "  }",
-        "}"
-    ],
     "notes": [
-        "This upstream release tag is always 3.0.x and the asset is replaced in-place."
+        "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
+        "If a previous forced update left empty persisted files, copy them once from the latest _*.old install folder into %SCOOP%\\persist\\videoduplicatefinder."
     ],
     "checkver": {
         "url": "https://api.github.com/repos/0x90d/videoduplicatefinder/releases/tags/3.0.x",
