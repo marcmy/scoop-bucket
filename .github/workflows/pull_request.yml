@@ -1,13 +1,22 @@
+name: Pull Requests
+
 on:
   pull_request_target:
-    types: [opened]
-name: Pull Requests
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   pullRequestHandler:
     name: PullRequestHandler
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@main
+        with:
+          fetch-depth: 0
       - name: PullRequestHandler
         uses: ScoopInstaller/GithubActions@main
         env:
