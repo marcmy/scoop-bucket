@@ -1,0 +1,67 @@
+{
+    "version": "2026.03.17",
+    "description": "USB mouse and controller polling rate overclocking utility for Windows.",
+    "homepage": "https://github.com/LordOfMice/hidusbf",
+    "license": {
+        "identifier": "Unknown",
+        "url": "https://github.com/LordOfMice/hidusbf"
+    },
+    "url": "https://raw.githubusercontent.com/LordOfMice/hidusbf/master/hidusbf.zip",
+    "hash": "skip",
+    "persist": "install_path.txt",
+    "notes": [
+        "On first install, Scoop will ask where HIDUSBF should be copied/extracted for regular use.",
+        "The installer then creates a Desktop shortcut to DRIVER\\Setup.exe inside that chosen folder.",
+        "Recent Windows versions may require disabling Memory Integrity before the driver can be installed."
+    ],
+    "checkver": {
+        "url": "https://api.github.com/repos/LordOfMice/hidusbf/commits/master",
+        "jsonpath": "$.commit.committer.date",
+        "regex": "^(\\d{4})-(\\d{2})-(\\d{2})T",
+        "replace": "$1.$2.$3"
+    },
+    "autoupdate": {
+        "url": "https://raw.githubusercontent.com/LordOfMice/hidusbf/master/hidusbf.zip"
+    },
+    "post_install": [
+        "$ErrorActionPreference = 'Stop'",
+        "if (!(Test-Path $persist_dir)) { New-Item -ItemType Directory -Path $persist_dir | Out-Null }",
+        "$cfg = Join-Path $persist_dir 'install_path.txt'",
+        "$target = $null",
+        "if (Test-Path $cfg) { $target = (Get-Content $cfg -Raw).Trim() }",
+        "if (-not $target) {",
+        "  $target = Read-Host 'Enter the full folder path where HIDUSBF should be copied/extracted'",
+        "  if ($target) { Set-Content -Path $cfg -Value $target -NoNewline }",
+        "}",
+        "if (-not $target) {",
+        "  Write-Host 'No install path was provided. Skipping external copy and Desktop shortcut creation.' -ForegroundColor Yellow",
+        "  return",
+        "}",
+        "if (!(Test-Path $target)) { New-Item -ItemType Directory -Force -Path $target | Out-Null }",
+        "Get-ChildItem -LiteralPath $dir -Force | Where-Object { $_.Name -ne 'install_path.txt' } | ForEach-Object {",
+        "  $destination = Join-Path $target $_.Name",
+        "  if ($_.PSIsContainer) { Copy-Item $_.FullName -Destination $destination -Recurse -Force }",
+        "  else { Copy-Item $_.FullName -Destination $destination -Force }",
+        "}",
+        "$setup = Join-Path $target 'DRIVER\\Setup.exe'",
+        "if (Test-Path $setup) {",
+        "  $desktop = [Environment]::GetFolderPath('Desktop')",
+        "  $shortcutPath = Join-Path $desktop 'HIDUSBF Setup.lnk'",
+        "  $shell = New-Object -ComObject WScript.Shell",
+        "  $shortcut = $shell.CreateShortcut($shortcutPath)",
+        "  $shortcut.TargetPath = $setup",
+        "  $shortcut.WorkingDirectory = Split-Path $setup",
+        "  $shortcut.IconLocation = $setup",
+        "  $shortcut.Save()",
+        "  Write-Host ('Copied HIDUSBF to: {0}' -f $target) -ForegroundColor Green",
+        "  Write-Host ('Created Desktop shortcut: {0}' -f $shortcutPath) -ForegroundColor Green",
+        "} else {",
+        "  Write-Host ('Expected Setup.exe was not found at: {0}' -f $setup) -ForegroundColor Yellow",
+        "}"
+    ],
+    "pre_uninstall": [
+        "$desktop = [Environment]::GetFolderPath('Desktop')",
+        "$shortcutPath = Join-Path $desktop 'HIDUSBF Setup.lnk'",
+        "if (Test-Path $shortcutPath) { Remove-Item $shortcutPath -Force }"
+    ]
+}
