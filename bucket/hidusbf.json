@@ -23,10 +23,17 @@
     "autoupdate": {
         "url": "https://raw.githubusercontent.com/LordOfMice/hidusbf/master/hidusbf.zip"
     },
+    "pre_install": [
+        "$ErrorActionPreference = 'Stop'",
+        "$cfg = Join-Path $dir 'install_path.txt'",
+        "if (Test-Path $cfg -PathType Container) { Remove-Item $cfg -Recurse -Force }",
+        "if (!(Test-Path $cfg -PathType Leaf)) { New-Item -ItemType File -Path $cfg -Force | Out-Null }"
+    ],
     "post_install": [
         "$ErrorActionPreference = 'Stop'",
         "if (!(Test-Path $persist_dir)) { New-Item -ItemType Directory -Path $persist_dir | Out-Null }",
         "$cfg = Join-Path $persist_dir 'install_path.txt'",
+        "if (Test-Path $cfg -PathType Container) { Remove-Item $cfg -Recurse -Force; New-Item -ItemType File -Path $cfg -Force | Out-Null }",
         "$target = $null",
         "if (Test-Path $cfg) { $target = (Get-Content $cfg -Raw).Trim() }",
         "if (-not $target) {",
