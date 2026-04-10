@@ -91,6 +91,14 @@
             }
         }
     },
+    "pre_install": [
+        "$x64 = Join-Path $dir 'quake3e.x64.exe'",
+        "$x86 = Join-Path $dir 'quake3e.exe'",
+        "if ((Test-Path $x64) -and !(Test-Path $x86)) {",
+        "  try { New-Item -ItemType HardLink -Path $x86 -Target $x64 | Out-Null }",
+        "  catch { Copy-Item $x64 $x86 -Force }",
+        "}"
+    ],
     "post_install": [
         "$ErrorActionPreference = 'SilentlyContinue'",
         "$cfg = Join-Path $persist_dir 'link_target.txt'",
