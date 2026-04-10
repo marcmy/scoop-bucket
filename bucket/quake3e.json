@@ -42,6 +42,7 @@
         }
     },
     "persist": "config",
+    "shortcuts": [],
     "checkver": {
         "script": [
             "$ErrorActionPreference='Stop'",
