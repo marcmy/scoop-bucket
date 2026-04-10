@@ -10,8 +10,14 @@
     "hash": "bd8d1fb0545d8df88d9cef0c67682daef7d304561bc64acfee5c0d8c12d0f797",
     "notes": [
         "HIDUSBF is installed into Scoop's usual app directory.",
-        "The installer creates a Desktop shortcut to DRIVER\\Setup.exe inside the Scoop app directory.",
+        "A Start Menu shortcut (Scoop Apps\\HIDUSBF Setup) points to DRIVER\\Setup.exe.",
         "Recent Windows versions may require disabling Memory Integrity before the driver can be installed."
+    ],
+    "shortcuts": [
+        [
+            "DRIVER\\Setup.exe",
+            "HIDUSBF Setup"
+        ]
     ],
     "checkver": {
         "url": "https://api.github.com/repos/LordOfMice/hidusbf/commits?path=hidusbf.zip&sha=master&per_page=1",
@@ -23,25 +29,9 @@
         "url": "https://raw.githubusercontent.com/LordOfMice/hidusbf/master/hidusbf.zip"
     },
     "post_install": [
-        "$ErrorActionPreference = 'Stop'",
         "$setup = Join-Path $dir 'DRIVER\\Setup.exe'",
-        "if (Test-Path $setup) {",
-        "  $desktop = [Environment]::GetFolderPath('Desktop')",
-        "  $shortcutPath = Join-Path $desktop 'HIDUSBF Setup.lnk'",
-        "  $shell = New-Object -ComObject WScript.Shell",
-        "  $shortcut = $shell.CreateShortcut($shortcutPath)",
-        "  $shortcut.TargetPath = $setup",
-        "  $shortcut.WorkingDirectory = Split-Path $setup",
-        "  $shortcut.IconLocation = $setup",
-        "  $shortcut.Save()",
-        "  Write-Host ('Created Desktop shortcut: {0}' -f $shortcutPath) -ForegroundColor Green",
-        "} else {",
+        "if (!(Test-Path $setup)) {",
         "  Write-Host ('Expected Setup.exe was not found at: {0}' -f $setup) -ForegroundColor Yellow",
         "}"
-    ],
-    "pre_uninstall": [
-        "$desktop = [Environment]::GetFolderPath('Desktop')",
-        "$shortcutPath = Join-Path $desktop 'HIDUSBF Setup.lnk'",
-        "if (Test-Path $shortcutPath) { Remove-Item $shortcutPath -Force }"
     ]
 }
