@@ -7,6 +7,14 @@
         "64bit": {
             "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-mingw-x86_64.zip",
             "hash": "0e73b12381233d242f35719ffad00a3feb994ecefaa92c55be60beb64b250a07",
+            "shortcuts": [
+                [
+                    "quake3e.x64.exe",
+                    "Quake3e",
+                    "",
+                    "quake3e.x64.exe"
+                ]
+            ],
             "bin": [
                 [
                     "quake3e.x64.exe",
@@ -25,6 +33,14 @@
         "32bit": {
             "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-mingw-x86.zip",
             "hash": "a24bb59c6ff9f72098403e82f42b7640801e9d93c64d7b893dfbc1ebc5ada4c0",
+            "shortcuts": [
+                [
+                    "quake3e.exe",
+                    "Quake3e",
+                    "",
+                    "quake3e.exe"
+                ]
+            ],
             "bin": [
                 [
                     "quake3e.exe",
