@@ -41,21 +41,7 @@
             ]
         }
     },
-    "persist": "link_target.txt",
-    "shortcuts": [
-        [
-            "quake3e.x64.exe",
-            "Quake3e",
-            "",
-            "quake3e.x64.exe"
-        ],
-        [
-            "quake3e.exe",
-            "Quake3e",
-            "",
-            "quake3e.exe"
-        ]
-    ],
+    "persist": "config",
     "checkver": {
         "script": [
             "$ErrorActionPreference='Stop'",
@@ -101,10 +87,16 @@
     ],
     "post_install": [
         "$ErrorActionPreference = 'SilentlyContinue'",
-        "$cfg = Join-Path $persist_dir 'link_target.txt'",
+        "$cfgDir = Join-Path $persist_dir 'config'",
+        "$cfg = Join-Path $cfgDir 'link_target.txt'",
+        "$legacyCfg = Join-Path $persist_dir 'link_target.txt'",
         "if (!(Test-Path $persist_dir)) { New-Item -ItemType Directory -Path $persist_dir | Out-Null }",
+        "if (!(Test-Path $cfgDir)) { New-Item -ItemType Directory -Path $cfgDir -Force | Out-Null }",
+        "if (!(Test-Path $cfg -PathType Leaf) -and (Test-Path $legacyCfg -PathType Leaf)) {",
+        "  Copy-Item $legacyCfg $cfg -Force",
+        "}",
         "$target = $null",
-        "if (Test-Path $cfg) { $target = (Get-Content $cfg -Raw).Trim() }",
+        "if (Test-Path $cfg -PathType Leaf) { $target = (Get-Content $cfg -Raw).Trim() }",
         "if (-not $target) {",
         "  $target = Read-Host 'Enter full path to your Quake III install (folder that contains baseq3)'",
         "  if (-not (Test-Path $target)) {",
@@ -151,8 +143,13 @@
         "$menuDir = Join-Path ([Environment]::GetFolderPath('ApplicationData')) 'Microsoft\\Windows\\Start Menu\\Programs\\Scoop Apps'",
         "$shortcutPath = Join-Path $menuDir 'Quake3e.lnk'",
         "if (Test-Path $shortcutPath) { try { Remove-Item $shortcutPath -Force } catch {} }",
-        "$cfg = Join-Path $persist_dir 'link_target.txt'",
-        "if (Test-Path $cfg) {",
+        "$cfgDir = Join-Path $persist_dir 'config'",
+        "$cfg = Join-Path $cfgDir 'link_target.txt'",
+        "$legacyCfg = Join-Path $persist_dir 'link_target.txt'",
+        "if (!(Test-Path $cfg -PathType Leaf) -and (Test-Path $legacyCfg -PathType Leaf)) {",
+        "  $cfg = $legacyCfg",
+        "}",
+        "if (Test-Path $cfg -PathType Leaf) {",
         "  $target = (Get-Content $cfg -Raw).Trim()",
         "  if (Test-Path $target) {",
         "    $names = @(",
