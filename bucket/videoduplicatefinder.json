@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/0x90d/videoduplicatefinder",
     "description": "Video Duplicate Finder is a cross-platform software to find duplicated video (and image) files on hard disk based on similiarity",
-    "version": "3.0.0-git-20260328-0314",
+    "version": "3.0.0-git-20260416-0543",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/App-win-x64.zip",
-            "hash": "486308a7d3ef3a2e2e3992668c3ae69d0b90a324acf97a17af17039ae04cfa33"
+            "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/GUI-win-x64.zip",
+            "hash": "81c4c5220b8c24c1bbf4f0eddecba0ad60ac216625dd67eed5d5b9453b0e54fa"
         }
     },
     "shortcuts": [
@@ -35,14 +35,14 @@
     "notes": "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
     "checkver": {
         "url": "https://api.github.com/repos/0x90d/videoduplicatefinder/releases/tags/3.0.x",
-        "jsonpath": "$.assets[?(@.name=='App-win-x64.zip')].updated_at",
+        "jsonpath": "$.assets[?(@.name=='GUI-win-x64.zip')].updated_at",
         "regex": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2})",
         "replace": "3.0.0-git-$1$2$3-$4$5"
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/App-win-x64.zip"
+                "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/GUI-win-x64.zip"
             }
         }
     }
