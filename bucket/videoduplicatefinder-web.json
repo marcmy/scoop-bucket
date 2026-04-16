@@ -23,7 +23,7 @@
     ],
     "notes": [
         "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
-        "Run `VDF.Web` and open the reported local URL in your browser."
+        "Run `vdf-web` and open the reported local URL in your browser."
     ],
     "checkver": {
         "url": "https://api.github.com/repos/0x90d/videoduplicatefinder/releases/tags/3.0.x",
