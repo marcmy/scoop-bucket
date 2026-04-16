@@ -9,7 +9,18 @@
             "hash": "62192f43cb04e7d66af982b95b6a09507f23616d3277ab987ba449913a00d0bc"
         }
     },
-    "bin": "VDF.Web.exe",
+    "bin": [
+        [
+            "VDF.Web.exe",
+            "vdf-web"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "VDF.Web.exe",
+            "Video Duplicate Finder (Web)"
+        ]
+    ],
     "notes": [
         "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
         "Run `VDF.Web` and open the reported local URL in your browser."
