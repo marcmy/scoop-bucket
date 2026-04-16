@@ -1,0 +1,30 @@
+{
+    "homepage": "https://github.com/0x90d/videoduplicatefinder",
+    "description": "Self-hosted web interface for Video Duplicate Finder",
+    "version": "3.0.0-git-20260416-0543",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/Web-win-x64.zip",
+            "hash": "62192f43cb04e7d66af982b95b6a09507f23616d3277ab987ba449913a00d0bc"
+        }
+    },
+    "bin": "VDF.Web.exe",
+    "notes": [
+        "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
+        "Run `VDF.Web` and open the reported local URL in your browser."
+    ],
+    "checkver": {
+        "url": "https://api.github.com/repos/0x90d/videoduplicatefinder/releases/tags/3.0.x",
+        "jsonpath": "$.assets[?(@.name=='Web-win-x64.zip')].updated_at",
+        "regex": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2})",
+        "replace": "3.0.0-git-$1$2$3-$4$5"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/Web-win-x64.zip"
+            }
+        }
+    }
+}
