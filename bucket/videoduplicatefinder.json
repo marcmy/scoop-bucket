@@ -27,6 +27,7 @@
         "ScannedFiles.db",
         "ScannedFiles.db-wal",
         "ScannedFiles.db-shm",
+        "backup.scanresults",
         "log.txt"
     ],
     "pre_install": [
@@ -36,6 +37,7 @@
         "if (!(Test-Path \"$persist_dir\\ScannedFiles.db\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db\" | Out-Null }",
         "if (!(Test-Path \"$persist_dir\\ScannedFiles.db-shm\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db-shm\" | Out-Null }",
         "if (!(Test-Path \"$persist_dir\\ScannedFiles.db-wal\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db-wal\" | Out-Null }",
+        "if (!(Test-Path \"$persist_dir\\backup.scanresults\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\backup.scanresults\" | Out-Null }",
         "if (!(Test-Path \"$persist_dir\\log.txt\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\log.txt\" | Out-Null }"
     ],
     "notes": "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
