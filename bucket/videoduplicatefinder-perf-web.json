@@ -6,7 +6,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/Web-win-x64.zip",
-            "hash": "skip"
+            "hash": "6632d21b1f3d26b17972268acc49858a428a22c27246daac4b51217e47befcda"
         }
     },
     "bin": [
