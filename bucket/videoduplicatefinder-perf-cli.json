@@ -1,0 +1,35 @@
+{
+    "homepage": "https://github.com/marcmy/videoduplicatefinder",
+    "description": "Command-line interface for Marc's Video Duplicate Finder perf/native-hwaccel fork build",
+    "version": "3.0.0-perf-git-20260425-0812",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/CLI-win-x64.zip",
+            "hash": "skip"
+        }
+    },
+    "bin": [
+        [
+            "vdf-cli.exe",
+            "vdf-cli-perf"
+        ]
+    ],
+    "notes": "This fork release tag is always 3.0.x and the asset is replaced in-place.",
+    "checkver": {
+        "script": [
+            "$ErrorActionPreference = 'Stop'",
+            "$r = Invoke-RestMethod -Headers @{ 'User-Agent' = 'Scoop-Checkver'; 'Accept' = 'application/vnd.github+json' } -Uri 'https://api.github.com/repos/marcmy/videoduplicatefinder/releases/tags/3.0.x'",
+            "([datetimeoffset](($r.assets | Where-Object { $_.name -eq 'CLI-win-x64.zip' } | Select-Object -First 1).updated_at)).UtcDateTime.ToString('yyyy-MM-ddTHH:mm')"
+        ],
+        "regex": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2})",
+        "replace": "3.0.0-perf-git-$1$2$3-$4$5"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/CLI-win-x64.zip"
+            }
+        }
+    }
+}
