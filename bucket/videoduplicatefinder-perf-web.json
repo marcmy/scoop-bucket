@@ -21,6 +21,17 @@
             "Video Duplicate Finder (Web Perf)"
         ]
     ],
+    "persist": [
+        "web-settings.json",
+        "web-credentials.json",
+        "Settings.json",
+        "BlacklistedGroups.json",
+        "ScannedFiles.db",
+        "ScannedFiles.db-wal",
+        "ScannedFiles.db-shm",
+        "backup.scanresults",
+        "log.txt"
+    ],
     "notes": [
         "This fork release tag is always 3.0.x and the asset is replaced in-place.",
         "Run `vdf-web-perf` and open the reported local URL in your browser."
