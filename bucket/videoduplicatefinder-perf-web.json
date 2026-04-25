@@ -1,0 +1,61 @@
+{
+    "homepage": "https://github.com/marcmy/videoduplicatefinder",
+    "description": "Self-hosted web interface for Marc's Video Duplicate Finder perf/native-hwaccel fork build",
+    "version": "3.0.0-perf-git-20260425-0812",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/Web-win-x64.zip",
+            "hash": "skip"
+        }
+    },
+    "bin": [
+        [
+            "VDF.Web.exe",
+            "vdf-web-perf"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "VDF.Web.exe",
+            "Video Duplicate Finder (Web Perf)"
+        ]
+    ],
+    "notes": [
+        "This fork release tag is always 3.0.x and the asset is replaced in-place.",
+        "Run `vdf-web-perf` and open the reported local URL in your browser."
+    ],
+    "post_install": [
+        "$appsDir = Split-Path (Split-Path -Path $dir -Parent) -Parent",
+        "$guiExe = Join-Path $appsDir 'videoduplicatefinder-perf\\current\\VDF.GUI.exe'",
+        "if (Test-Path $guiExe) {",
+        "    $startMenuRoot = [Environment]::GetFolderPath($(if ($global) { 'CommonStartMenu' } else { 'StartMenu' }))",
+        "    $shortcutDir = Join-Path $startMenuRoot 'Programs\\Scoop Apps'",
+        "    if (!(Test-Path $shortcutDir)) { New-Item -ItemType Directory -Force -Path $shortcutDir | Out-Null }",
+        "    $shortcutPath = Join-Path $shortcutDir 'Video Duplicate Finder (Web Perf).lnk'",
+        "    $targetExe = Join-Path $dir 'VDF.Web.exe'",
+        "    $wsShell = New-Object -ComObject WScript.Shell",
+        "    $shortcut = $wsShell.CreateShortcut($shortcutPath)",
+        "    $shortcut.TargetPath = $targetExe",
+        "    $shortcut.WorkingDirectory = $dir",
+        "    $shortcut.IconLocation = $guiExe",
+        "    $shortcut.Save()",
+        "}"
+    ],
+    "checkver": {
+        "script": [
+            "$ErrorActionPreference = 'Stop'",
+            "$r = Invoke-RestMethod -Headers @{ 'User-Agent' = 'Scoop-Checkver'; 'Accept' = 'application/vnd.github+json' } -Uri 'https://api.github.com/repos/marcmy/videoduplicatefinder/releases/tags/3.0.x'",
+            "([datetimeoffset](($r.assets | Where-Object { $_.name -eq 'Web-win-x64.zip' } | Select-Object -First 1).updated_at)).UtcDateTime.ToString('yyyy-MM-ddTHH:mm')"
+        ],
+        "regex": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2})",
+        "replace": "3.0.0-perf-git-$1$2$3-$4$5"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/Web-win-x64.zip"
+            }
+        }
+    }
+}
