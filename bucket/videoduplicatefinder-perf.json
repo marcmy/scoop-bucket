@@ -6,7 +6,8 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/Bundle-win-x64.zip",
-            "hash": "e0486cbf859fd37b667186baeb2fc7d7d2ce09d935413fd8e725b7b418c3d2b4"
+            "hash": "e0486cbf859fd37b667186baeb2fc7d7d2ce09d935413fd8e725b7b418c3d2b4",
+            "extract_dir": "Bundle-win-x64"
         }
     },
     "shortcuts": [
@@ -61,7 +62,8 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/Bundle-win-x64.zip"
+                "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/Bundle-win-x64.zip",
+                "extract_dir": "Bundle-win-x64"
             }
         }
     }
