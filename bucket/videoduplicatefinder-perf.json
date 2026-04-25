@@ -49,6 +49,19 @@
         "This fork release tag is always 3.0.x and the asset is replaced in-place.",
         "Includes GUI, CLI, and Web UI. Use `vdf-gui-perf`, `vdf-cli-perf`, or `vdf-web-perf`."
     ],
+    "post_install": [
+        "$guiExe = Join-Path $dir 'VDF.GUI.exe'",
+        "if (Test-Path $guiExe) {",
+        "    $startMenuRoot = [Environment]::GetFolderPath($(if ($global) { 'CommonStartMenu' } else { 'StartMenu' }))",
+        "    $shortcutPath = Join-Path $startMenuRoot 'Programs\\Scoop Apps\\Video Duplicate Finder (Web Perf).lnk'",
+        "    if (Test-Path $shortcutPath) {",
+        "        $wsShell = New-Object -ComObject WScript.Shell",
+        "        $shortcut = $wsShell.CreateShortcut($shortcutPath)",
+        "        $shortcut.IconLocation = $guiExe",
+        "        $shortcut.Save()",
+        "    }",
+        "}"
+    ],
     "checkver": {
         "script": [
             "$ErrorActionPreference='Stop'",
