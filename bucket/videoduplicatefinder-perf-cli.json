@@ -6,7 +6,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/CLI-win-x64.zip",
-            "hash": "skip"
+            "hash": "d4887a661a92ef36df8f23fe08acf04d9e4d80c61b40315c972d58939f1f04d5"
         }
     },
     "bin": [
