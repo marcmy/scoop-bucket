@@ -34,22 +34,33 @@
             "vdf-web-perf"
         ]
     ],
-    "persist": [
-        "web-settings.json",
-        "web-credentials.json",
-        "Settings.json",
-        "BlacklistedGroups.json",
-        "ScannedFiles.db",
-        "ScannedFiles.db-wal",
-        "ScannedFiles.db-shm",
-        "backup.scanresults",
-        "log.txt"
-    ],
     "notes": [
         "This fork release tag is always 3.0.x and the asset is replaced in-place.",
-        "Includes GUI, CLI, and Web UI. Use `vdf-gui-perf`, `vdf-cli-perf`, or `vdf-web-perf`."
+        "Includes GUI, CLI, and Web UI. Use `vdf-gui-perf`, `vdf-cli-perf`, or `vdf-web-perf`.",
+        "VDF state files are backed up/restored only when they already exist as real files; no empty placeholder files or junction folders are created."
+    ],
+    "pre_uninstall": [
+        "$stateFiles = @('web-settings.json', 'web-credentials.json', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "if (!(Test-Path $persist_dir)) { New-Item -ItemType Directory -Force -Path $persist_dir | Out-Null }",
+        "foreach ($name in $stateFiles) {",
+        "    $src = Join-Path $dir $name",
+        "    $dst = Join-Path $persist_dir $name",
+        "    if (Test-Path $src -PathType Leaf) {",
+        "        Copy-Item -Force -LiteralPath $src -Destination $dst",
+        "    }",
+        "}"
     ],
     "post_install": [
+        "$stateFiles = @('web-settings.json', 'web-credentials.json', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "if (Test-Path $persist_dir) {",
+        "    foreach ($name in $stateFiles) {",
+        "        $src = Join-Path $persist_dir $name",
+        "        $dst = Join-Path $dir $name",
+        "        if (Test-Path $src -PathType Leaf) {",
+        "            Copy-Item -Force -LiteralPath $src -Destination $dst",
+        "        }",
+        "    }",
+        "}",
         "$guiExe = Join-Path $dir 'VDF.GUI.exe'",
         "if (Test-Path $guiExe) {",
         "    $startMenuRoot = [Environment]::GetFolderPath($(if ($global) { 'CommonStartMenu' } else { 'StartMenu' }))",
