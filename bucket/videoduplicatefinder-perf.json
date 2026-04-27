@@ -6,7 +6,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/Bundle-win-x64.zip",
-            "hash": "048acbfcab7c2f9386bb69997ed5218dc44bbfbbaf8612de253d75913ab0eec7",
+            "hash": "a831b34e36b5ace0b8d0ba6fe5755637be1dbd986319d3001ef8bf0e352f1fcc",
             "extract_dir": "Bundle-win-x64"
         }
     },
