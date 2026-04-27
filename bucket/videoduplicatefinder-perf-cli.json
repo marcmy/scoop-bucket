@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/marcmy/videoduplicatefinder",
     "description": "Command-line interface for Marc's Video Duplicate Finder perf/native-hwaccel fork build",
-    "version": "3.0.0-perf-git-20260427-1950",
+    "version": "3.0.0-perf-git-20260427-2205",
     "license": "MIT",
     "architecture": {
         "64bit": {
             "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/CLI-win-x64.zip",
-            "hash": "b76c214d9744b5fa8693b529f3cbaa4232279ff62c4f44c56306240939d4d576"
+            "hash": "944b32a76b94c850e7226a54c49f7da76ee0c1043cc435d2e85be267d3430786"
         }
     },
     "bin": [
