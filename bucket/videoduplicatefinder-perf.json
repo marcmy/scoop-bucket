@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/marcmy/videoduplicatefinder",
     "description": "Video Duplicate Finder GUI, CLI, and Web UI from Marc's perf/native-hwaccel fork build",
-    "version": "3.0.0-perf-git-20260427-0844",
+    "version": "3.0.0-perf-git-20260427-1427",
     "license": "MIT",
     "architecture": {
         "64bit": {
             "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/3.0.x/Bundle-win-x64.zip",
-            "hash": "a831b34e36b5ace0b8d0ba6fe5755637be1dbd986319d3001ef8bf0e352f1fcc",
+            "hash": "2adbf55051d534e9b9e09018ababc6440739854276ba815773675fba198ee531",
             "extract_dir": "Bundle-win-x64"
         }
     },
