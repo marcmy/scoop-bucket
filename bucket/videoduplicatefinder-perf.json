@@ -1,7 +1,7 @@
 {
     "homepage": "https://github.com/marcmy/videoduplicatefinder",
     "description": "Video Duplicate Finder GUI, CLI, and Web UI from Marc's perf/native-hwaccel fork build",
-    "version": "3.0.0-perf-git-20260427-0400",
+    "version": "3.0.0-perf-git-20260427-0844",
     "license": "MIT",
     "architecture": {
         "64bit": {
