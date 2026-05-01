@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/0x90d/videoduplicatefinder",
     "description": "Self-hosted web interface for Video Duplicate Finder",
-    "version": "3.0.0-git-20260429-1351",
+    "version": "3.0.0-git-20260501-0226",
     "license": "MIT",
     "architecture": {
         "64bit": {
             "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/Web-win-x64.zip",
-            "hash": "c62836ef77da286ca978f3e6a5156deeb227f2228349fdb42bd449dac8674687"
+            "hash": "155df1b5373c9a9d7082a231ded809fe05fdb28a73cf9ea72c9364bcbf9d3716"
         }
     },
     "bin": [
