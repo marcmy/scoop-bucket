@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/0x90d/videoduplicatefinder",
     "description": "Command-line interface for Video Duplicate Finder",
-    "version": "3.0.0-git-20260501-1108",
+    "version": "3.0.0-git-20260504-0159",
     "license": "MIT",
     "architecture": {
         "64bit": {
             "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/3.0.x/CLI-win-x64.zip",
-            "hash": "852c6cf8e9e7d9840e770d974bad00eb71a06734c5055b4c28ff0ecf8ba99d21"
+            "hash": "6cf052c83119aa814d1930bc9105f95a28287bdbbf6675718f7595ee670aa4a4"
         }
     },
     "bin": [
