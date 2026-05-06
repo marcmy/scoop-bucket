@@ -76,18 +76,22 @@
             "    $artifacts = Invoke-RestMethod -Headers $headers -Uri $run.artifacts_url",
             "    $hit = $artifacts.artifacts | Where-Object { ($_.name -eq $artifact) -and (-not $_.expired) } | Select-Object -First 1",
             "    if ($hit) {",
-            "        \"{0} {1} {2}\" -f $run.id, $hit.name, ($hit.digest -replace '^sha256:', '')",
+            "        \"{0} {1}\" -f $run.id, $hit.name",
             "        break",
             "    }",
             "}"
         ],
-        "regex": "^(?<version>\\d+) (?<artifact>.+?) (?<sha256>[a-f0-9]{64})$"
+        "regex": "^(?<version>\\d+) (?<artifact>.+)$"
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
                 "url": "https://nightly.link/qbittorrent/qBittorrent/actions/runs/$version/$matchArtifact.zip",
-                "hash": "$matchSha256"
+                "hash": {
+                    "mode": "json",
+                    "url": "https://api.github.com/repos/qbittorrent/qBittorrent/actions/runs/$version/artifacts",
+                    "jsonpath": "$..artifacts[?(@.name=='$matchArtifact')].digest"
+                }
             }
         }
     }
