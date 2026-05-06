@@ -53,7 +53,12 @@
         "    }",
         "}"
     ],
-    "bin": "qbittorrent.exe",
+    "bin": [
+        [
+            "qbittorrent.exe",
+            "qbittorrent-lt21"
+        ]
+    ],
     "shortcuts": [
         [
             "qbittorrent.exe",
