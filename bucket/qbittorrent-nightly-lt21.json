@@ -1,0 +1,94 @@
+{
+    "version": "25339123775",
+    "description": "Free and reliable P2P BitTorrent client. Nightly CI build using libtorrent 2.1.0-rc1.",
+    "homepage": "https://github.com/qbittorrent/qBittorrent",
+    "license": {
+        "identifier": "GPL-2.0-only",
+        "url": "https://github.com/qbittorrent/qBittorrent/blob/master/COPYING"
+    },
+    "notes": [
+        "This manifest tracks CI artifacts that include libtorrent 2.1.0-rc1.",
+        "For file associations, run:",
+        "reg import \"$dir\\install-associations.reg\""
+    ],
+    "suggest": {
+        "vcredist": "extras/vcredist2022"
+    },
+    "architecture": {
+        "64bit": {
+            "url": "https://nightly.link/qbittorrent/qBittorrent/actions/runs/25339123775/qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1.zip",
+            "hash": "19b424432b07eca5fc8b7c3f78933a4e52f2cddd732414b9a30ad076d58daf0e",
+            "extract_dir": "qBittorrent"
+        }
+    },
+    "pre_install": [
+        "if (Test-Path \"$dir/qbittorrent.pdb\") { Remove-Item \"$dir/qbittorrent.pdb\" -Force }",
+        "if (!(Test-Path \"$persist_dir/profile\")) {",
+        "    $source = @(",
+        "        \"$persist_dir/../qbittorrent-nightly/profile\",",
+        "        \"$persist_dir/../qbittorrent-portable/profile\"",
+        "    ) | Where-Object { Test-Path \"$_/qBittorrent\" } | Select-Object -First 1",
+        "    if ($source) {",
+        "        Write-Host \"Importing existing qBittorrent profile from $source\" -ForegroundColor Yellow",
+        "        New-Item \"$persist_dir/profile\" -ItemType Directory -Force | Out-Null",
+        "        Copy-Item \"$source/qBittorrent\" \"$persist_dir/profile/qBittorrent\" -Recurse -Force | Out-Null",
+        "    } elseif (Test-Path \"$env:APPDATA/qBittorrent\") {",
+        "        Write-Host \"Importing existing non-portable qBittorrent profile from AppData\" -ForegroundColor Yellow",
+        "        New-Item \"$persist_dir/profile/qBittorrent/config\" -ItemType Directory -Force | Out-Null",
+        "        New-Item \"$persist_dir/profile/qBittorrent/data\" -ItemType Directory -Force | Out-Null",
+        "        Copy-Item \"$env:APPDATA/qBittorrent\" \"$persist_dir/profile/qBittorrent/config\" -Recurse -Force | Out-Null",
+        "        if (Test-Path \"$env:LOCALAPPDATA/qBittorrent\") {",
+        "            Copy-Item \"$env:LOCALAPPDATA/qBittorrent\" \"$persist_dir/profile/qBittorrent/data\" -Recurse -Force | Out-Null",
+        "        }",
+        "    }",
+        "}"
+    ],
+    "post_install": [
+        "'install-associations', 'uninstall-associations' | ForEach-Object {",
+        "    if (Test-Path \"$bucketsdir\\$bucket\\scripts\\$app\\$_.reg\") {",
+        "        $qbitPath = \"$dir\".Replace('\\', '\\\\')",
+        "        $content = (Get-Content \"$bucketsdir\\$bucket\\scripts\\$app\\$_.reg\").Replace('$qbit', $qbitPath)",
+        "        if ($global) { $content = $content.Replace('HKEY_CURRENT_USER', 'HKEY_LOCAL_MACHINE') }",
+        "        Set-Content \"$dir\\$_.reg\" $content -Encoding Ascii -Force",
+        "    }",
+        "}"
+    ],
+    "bin": "qbittorrent.exe",
+    "shortcuts": [
+        [
+            "qbittorrent.exe",
+            "qBittorrent (nightly lt 2.1)"
+        ]
+    ],
+    "persist": "profile",
+    "uninstaller": {
+        "script": "if ($cmd -eq 'uninstall') { reg import \"$dir\\uninstall-associations.reg\" }"
+    },
+    "checkver": {
+        "url": "https://api.github.com/repos/qbittorrent/qBittorrent/actions/workflows/ci_windows.yaml/runs?branch=master&status=completed&per_page=30",
+        "script": [
+            "$ErrorActionPreference = 'Stop'",
+            "$artifact = 'qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1'",
+            "$headers = @{ 'User-Agent' = 'Scoop-Checkver'; 'Accept' = 'application/vnd.github+json'; 'X-GitHub-Api-Version' = '2022-11-28' }",
+            "if ($env:GITHUB_TOKEN) { $headers['Authorization'] = \"Bearer $env:GITHUB_TOKEN\" }",
+            "$runs = ($page | ConvertFrom-Json).workflow_runs",
+            "foreach ($run in $runs) {",
+            "    $artifacts = Invoke-RestMethod -Headers $headers -Uri $run.artifacts_url",
+            "    $hit = $artifacts.artifacts | Where-Object { ($_.name -eq $artifact) -and (-not $_.expired) } | Select-Object -First 1",
+            "    if ($hit) {",
+            "        \"{0} {1} {2}\" -f $run.id, $hit.name, ($hit.digest -replace '^sha256:', '')",
+            "        break",
+            "    }",
+            "}"
+        ],
+        "regex": "^(?<version>\\d+) (?<artifact>.+?) (?<sha256>[a-f0-9]{64})$"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://nightly.link/qbittorrent/qBittorrent/actions/runs/$version/$matchArtifact.zip",
+                "hash": "$matchSha256"
+            }
+        }
+    }
+}
