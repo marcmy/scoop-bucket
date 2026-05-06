@@ -1,8 +1,15 @@
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - 'bucket/**'
+      - 'scripts/**'
+      - '.github/workflows/excavator.yml'
   schedule:
-    # run every 4 hours
-    - cron: '20 */4 * * *'
+    # run every 30 minutes
+    - cron: '20,50 * * * *'
 name: Excavator
 jobs:
   excavate:
