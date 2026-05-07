@@ -21,26 +21,61 @@
             "vdf-gui"
         ]
     ],
-    "persist": [
-        "Settings.json",
-        "BlacklistedGroups.json",
-        "ScannedFiles.db",
-        "ScannedFiles.db-wal",
-        "ScannedFiles.db-shm",
-        "backup.scanresults",
-        "log.txt"
+    "notes": [
+        "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
+        "VDF state files are mirrored from the current install only when they already exist; missing files are not created and stale persisted copies are removed."
     ],
     "pre_install": [
-        "if (!(Test-Path \"$persist_dir\")) { New-Item -ItemType Directory -Force -Path \"$persist_dir\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\Settings.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\Settings.json\" -Value \"{}\" }",
-        "if (!(Test-Path \"$persist_dir\\BlacklistedGroups.json\")) { Set-Content -Encoding UTF8 -Path \"$persist_dir\\BlacklistedGroups.json\" -Value \"[]\" }",
-        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db-shm\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db-shm\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\ScannedFiles.db-wal\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\ScannedFiles.db-wal\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\backup.scanresults\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\backup.scanresults\" | Out-Null }",
-        "if (!(Test-Path \"$persist_dir\\log.txt\")) { New-Item -ItemType File -Force -Path \"$persist_dir\\log.txt\" | Out-Null }"
+        "$stateFiles = @('Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "$appRoot = Split-Path $dir -Parent",
+        "$currentDir = Join-Path $appRoot 'current'",
+        "foreach ($name in $stateFiles) {",
+        "    $src = Join-Path $currentDir $name",
+        "    $dst = Join-Path $persist_dir $name",
+        "    if (Test-Path $src -PathType Leaf) {",
+        "        if (!(Test-Path $persist_dir)) { New-Item -ItemType Directory -Force -Path $persist_dir | Out-Null }",
+        "        if (Test-Path $dst) { Remove-Item -Recurse -Force -LiteralPath $dst }",
+        "        Copy-Item -Force -LiteralPath $src -Destination $dst",
+        "    } elseif (Test-Path $dst) {",
+        "        Remove-Item -Recurse -Force -LiteralPath $dst",
+        "    }",
+        "}"
     ],
-    "notes": "This upstream release tag is always 3.0.x and the asset is replaced in-place.",
+    "pre_uninstall": [
+        "$stateFiles = @('Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "foreach ($name in $stateFiles) {",
+        "    $src = Join-Path $dir $name",
+        "    $dst = Join-Path $persist_dir $name",
+        "    if (Test-Path $src -PathType Leaf) {",
+        "        if (!(Test-Path $persist_dir)) { New-Item -ItemType Directory -Force -Path $persist_dir | Out-Null }",
+        "        if (Test-Path $dst) { Remove-Item -Recurse -Force -LiteralPath $dst }",
+        "        Copy-Item -Force -LiteralPath $src -Destination $dst",
+        "    } elseif (Test-Path $dst) {",
+        "        Remove-Item -Recurse -Force -LiteralPath $dst",
+        "    }",
+        "}"
+    ],
+    "post_install": [
+        "$stateFiles = @('Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "foreach ($name in $stateFiles) {",
+        "    $dst = Join-Path $dir $name",
+        "    $src = Join-Path $persist_dir $name",
+        "    if (Test-Path $dst -PathType Container) { Remove-Item -Recurse -Force -LiteralPath $dst }",
+        "    if (Test-Path $dst -PathType Leaf) {",
+        "        if (!(Test-Path $persist_dir)) { New-Item -ItemType Directory -Force -Path $persist_dir | Out-Null }",
+        "        if (Test-Path $src) { Remove-Item -Recurse -Force -LiteralPath $src }",
+        "        Copy-Item -Force -LiteralPath $dst -Destination $src",
+        "    }",
+        "    if (Test-Path $src -PathType Leaf) {",
+        "        if (Test-Path $dst) { Remove-Item -Recurse -Force -LiteralPath $dst }",
+        "        try {",
+        "            New-Item -ItemType HardLink -Path $dst -Target $src | Out-Null",
+        "        } catch {",
+        "            Copy-Item -Force -LiteralPath $src -Destination $dst",
+        "        }",
+        "    }",
+        "}"
+    ],
     "checkver": {
         "script": [
             "$ErrorActionPreference='Stop'",
