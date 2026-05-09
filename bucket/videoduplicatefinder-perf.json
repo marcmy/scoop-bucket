@@ -35,10 +35,8 @@
     ]
   ],
   "notes": [
-    [
-      "This fork release tag is always 3.0.x and the asset is replaced in-place.",
-      "Includes GUI, CLI, and Web UI. Use `vdf-gui-perf`, `vdf-cli-perf`, or `vdf-web-perf`."
-    ],
+    "This fork release tag is always 3.0.x and the asset is replaced in-place.",
+    "Includes GUI, CLI, and Web UI. Use `vdf-gui-perf`, `vdf-cli-perf`, or `vdf-web-perf`.",
     "VDF state files are mirrored from existing installs only when real files exist; missing files do not create placeholders or delete persisted state."
   ],
   "pre_install": [
