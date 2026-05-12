@@ -11,7 +11,7 @@ on:
 jobs:
   test_powershell:
     name: WindowsPowerShell
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: Checkout Bucket
         uses: actions/checkout@main
