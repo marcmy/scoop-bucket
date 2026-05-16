@@ -1,5 +1,5 @@
 {
-    "version": "25858721186",
+    "version": "25945922992",
     "description": "Free and reliable P2P BitTorrent client. Nightly CI build using libtorrent 2.1.0-rc1.",
     "homepage": "https://github.com/qbittorrent/qBittorrent",
     "license": {
@@ -16,8 +16,8 @@
     },
     "architecture": {
         "64bit": {
-            "url": "https://nightly.link/qbittorrent/qBittorrent/actions/runs/25858721186/qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1.zip",
-            "hash": "f568035d766616ef110b3993dd374caa22419a81bafd2486751c18e1116e92dd",
+            "url": "https://nightly.link/qbittorrent/qBittorrent/actions/runs/25945922992/qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1.zip",
+            "hash": "48d6df67f3449f62aead9f1ff170c08d2e4aef9a95bdde80e35f963a3c2273a3",
             "extract_dir": "qBittorrent"
         }
     },
@@ -70,21 +70,14 @@
         "script": "if ($cmd -eq 'uninstall') { reg import \"$dir\\uninstall-associations.reg\" }"
     },
     "checkver": {
-        "url": "https://api.github.com/repos/qbittorrent/qBittorrent/actions/workflows/ci_windows.yaml/runs?branch=master&status=completed&per_page=30",
+        "url": "https://api.github.com/repos/qbittorrent/qBittorrent/actions/artifacts?name=qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1&per_page=100",
         "script": [
-            "$ErrorActionPreference = 'Stop'",
-            "$artifact = 'qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1'",
-            "$headers = @{ 'User-Agent' = 'Scoop-Checkver'; 'Accept' = 'application/vnd.github+json'; 'X-GitHub-Api-Version' = '2022-11-28' }",
-            "if ($env:GITHUB_TOKEN) { $headers['Authorization'] = \"Bearer $env:GITHUB_TOKEN\" }",
-            "$runs = ($page | ConvertFrom-Json).workflow_runs",
-            "foreach ($run in $runs) {",
-            "    $artifacts = Invoke-RestMethod -Headers $headers -Uri $run.artifacts_url",
-            "    $hit = $artifacts.artifacts | Where-Object { ($_.name -eq $artifact) -and (-not $_.expired) } | Select-Object -First 1",
-            "    if ($hit) {",
-            "        \"{0} {1}\" -f $run.id, $hit.name",
-            "        break",
-            "    }",
-            "}"
+            "$artifact = (($page | ConvertFrom-Json).artifacts | Where-Object {",
+            "    ($_.name -eq 'qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1') -and",
+            "    (-not $_.expired)",
+            "} | Sort-Object created_at -Descending | Select-Object -First 1)",
+            "if (-not $artifact) { throw 'No matching non-expired lt21 artifacts found' }",
+            "\"{0} {1}\" -f $artifact.workflow_run.id, $artifact.name"
         ],
         "regex": "^(?<version>\\d+) (?<artifact>.+)$"
     },
