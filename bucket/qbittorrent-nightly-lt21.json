@@ -74,9 +74,9 @@
         "script": [
             "$artifact = (($page | ConvertFrom-Json).artifacts | Where-Object {",
             "    ($_.name -eq 'qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1') -and",
-            "    (-not $_.expired) -and",
-            "    ($_.workflow_run.head_branch -eq 'master')",
+            "    (-not $_.expired)",
             "} | Sort-Object created_at -Descending | Select-Object -First 1)",
+            "if (-not $artifact) { throw 'No matching non-expired lt21 artifacts found' }",
             "\"{0} {1}\" -f $artifact.workflow_run.id, $artifact.name"
         ],
         "regex": "^(?<version>\\d+) (?<artifact>.+)$"
