@@ -70,7 +70,7 @@
         "script": "if ($cmd -eq 'uninstall') { reg import \"$dir\\uninstall-associations.reg\" }"
     },
     "checkver": {
-        "url": "https://api.github.com/repos/qbittorrent/qBittorrent/actions/workflows/ci_windows.yaml/runs?branch=master&status=completed&per_page=30",
+        "url": "https://api.github.com/repos/qbittorrent/qBittorrent/actions/workflows/ci_windows.yaml/runs?branch=master&event=push&status=completed&per_page=100",
         "script": [
             "$ErrorActionPreference = 'Stop'",
             "$artifact = 'qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1'",
@@ -78,6 +78,7 @@
             "if ($env:GITHUB_TOKEN) { $headers['Authorization'] = \"Bearer $env:GITHUB_TOKEN\" }",
             "$runs = ($page | ConvertFrom-Json).workflow_runs",
             "foreach ($run in $runs) {",
+            "    if ($run.conclusion -ne 'success') { continue }",
             "    $artifacts = Invoke-RestMethod -Headers $headers -Uri $run.artifacts_url",
             "    $hit = $artifacts.artifacts | Where-Object { ($_.name -eq $artifact) -and (-not $_.expired) } | Select-Object -First 1",
             "    if ($hit) {",
