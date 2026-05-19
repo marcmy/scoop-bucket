@@ -8,7 +8,7 @@ on:
       - 'scripts/**/*.reg'
   schedule:
     # run every 30 minutes
-    - cron: '2,13,26,34,47,52 * * * *'
+    - cron: '13 * * * *'
 name: Excavator
 jobs:
   excavate:
