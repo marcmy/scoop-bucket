@@ -1,5 +1,5 @@
 {
-    "version": "26412091084",
+    "version": "26392204938",
     "description": "Free and reliable P2P BitTorrent client. Nightly CI build using libtorrent 2.1.0-rc1.",
     "homepage": "https://github.com/qbittorrent/qBittorrent",
     "license": {
@@ -16,8 +16,8 @@
     },
     "architecture": {
         "64bit": {
-            "url": "https://nightly.link/qbittorrent/qBittorrent/actions/runs/26412091084/qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1.zip",
-            "hash": "550df8719064f981da863ed7d4533a8ee3483ceb6d6bcaaebe2928a85a61481c",
+            "url": "https://nightly.link/qbittorrent/qBittorrent/actions/runs/26392204938/qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1.zip",
+            "hash": "869ff9018cc253d2bbf617061944e4576857dc7daa342e5ed96a0ebf43540626",
             "extract_dir": "qBittorrent"
         }
     },
@@ -72,11 +72,14 @@
     "checkver": {
         "url": "https://api.github.com/repos/qbittorrent/qBittorrent/actions/artifacts?name=qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1&per_page=100",
         "script": [
+            "$repoId = 3351871",
             "$artifact = (($page | ConvertFrom-Json).artifacts | Where-Object {",
             "    ($_.name -eq 'qBittorrent-CI_Windows-x64_libtorrent-2.1.0-rc1') -and",
-            "    (-not $_.expired)",
+            "    (-not $_.expired) -and",
+            "    ($_.workflow_run.head_repository_id -eq $repoId) -and",
+            "    ($_.workflow_run.head_branch -eq 'master')",
             "} | Sort-Object created_at -Descending | Select-Object -First 1)",
-            "if (-not $artifact) { throw 'No matching non-expired lt21 artifacts found' }",
+            "if (-not $artifact) { throw 'No matching non-expired upstream master lt21 artifacts found' }",
             "\"{0} {1}\" -f $artifact.workflow_run.id, $artifact.name"
         ],
         "regex": "^(?<version>\\d+) (?<artifact>.+)$"
