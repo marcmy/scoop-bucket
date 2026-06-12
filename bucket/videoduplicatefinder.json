@@ -6,7 +6,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/4.0.x/GUI-win-x64.zip",
-            "hash": "38ca6518294657b4ce9455c777fe19c145aa4faa74507e7e7495d0fe8e18cdc8"
+            "hash": "bb1fd02aca80c21254a0bcded6eda5ece09123bed029920795298f6d9375f092"
         }
     },
     "shortcuts": [
