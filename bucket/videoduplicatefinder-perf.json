@@ -91,10 +91,11 @@
             "$ErrorActionPreference='Stop'",
             "$h=@{ 'User-Agent'='Scoop-Checkver'; 'Accept'='application/vnd.github+json'; 'Authorization'=(\"Bearer {0}\" -f $env:GITHUB_TOKEN); 'X-GitHub-Api-Version'='2022-11-28' }",
             "$r=Invoke-RestMethod -Headers $h -Uri 'https://api.github.com/repos/marcmy/videoduplicatefinder/releases/tags/4.0.x'",
-            "([datetimeoffset](($r.assets | Where-Object { $_.name -eq 'Bundle-win-x64.zip' } | Select-Object -First 1).updated_at)).UtcDateTime.ToString('yyyy-MM-ddTHH:mm')"
+            "if ([string]$r.body -notmatch 'Last build based on\\s+([0-9a-fA-F]{7,40})') { throw 'Could not find commit in release body.' }",
+            "$Matches[1].Substring(0,7).ToLowerInvariant()"
         ],
-        "regex": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2})",
-        "replace": "4.0.0-perf-git-$1$2$3-$4$5"
+        "regex": "^([0-9a-f]{7})$",
+        "replace": "4.0.0-perf-git-$1"
     },
     "autoupdate": {
         "architecture": {
