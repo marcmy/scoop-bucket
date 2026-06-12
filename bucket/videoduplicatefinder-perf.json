@@ -40,7 +40,7 @@
         "VDF state files are mirrored from existing installs only when real files exist; missing files do not create placeholders or delete persisted state."
     ],
     "pre_install": [
-        "$stateFiles = @('web-settings.json', 'web-credenti\\u0061ls.json', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "$stateFiles = @('web-settings.json', 'web-credentials.json', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
         "$appRoot = Split-Path $dir -Parent",
         "$newDir = [IO.Path]::GetFullPath($dir)",
         "$candidateDirs = @()",
@@ -63,7 +63,7 @@
         "}"
     ],
     "pre_uninstall": [
-        "$stateFiles = @('web-settings.json', 'web-credenti\\u0061ls.json', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "$stateFiles = @('web-settings.json', 'web-credentials.json', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
         "foreach ($name in $stateFiles) {",
         "    $src = Join-Path $dir $name",
         "    $dst = Join-Path $persist_dir $name",
@@ -74,7 +74,7 @@
         "}"
     ],
     "post_install": [
-        "$stateFiles = @('web-settings.json', 'web-credenti\\u0061ls.json', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "$stateFiles = @('web-settings.json', 'web-credentials.json', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
         "foreach ($name in $stateFiles) {",
         "    $persisted = Join-Path $persist_dir $name",
         "    $target = Join-Path $dir $name",
