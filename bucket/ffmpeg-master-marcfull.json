@@ -5,7 +5,7 @@
     "license": "Nonfree",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-000000000000-win64-nonfree-shared-marcfull/ffmpeg-master-latest-win64-nonfree-shared-marcfull.zip",
+            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-000000000000-win64-nonfree-shared-marcfull/ffmpeg-latest-win64-nonfree-marcshared.zip",
             "hash": "skip"
         }
     },
@@ -39,7 +39,7 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-$version-win64-nonfree-shared-marcfull/ffmpeg-master-latest-win64-nonfree-shared-marcfull.zip"
+                "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-$version-win64-nonfree-shared-marcfull/ffmpeg-latest-win64-nonfree-marcshared.zip"
             }
         }
     }
