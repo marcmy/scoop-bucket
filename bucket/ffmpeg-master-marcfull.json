@@ -17,22 +17,13 @@
         "}"
     ],
     "bin": [
-        [
-            "bin\\ffmpeg.exe",
-            "ffmpeg-master"
-        ],
-        [
-            "bin\\ffprobe.exe",
-            "ffprobe-master"
-        ],
-        [
-            "bin\\ffplay.exe",
-            "ffplay-master"
-        ]
+        "bin\\ffmpeg.exe",
+        "bin\\ffprobe.exe",
+        "bin\\ffplay.exe"
     ],
     "notes": [
         "Installs Marc's hourly FFmpeg master shared build.",
-        "Shims are ffmpeg-master, ffprobe-master, and ffplay-master to avoid conflicting with the regular ffmpeg package."
+        "Provides the regular ffmpeg, ffprobe, and ffplay shims. This will conflict with another Scoop package that also owns those shims."
     ],
     "checkver": {
         "script": [
