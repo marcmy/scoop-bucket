@@ -19,35 +19,35 @@
     },
     "pre_install": [
         "$ErrorActionPreference = 'Stop'",
-        "$gui = Join-Path $dir 'jasna.exe'",
+        "$gui = Join-Path $dir 'jasna-gui.exe'",
         "$cli = Join-Path $dir 'jasna-cli.exe'",
         "if (!(Test-Path $gui) -or !(Test-Path $cli)) {",
-        "    $nested = Get-ChildItem $dir -Directory | Where-Object { (Test-Path (Join-Path $_.FullName 'jasna.exe')) -and (Test-Path (Join-Path $_.FullName 'jasna-cli.exe')) } | Select-Object -First 1",
+        "    $nested = Get-ChildItem $dir -Directory | Where-Object { (Test-Path (Join-Path $_.FullName 'jasna-gui.exe')) -and (Test-Path (Join-Path $_.FullName 'jasna-cli.exe')) } | Select-Object -First 1",
         "    if ($nested) {",
         "        Get-ChildItem $nested.FullName -Force | Move-Item -Destination $dir -Force",
         "        Remove-Item $nested.FullName -Recurse -Force -ErrorAction SilentlyContinue",
         "    }",
         "}",
-        "if (!(Test-Path $gui)) { throw 'jasna.exe was not found after extraction.' }",
+        "if (!(Test-Path $gui)) { throw 'jasna-gui.exe was not found after extraction.' }",
         "if (!(Test-Path $cli)) { throw 'jasna-cli.exe was not found after extraction.' }"
     ],
     "bin": [
         [
-            "jasna-cli.exe",
+            "jasna-gui.exe",
             "jasna"
+        ],
+        [
+            "jasna-gui.exe",
+            "jasna-gui"
         ],
         [
             "jasna-cli.exe",
             "jasna-cli"
-        ],
-        [
-            "jasna.exe",
-            "jasna-gui"
         ]
     ],
     "shortcuts": [
         [
-            "jasna.exe",
+            "jasna-gui.exe",
             "Jasna"
         ]
     ],
