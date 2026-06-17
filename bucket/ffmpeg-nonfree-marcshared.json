@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/marcmy/FFmpeg-Builds",
     "description": "Hourly FFmpeg master win64 nonfree shared build from Marc's FFmpeg-Builds fork",
-    "version": "20260617.110650",
+    "version": "20260617.155519",
     "license": "Nonfree",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-20260617.110650-win64-nonfree-marcshared/ffmpeg-20260617.110650-win64-nonfree-marcshared.zip",
-            "hash": "1d08152ec94bf46f9a5df7e899b72fee8a59264aeb3e504c6f76e0c820c93c60"
+            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-20260617.155519-win64-nonfree-marcshared/ffmpeg-20260617.155519-win64-nonfree-marcshared.zip",
+            "hash": "d91498b74f71b2bbf0cad9b2146b33c5b5bf43ef3baffb9cb38ddd63119ee2e2"
         }
     },
     "pre_install": [
