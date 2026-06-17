@@ -14,13 +14,17 @@
                 "5de7cdd8c28971a968f43508b163c2a889a3d6d246c2b0f5dc0c1ae17ea94251",
                 "ecb2cabed5b078a57e657030b1b3beb80ed281b9061592dc756f7e4212568647",
                 "a6acc10a614d76973e5c3ea30191cd55ae982de79f7178e1e5d9a7eebe08f009"
-            ],
-            "extract_dir": "dist_windows"
+            ]
         }
     },
     "pre_install": [
         "$ErrorActionPreference = 'Stop'",
         "$exe = Join-Path $dir 'jasna.exe'",
+        "$nested = Join-Path $dir 'dist_windows'",
+        "if (!(Test-Path $exe) -and (Test-Path (Join-Path $nested 'jasna.exe'))) {",
+        "    Get-ChildItem $nested -Force | Move-Item -Destination $dir -Force",
+        "    Remove-Item $nested -Recurse -Force -ErrorAction SilentlyContinue",
+        "}",
         "if (!(Test-Path $exe)) { throw 'jasna.exe was not found after extraction.' }"
     ],
     "bin": [
