@@ -1,8 +1,8 @@
 {
     "homepage": "https://github.com/marcmy/FFmpeg-Builds",
-    "description": "Hourly FFmpeg master win64 nonfree shared build from Marc's FFmpeg-Builds fork",
+    "description": "Hourly FFmpeg master win64 GPLv3 shared build from Marc's FFmpeg-Builds fork",
     "version": "20260620.003937",
-    "license": "Nonfree",
+    "license": "GPL-3.0-or-later",
     "architecture": {
         "64bit": {
             "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-20260620.003937-win64-marc-shared/ffmpeg-20260620.003937-win64-marc-shared.zip",
@@ -22,7 +22,7 @@
         "bin\\ffplay.exe"
     ],
     "notes": [
-        "Installs Marc's hourly FFmpeg master nonfree shared build.",
+        "Installs Marc's hourly FFmpeg master GPLv3 shared build.",
         "Provides the regular ffmpeg, ffprobe, and ffplay shims. This will conflict with another Scoop package that also owns those shims."
     ],
     "checkver": {
