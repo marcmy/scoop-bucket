@@ -1,19 +1,19 @@
 {
-    "version": "0.7.1",
+    "version": "0.7.2",
     "description": "GPU-accelerated mosaic restoration tool for modern NVIDIA GPUs.",
     "homepage": "https://github.com/Kruk2/jasna",
     "license": "AGPL-3.0-or-later",
     "architecture": {
         "64bit": {
             "url": [
-                "https://github.com/Kruk2/jasna/releases/download/v0.7.1/jasna-v0.7.1.7z.001",
-                "https://github.com/Kruk2/jasna/releases/download/v0.7.1/jasna-v0.7.1.7z.002",
-                "https://github.com/Kruk2/jasna/releases/download/v0.7.1/jasna-v0.7.1.7z.003"
+                "https://github.com/Kruk2/jasna/releases/download/v0.7.2/jasna-windows-v0.7.2.7z.001",
+                "https://github.com/Kruk2/jasna/releases/download/v0.7.2/jasna-windows-v0.7.2.7z.002",
+                "https://github.com/Kruk2/jasna/releases/download/v0.7.2/jasna-windows-v0.7.2.7z.003"
             ],
             "hash": [
-                "5de7cdd8c28971a968f43508b163c2a889a3d6d246c2b0f5dc0c1ae17ea94251",
-                "ecb2cabed5b078a57e657030b1b3beb80ed281b9061592dc756f7e4212568647",
-                "a6acc10a614d76973e5c3ea30191cd55ae982de79f7178e1e5d9a7eebe08f009"
+                "7ae61d5f58452b848073aadc334ba0c36efd9593a04012e1f60084667db8e73e",
+                "d18af0f6513d067993259af0a68e7019d7742df0d6a271f8f8b1778a3db87561",
+                "a484a6c0eb5355e5423b45707634392538cbb5cfbd3141717604a181481c1c9a"
             ]
         }
     },
@@ -51,27 +51,27 @@
         "architecture": {
             "64bit": {
                 "url": [
-                    "https://github.com/Kruk2/jasna/releases/download/v$version/jasna-v$version.7z.001",
-                    "https://github.com/Kruk2/jasna/releases/download/v$version/jasna-v$version.7z.002",
-                    "https://github.com/Kruk2/jasna/releases/download/v$version/jasna-v$version.7z.003"
+                    "https://github.com/Kruk2/jasna/releases/download/v$version/jasna-windows-v$version.7z.001",
+                    "https://github.com/Kruk2/jasna/releases/download/v$version/jasna-windows-v$version.7z.002",
+                    "https://github.com/Kruk2/jasna/releases/download/v$version/jasna-windows-v$version.7z.003"
                 ],
                 "hash": [
                     {
                         "mode": "json",
                         "url": "https://api.github.com/repos/Kruk2/jasna/releases/tags/v$version",
-                        "jsonpath": "$..assets[?(@.name=='jasna-v$version.7z.001')].digest",
+                        "jsonpath": "$..assets[?(@.name=='jasna-windows-v$version.7z.001')].digest",
                         "regex": "sha256:([a-f0-9]{64})"
                     },
                     {
                         "mode": "json",
                         "url": "https://api.github.com/repos/Kruk2/jasna/releases/tags/v$version",
-                        "jsonpath": "$..assets[?(@.name=='jasna-v$version.7z.002')].digest",
+                        "jsonpath": "$..assets[?(@.name=='jasna-windows-v$version.7z.002')].digest",
                         "regex": "sha256:([a-f0-9]{64})"
                     },
                     {
                         "mode": "json",
                         "url": "https://api.github.com/repos/Kruk2/jasna/releases/tags/v$version",
-                        "jsonpath": "$..assets[?(@.name=='jasna-v$version.7z.003')].digest",
+                        "jsonpath": "$..assets[?(@.name=='jasna-windows-v$version.7z.003')].digest",
                         "regex": "sha256:([a-f0-9]{64})"
                     }
                 ]
