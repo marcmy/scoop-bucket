@@ -18,12 +18,12 @@
     ],
     "checkver": {
         "url": "https://github.com/marcmy/RazerAutoPollingRate/releases",
-        "regex": "/releases/tag/v([\\d.]+)-maintained"
+        "regex": "/releases/tag/v([\\d.]+)"
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/marcmy/RazerAutoPollingRate/releases/download/v$version-maintained/razerautopollingrate-$version-full.nupkg"
+                "url": "https://github.com/marcmy/RazerAutoPollingRate/releases/download/v$version/razerautopollingrate-$version-full.nupkg"
             }
         }
     }
