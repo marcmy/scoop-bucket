@@ -1,12 +1,12 @@
 {
-    "version": "1.2.13",
+    "version": "1.2.12",
     "description": "Tray app that automatically adjusts Razer HyperPolling dongle polling rate based on foreground or running processes.",
     "homepage": "https://github.com/marcmy/RazerAutoPollingRate",
     "license": "ISC",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/marcmy/RazerAutoPollingRate/releases/download/v1.2.13-maintained/razerautopollingrate-1.2.13-full.nupkg",
-            "hash": "477a65bf46bf6bf82cdde7305b4556e58fcf94ff712f7900e8bb0c24467dfe23"
+            "url": "https://github.com/marcmy/RazerAutoPollingRate/releases/download/v1.2.12-maintained/razerautopollingrate-1.2.12-full.nupkg",
+            "hash": "0c7a2e00f4b6ead3399527b42fb157cb508769b1bf8ac64c9398081231be72f1"
         }
     },
     "extract_dir": "lib/net45",
