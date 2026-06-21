@@ -3,7 +3,7 @@ on:
     types: [created]
 name: Commented Pull Request
 permissions:
-  contents: read
+  contents: write
 jobs:
   pullRequestHandler:
     name: PullRequestHandler
