@@ -2,6 +2,8 @@ on:
   issue_comment:
     types: [created]
 name: Commented Pull Request
+permissions:
+  contents: read
 jobs:
   pullRequestHandler:
     name: PullRequestHandler
