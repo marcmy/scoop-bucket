@@ -2,6 +2,8 @@ on:
   issues:
     types: [opened, labeled]
 name: Issues
+permissions:
+  contents: read
 jobs:
   issueHandler:
     name: IssueHandler
