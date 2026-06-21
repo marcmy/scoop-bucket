@@ -13,6 +13,8 @@ on:
     # run every 30 minutes
     - cron: '13 * * * *'
 name: Excavator
+permissions:
+  contents: read
 jobs:
   excavate:
     name: Excavate
