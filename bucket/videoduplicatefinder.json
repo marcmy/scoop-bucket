@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/0x90d/videoduplicatefinder",
     "description": "Video Duplicate Finder is a cross-platform software to find duplicated video (and image) files on hard disk based on similiarity",
-    "version": "4.0.0-git-20260621-0552",
+    "version": "4.0.0-git-20260621-0649",
     "license": "MIT",
     "architecture": {
         "64bit": {
             "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/4.0.x/GUI-win-x64.zip",
-            "hash": "da31a804cda3945dae88849dcc29c6566d31d4931400934b01dfe8902274255c"
+            "hash": "82b15e0748cd6d44a0786de8a32c09e89d79cd834261ef0cde39252035c05864"
         }
     },
     "shortcuts": [
