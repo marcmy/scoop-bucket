@@ -1,28 +1,43 @@
+name: Bump VDF package revisions
+
 on:
-  workflow_dispatch:
-  repository_dispatch:
-    types:
-      - ffmpeg-build-released
   push:
     branches:
-      - master
-    paths:
-      - 'bucket/*.json'
-      - 'scripts/**/*.reg'
-  schedule:
-    # run every 30 minutes
-    - cron: '13 * * * *'
-name: Excavator
+      - vdf-perf-aot-revision-clean
+
 permissions:
   contents: write
+
 jobs:
-  excavate:
-    name: Excavate
-    runs-on: windows-2022
+  update:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
-      - name: Excavate
-        uses: ScoopInstaller/GithubActions@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SKIP_UPDATED: 1
+      - uses: actions/checkout@v5
+        with:
+          ref: vdf-perf-aot-revision-clean
+          fetch-depth: 0
+
+      - name: Bump both manifests
+        shell: pwsh
+        run: |
+          foreach ($path in @(
+              'bucket/videoduplicatefinder-perf.json',
+              'bucket/videoduplicatefinder-perf-full.json'
+          )) {
+              $manifest = Get-Content -LiteralPath $path -Raw | ConvertFrom-Json -AsHashtable
+              $manifest.version = '4.0.0-perf-git-20260622-2126.1'
+              $manifest.checkver.replace = '4.0.0-perf-git-$1$2$3-$4$5.1'
+              $manifest | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $path -Encoding utf8
+          }
+
+      - name: Restore workflow and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin master
+          git checkout origin/master -- .github/workflows/excavator.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add .github/workflows/excavator.yml bucket/videoduplicatefinder-perf.json bucket/videoduplicatefinder-perf-full.json
+          git commit -m 'Bump VDF Perf package revisions'
+          git push origin HEAD:vdf-perf-aot-revision-clean
