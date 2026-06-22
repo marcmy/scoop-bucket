@@ -10,7 +10,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/ShareX/DevBuilds/releases/download/v20.2.0.1138/ShareX-20.2.0.1138-setup-x64.exe",
-            "hash": "5e86b4e1f0fa6d69843280b08a65d29092b2b415dd36d5f5e2f480fbdb1b057c"
+            "hash": "5e86cfe19a7b7b3b9d9d9d361377e0acd8066821b991a208c37327298a7a40e1"
         }
     },
     "installer": {
