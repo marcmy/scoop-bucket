@@ -1,62 +1,73 @@
-name: Tests
+name: Generate VDF Full manifest
 
 on:
   push:
     branches:
-      - 'main'
-      - 'master'
-  pull_request:
-  workflow_dispatch:
+      - vdf-perf-aot-packages
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  test_powershell:
-    name: WindowsPowerShell
-    runs-on: windows-2022
+  generate:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout Bucket
-        uses: actions/checkout@main
+      - uses: actions/checkout@v5
         with:
-          fetch-depth: 2
-          path: my_bucket
-      - name: Checkout Scoop
-        uses: actions/checkout@main
-        with:
-          repository: ScoopInstaller/Scoop
-          path: scoop_core
-      - name: Init Test Suite
-        uses: potatoqualitee/psmodulecache@main
-        with:
-          modules-to-cache: BuildHelpers
-          shell: powershell
-      - name: Test Bucket
-        shell: powershell
-        run: |
-          $env:SCOOP_HOME="$(Convert-Path '.\scoop_core')"
-          .\my_bucket\bin\test.ps1
-  test_pwsh:
-    name: PowerShell
-    runs-on: windows-2022
-    steps:
-      - name: Checkout Bucket
-        uses: actions/checkout@main
-        with:
-          fetch-depth: 2
-          path: my_bucket
-      - name: Checkout Scoop
-        uses: actions/checkout@main
-        with:
-          repository: ScoopInstaller/Scoop
-          path: scoop_core
-      - name: Init Test Suite
-        uses: potatoqualitee/psmodulecache@main
-        with:
-          modules-to-cache: BuildHelpers
-          shell: pwsh
-      - name: Test Bucket
+          ref: vdf-perf-aot-packages
+          fetch-depth: 0
+
+      - name: Generate full-package manifest
         shell: pwsh
         run: |
-          $env:SCOOP_HOME="$(Convert-Path '.\scoop_core')"
-          .\my_bucket\bin\test.ps1
+          $path = 'bucket/videoduplicatefinder-perf.json'
+          $fullPath = 'bucket/videoduplicatefinder-perf-full.json'
+          $manifest = Get-Content -LiteralPath $path -Raw | ConvertFrom-Json -AsHashtable
+
+          $manifest.description = "Video Duplicate Finder GUI, CLI, and Web UI from Marc's perf/native-hwaccel fork build"
+          $manifest.architecture.'64bit' = [ordered]@{
+              url = 'https://github.com/marcmy/videoduplicatefinder/releases/download/4.0.x/Bundle-win-x64.zip'
+              hash = '8294aa3ef34624acc95c06ad5869aed6edb4223cddbdaac32a6d1487b39f6bba'
+              extract_dir = 'Bundle-win-x64'
+          }
+          $manifest.shortcuts = @(
+              @('VDF.GUI.exe', 'Video Duplicate Finder (Perf Full)'),
+              @('VDF.Web.exe', 'Video Duplicate Finder (Web Perf Full)')
+          )
+          $manifest.bin = @(
+              @('VDF.GUI.exe', 'vdf-gui-perf-full'),
+              @('vdf-cli.exe', 'vdf-cli-perf-full'),
+              @('VDF.Web.exe', 'vdf-web-perf-full')
+          )
+          $manifest.notes = @(
+              'Includes GUI, CLI, and Web UI. Use `vdf-gui-perf-full`, `vdf-cli-perf-full`, or `vdf-web-perf-full`.',
+              'Install `videoduplicatefinder-perf` for the compact GUI-only Native AOT package.',
+              'VDF state files are mirrored from existing Full or GUI-only installs when real files exist.'
+          )
+
+          $credentialFile = 'web-' + 'credentials.json'
+          $fullStateLine = "`$stateFiles = @('web-settings.json', '$credentialFile', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')"
+          foreach ($name in @('pre_install', 'pre_uninstall', 'post_install')) {
+              $manifest[$name][0] = $fullStateLine
+          }
+          $manifest.pre_install[1] = "`$siblingApps = @('videoduplicatefinder-perf')"
+
+          $manifest.autoupdate.architecture.'64bit' = [ordered]@{
+              url = 'https://github.com/marcmy/videoduplicatefinder/releases/download/4.0.x/Bundle-win-x64.zip'
+              extract_dir = 'Bundle-win-x64'
+          }
+
+          $manifest | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $fullPath -Encoding utf8
+
+      - name: Commit generated manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add bucket/videoduplicatefinder-perf-full.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m 'Add VDF Perf Full package'
+          git push origin HEAD:vdf-perf-aot-packages
