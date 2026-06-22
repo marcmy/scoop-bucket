@@ -1,24 +1,41 @@
 {
     "version": "20.2.0.1140",
-    "description": "Screen capture, file sharing and productivity tool. Development build.",
+    "description": "Screen capture, file sharing and productivity tool. Development build using the native installer.",
     "homepage": "https://getsharex.com/",
     "license": "GPL-3.0-only",
-    "notes": "Tracks development builds published to ShareX/DevBuilds and installs the non-portable setup build.",
+    "notes": "Tracks installer builds published to ShareX/DevBuilds.",
     "architecture": {
         "64bit": {
             "url": "https://github.com/ShareX/DevBuilds/releases/download/v20.2.0.1140/ShareX-20.2.0.1140-setup-x64.exe",
             "hash": "658221a224376cad5d9fab2fb4faaec121f688c80cceed49a9c17901ab0eba59"
         }
     },
+    "pre_install": [
+        "$shareXProcesses = Get-Process ShareX -ErrorAction SilentlyContinue",
+        "if ($shareXProcesses) {",
+        "    New-Item \"$dir\\.sharex-was-running\" -ItemType File -Force | Out-Null",
+        "    $shareXProcesses | Stop-Process -Force",
+        "    $shareXProcesses | Wait-Process -ErrorAction SilentlyContinue",
+        "}"
+    ],
     "installer": {
         "args": [
             "/VERYSILENT",
             "/SUPPRESSMSGBOXES",
             "/NORESTART",
             "/SP-",
+            "/NORUN",
+            "/TASKS=",
             "/DIR=\"$dir\""
         ]
     },
+    "post_install": [
+        "$restartMarker = \"$dir\\.sharex-was-running\"",
+        "if (Test-Path $restartMarker) {",
+        "    Remove-Item $restartMarker -Force",
+        "    Start-Process \"$dir\\ShareX.exe\"",
+        "}"
+    ],
     "uninstaller": {
         "file": "unins000.exe",
         "args": [
@@ -33,12 +50,6 @@
             "sharex-dev"
         ]
     ],
-    "shortcuts": [
-        [
-            "ShareX.exe",
-            "ShareX Dev"
-        ]
-    ],
     "checkver": {
         "url": "https://api.github.com/repos/ShareX/DevBuilds/releases?per_page=100",
         "script": [
@@ -47,7 +58,7 @@
             "    $version = $_.tag_name.TrimStart('v')",
             "    $_.assets.name -contains \"ShareX-$version-setup-x64.exe\"",
             "} | Sort-Object { [version]($_.tag_name.TrimStart('v')) } -Descending | Select-Object -First 1",
-            "if (-not $release) { throw 'No complete ShareX dev release found' }",
+            "if (-not $release) { throw 'No complete ShareX dev installer release found' }",
             "$release.tag_name.TrimStart('v')"
         ],
         "regex": "^(?<version>\\d+(?:\\.\\d+){3})$"
