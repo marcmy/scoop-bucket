@@ -7,7 +7,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/ShareX/DevBuilds/releases/download/v20.2.0.1140/ShareX-20.2.0.1140-portable-x64.zip",
-            "hash": "d2fd87d175270b3e4526fb0fb7546326bb31d151b8fd00f0ffacaa6ef6a08df1"
+            "hash": "bfe828ceee34a1747268aa62ccab83118f6858a130adde0b72e3e269932882f4"
         }
     },
     "pre_install": [
