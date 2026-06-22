@@ -1,54 +1,52 @@
 {
     "homepage": "https://github.com/marcmy/videoduplicatefinder",
-    "description": "Video Duplicate Finder GUI, CLI, and Web UI from Marc's perf/native-hwaccel fork build",
+    "description": "Video Duplicate Finder GUI from Marc's perf/native-hwaccel fork build (Native AOT)",
     "version": "4.0.0-perf-git-20260622-2126",
-    "license": "MIT",
+    "license": "AGPL-3.0-or-later",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/4.0.x/Bundle-win-x64.zip",
-            "hash": "8294aa3ef34624acc95c06ad5869aed6edb4223cddbdaac32a6d1487b39f6bba",
-            "extract_dir": "Bundle-win-x64"
+            "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/4.0.x/GUI-win-x64.zip",
+            "hash": "62cc65fbcc915e63699ebb9598c7b963e8a5a7468242a700c07e088834dbc6f7"
         }
     },
     "shortcuts": [
         [
             "VDF.GUI.exe",
             "Video Duplicate Finder (Perf)"
-        ],
-        [
-            "VDF.Web.exe",
-            "Video Duplicate Finder (Web Perf)"
         ]
     ],
     "bin": [
         [
             "VDF.GUI.exe",
             "vdf-gui-perf"
-        ],
-        [
-            "vdf-cli.exe",
-            "vdf-cli-perf"
-        ],
-        [
-            "VDF.Web.exe",
-            "vdf-web-perf"
         ]
     ],
     "notes": [
-        "This fork release tag is always 4.0.x and the asset is replaced in-place.",
-        "Includes GUI, CLI, and Web UI. Use `vdf-gui-perf`, `vdf-cli-perf`, or `vdf-web-perf`.",
-        "VDF state files are mirrored from existing installs only when real files exist; missing files do not create placeholders or delete persisted state."
+        "This is the compact GUI-only Native AOT package.",
+        "Install `videoduplicatefinder-perf-full` for the GUI, CLI, and Web UI bundle.",
+        "VDF state files are mirrored from existing GUI-only or Full installs when real files exist."
     ],
     "pre_install": [
-        "$stateFiles = @('web-settings.json', 'web-credentials.json', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "$stateFiles = @('Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "$siblingApps = @('videoduplicatefinder-perf-full')",
         "$appRoot = Split-Path $dir -Parent",
+        "$appsRoot = Split-Path $appRoot -Parent",
         "$newDir = [IO.Path]::GetFullPath($dir)",
         "$candidateDirs = @()",
         "if (Test-Path $appRoot -PathType Container) {",
-        "    $candidateDirs += Get-ChildItem -LiteralPath $appRoot -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -ne 'current' -and ([IO.Path]::GetFullPath($_.FullName) -ne $newDir) } | Sort-Object LastWriteTimeUtc -Descending",
+        "    $candidateDirs += Get-ChildItem -LiteralPath $appRoot -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -notin @('current', 'persist') -and ([IO.Path]::GetFullPath($_.FullName) -ne $newDir) } | Sort-Object LastWriteTimeUtc -Descending",
         "}",
         "$currentDir = Join-Path $appRoot 'current'",
         "if (Test-Path $currentDir -PathType Container) { $candidateDirs += Get-Item -LiteralPath $currentDir }",
+        "foreach ($siblingApp in $siblingApps) {",
+        "    $siblingRoot = Join-Path $appsRoot $siblingApp",
+        "    if (!(Test-Path $siblingRoot -PathType Container)) { continue }",
+        "    $candidateDirs += Get-ChildItem -LiteralPath $siblingRoot -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -notin @('current', 'persist') } | Sort-Object LastWriteTimeUtc -Descending",
+        "    $siblingCurrent = Join-Path $siblingRoot 'current'",
+        "    if (Test-Path $siblingCurrent -PathType Container) { $candidateDirs += Get-Item -LiteralPath $siblingCurrent }",
+        "    $siblingPersist = Join-Path $siblingRoot 'persist'",
+        "    if (Test-Path $siblingPersist -PathType Container) { $candidateDirs += Get-Item -LiteralPath $siblingPersist }",
+        "}",
         "foreach ($name in $stateFiles) {",
         "    $dst = Join-Path $persist_dir $name",
         "    if (Test-Path $dst -PathType Leaf) { continue }",
@@ -63,7 +61,7 @@
         "}"
     ],
     "pre_uninstall": [
-        "$stateFiles = @('web-settings.json', 'web-credentials.json', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "$stateFiles = @('Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
         "foreach ($name in $stateFiles) {",
         "    $src = Join-Path $dir $name",
         "    $dst = Join-Path $persist_dir $name",
@@ -74,7 +72,7 @@
         "}"
     ],
     "post_install": [
-        "$stateFiles = @('web-settings.json', 'web-credentials.json', 'Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
+        "$stateFiles = @('Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
         "foreach ($name in $stateFiles) {",
         "    $persisted = Join-Path $persist_dir $name",
         "    $target = Join-Path $dir $name",
@@ -99,8 +97,7 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/4.0.x/Bundle-win-x64.zip",
-                "extract_dir": "Bundle-win-x64"
+                "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/4.0.x/GUI-win-x64.zip"
             }
         }
     }
