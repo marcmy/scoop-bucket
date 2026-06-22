@@ -18,7 +18,7 @@
             "Get-Process ShareX -ErrorAction SilentlyContinue | Stop-Process -Force",
             "$setup = Get-ChildItem \"$dir\\ShareX-*-setup-x64.exe\" | Select-Object -First 1",
             "if (-not $setup) { throw 'ShareX setup executable was not found' }",
-            "$arguments = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/SP-', '/NORUN', '/NOICONS', '/TASKS=', \"/DIR=`\"$dir`\"\")",
+            "$arguments = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/SP-', '/NORUN', '/TASKS=', \"/DIR=`\"$dir`\"\")",
             "$process = Start-Process -FilePath $setup.FullName -ArgumentList $arguments -Wait -PassThru",
             "if ($process.ExitCode -ne 0) { throw \"ShareX setup exited with code $($process.ExitCode)\" }",
             "Remove-Item $setup.FullName -Force"
@@ -38,12 +38,6 @@
         [
             "ShareX.exe",
             "sharex-dev-installer"
-        ]
-    ],
-    "shortcuts": [
-        [
-            "ShareX.exe",
-            "ShareX Dev (Installer)"
         ]
     ],
     "checkver": {
