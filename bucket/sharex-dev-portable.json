@@ -15,7 +15,7 @@
     },
     "pre_install": [
         "$updater = @'",
-        "param([Parameter(ValueFromRemainingArguments = $true)][string[]]$ScoopArgs)",
+        "$ScoopArgs = @($args)",
         "$ErrorActionPreference = 'Stop'",
         "$app = 'sharex-dev-portable'",
         "$prefix = (& scoop prefix $app | Select-Object -Last 1).Trim()",
