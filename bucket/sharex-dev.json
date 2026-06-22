@@ -3,14 +3,30 @@
     "description": "Screen capture, file sharing and productivity tool. Development build.",
     "homepage": "https://getsharex.com/",
     "license": "GPL-3.0-only",
-    "notes": "Tracks development builds published to ShareX/DevBuilds.",
+    "notes": "Tracks development builds published to ShareX/DevBuilds and installs the non-portable setup build.",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/ShareX/DevBuilds/releases/download/v20.2.0.1138/ShareX-20.2.0.1138-portable-x64.zip",
-            "hash": "d2fd87d175270b3e4526fb0fb7546326bb31d151b8fd00f0ffacaa6ef6a08df1"
+            "url": "https://github.com/ShareX/DevBuilds/releases/download/v20.2.0.1138/ShareX-20.2.0.1138-setup-x64.exe",
+            "hash": "5e86b4e1f0fa6d69843280b08a65d29092b2b415dd36d5f5e2f480fbdb1b057c"
         }
     },
-    "pre_install": "if (!(Test-Path \"$persist_dir\\PersonalPath.cfg\")) { New-Item \"$dir\\PersonalPath.cfg\" | Out-Null }",
+    "installer": {
+        "args": [
+            "/VERYSILENT",
+            "/SUPPRESSMSGBOXES",
+            "/NORESTART",
+            "/SP-",
+            "/DIR=\"$dir\""
+        ]
+    },
+    "uninstaller": {
+        "file": "unins000.exe",
+        "args": [
+            "/VERYSILENT",
+            "/SUPPRESSMSGBOXES",
+            "/NORESTART"
+        ]
+    },
     "bin": [
         [
             "ShareX.exe",
@@ -23,17 +39,13 @@
             "ShareX Dev"
         ]
     ],
-    "persist": [
-        "PersonalPath.cfg",
-        "ShareX"
-    ],
     "checkver": {
         "url": "https://api.github.com/repos/ShareX/DevBuilds/releases?per_page=100",
         "script": [
             "$release = @($page | ConvertFrom-Json) | Where-Object {",
             "    if ($_.draft -or $_.tag_name -notmatch '^v\\d+(?:\\.\\d+){3}$') { return $false }",
             "    $version = $_.tag_name.TrimStart('v')",
-            "    $_.assets.name -contains \"ShareX-$version-portable-x64.zip\"",
+            "    $_.assets.name -contains \"ShareX-$version-setup-x64.exe\"",
             "} | Sort-Object { [version]($_.tag_name.TrimStart('v')) } -Descending | Select-Object -First 1",
             "if (-not $release) { throw 'No complete ShareX dev release found' }",
             "$release.tag_name.TrimStart('v')"
@@ -43,7 +55,7 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/ShareX/DevBuilds/releases/download/v$version/ShareX-$version-portable-x64.zip"
+                "url": "https://github.com/ShareX/DevBuilds/releases/download/v$version/ShareX-$version-setup-x64.exe"
             }
         }
     }
