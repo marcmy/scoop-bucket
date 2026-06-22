@@ -3,7 +3,7 @@ on:
     types: [opened, labeled]
 name: Issues
 permissions:
-  contents: read
+  contents: write
   issues: write
   pull-requests: write
 jobs:
