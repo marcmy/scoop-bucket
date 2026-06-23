@@ -17,10 +17,30 @@
             "/NORESTART",
             "/SP-",
             "/NORUN",
+            "/NOICONS",
             "/TASKS=",
             "/DIR=\"$dir\""
         ]
     },
+    "post_install": [
+        "$programs = [Environment]::GetFolderPath('Programs')",
+        "$nativeGroup = Join-Path $programs 'ShareX'",
+        "$appRoot = Split-Path $dir",
+        "if (Test-Path -LiteralPath $nativeGroup) {",
+        "    $shell = New-Object -ComObject WScript.Shell",
+        "    Get-ChildItem -LiteralPath $nativeGroup -Filter '*.lnk' -File -ErrorAction SilentlyContinue | ForEach-Object {",
+        "        try {",
+        "            $target = $shell.CreateShortcut($_.FullName).TargetPath",
+        "            if ($target -and $target.StartsWith($appRoot, [StringComparison]::OrdinalIgnoreCase)) {",
+        "                Remove-Item -LiteralPath $_.FullName -Force",
+        "            }",
+        "        } catch {}",
+        "    }",
+        "    if (!(Get-ChildItem -LiteralPath $nativeGroup -Force -ErrorAction SilentlyContinue)) {",
+        "        Remove-Item -LiteralPath $nativeGroup -Force",
+        "    }",
+        "}"
+    ],
     "uninstaller": {
         "file": "unins000.exe",
         "args": [
@@ -33,6 +53,12 @@
         [
             "ShareX.exe",
             "sharex-dev"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "ShareX.exe",
+            "ShareX Dev"
         ]
     ],
     "checkver": {
