@@ -4,8 +4,7 @@
     "homepage": "https://getsharex.com/",
     "license": "GPL-3.0-only",
     "notes": [
-        "Tracks portable development builds published to ShareX/DevBuilds.",
-        "Use sharex-dev-portable-update to update while ShareX is running; it will stop and restart this package's ShareX instance automatically."
+        "Tracks portable development builds published to ShareX/DevBuilds."
     ],
     "architecture": {
         "64bit": {
@@ -14,42 +13,12 @@
         }
     },
     "pre_install": [
-        "$updater = @'",
-        "$ScoopArgs = @($args)",
-        "$ErrorActionPreference = 'Stop'",
-        "$app = 'sharex-dev-portable'",
-        "$prefix = (& scoop prefix $app | Select-Object -Last 1).Trim()",
-        "$appRoot = Split-Path $prefix",
-        "$processes = @(Get-Process ShareX -ErrorAction SilentlyContinue | Where-Object { $_.Path -and $_.Path.StartsWith($appRoot, [StringComparison]::OrdinalIgnoreCase) })",
-        "$wasRunning = $processes.Count -gt 0",
-        "$exitCode = 0",
-        "try {",
-        "    if ($wasRunning) {",
-        "        $processes | Stop-Process -Force",
-        "        $processes | Wait-Process -ErrorAction SilentlyContinue",
-        "    }",
-        "    & scoop update \"marcmy/$app\" @ScoopArgs",
-        "    $exitCode = $LASTEXITCODE",
-        "} finally {",
-        "    if ($wasRunning) {",
-        "        $newPrefix = (& scoop prefix $app | Select-Object -Last 1).Trim()",
-        "        $exe = Join-Path $newPrefix 'ShareX.exe'",
-        "        if (Test-Path $exe) { Start-Process $exe }",
-        "    }",
-        "}",
-        "exit $exitCode",
-        "'@",
-        "Set-Content -Path \"$dir\\sharex-dev-portable-update.ps1\" -Value $updater -Encoding utf8",
         "if (!(Test-Path \"$persist_dir\\PersonalPath.cfg\")) { New-Item \"$dir\\PersonalPath.cfg\" | Out-Null }"
     ],
     "bin": [
         [
             "ShareX.exe",
             "sharex-dev-portable"
-        ],
-        [
-            "sharex-dev-portable-update.ps1",
-            "sharex-dev-portable-update"
         ]
     ],
     "shortcuts": [
