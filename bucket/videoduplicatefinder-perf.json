@@ -22,9 +22,9 @@
         ]
     ],
     "notes": [
-        "This is the compact GUI-only Native AOT package.",
-        "Install `videoduplicatefinder-perf-full` for the GUI, CLI, and Web UI bundle.",
-        "VDF state files are mirrored from existing GUI-only or Full installs when real files exist."
+        "This is the actively updated compact GUI-only Native AOT package.",
+        "`videoduplicatefinder-perf-full` has been retired because the release no longer publishes Bundle-win-x64.zip.",
+        "VDF state files are mirrored from existing GUI-only or legacy Full installs when real files exist."
     ],
     "pre_install": [
         "$stateFiles = @('Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'backup.scanresults', 'log.txt')",
