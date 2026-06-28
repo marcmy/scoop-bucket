@@ -92,7 +92,7 @@
             "([datetimeoffset]$r.updated_at).UtcDateTime.ToString('yyyy-MM-ddTHH:mm')"
         ],
         "regex": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2})",
-        "replace": "4.0.0-perf-git-$1$2$3-$4$5.1"
+        "replace": "4.0.0-perf-git-$1$2$3-$4$5"
     },
     "autoupdate": {
         "architecture": {
