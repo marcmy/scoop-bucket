@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/marcmy/FFmpeg-Builds",
     "description": "Hourly FFmpeg master win64 GPLv3 shared build from Marc's FFmpeg-Builds fork",
-    "version": "20260701.181910",
+    "version": "20260701.215220",
     "license": "GPL-3.0-or-later",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-20260701.181910-win64-marc-shared/ffmpeg-20260701.181910-win64-marc-shared.zip",
-            "hash": "7a14a30edded063c6331912938adcdd2b8ded2296c48f06432f8bc0ca316d175"
+            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-20260701.215220-win64-marc-shared/ffmpeg-20260701.215220-win64-marc-shared.zip",
+            "hash": "d3f4aa8d87e6d86415ef712511270b3490ff9ed5cf878a5fd1be0dd68fe05268"
         }
     },
     "pre_install": [
