@@ -6,7 +6,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/marcmy/RazerAutoPollingRate/releases/download/v1.3.2/razerautopollingrate-1.3.2-full.nupkg",
-            "hash": "0b85d9538ad480ebb9b9b0886d60a123cf80e3b98de140b302e826b6f99910f5"
+            "hash": "4dae032da60bdc4ef7761aeee04978642e4eb3170a4015d975346b240108b92d"
         }
     },
     "extract_dir": "lib/net45",
