@@ -1,5 +1,5 @@
 {
-    "version": "28844477406",
+    "version": "28851926838",
     "description": "Custom qBittorrent build paired with marcmy/libtorrent RC_2_1.",
     "homepage": "https://github.com/marcmy/qBittorrent",
     "license": {
@@ -18,14 +18,12 @@
     },
     "architecture": {
         "64bit": {
-            "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/28844477406/qBittorrent-Custom_Windows-x64_libtorrent-RC_2_1-89c18daafa38.zip",
-            "hash": "7c016a729eb9d3934baad95d654f7f8d3b5528aa50ac33ae44773c114ad905d3",
+            "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/28851926838/qBittorrent-Custom_Windows-x64_libtorrent-RC_2_1-89c18daafa38.zip",
+            "hash": "5da79415f31877110226bf3e6564e206e960d4ae81b6b8083fc5d2ef05d5bc10",
             "extract_dir": "qBittorrent"
         }
     },
-    "pre_install": [
-        "if (Test-Path \"$dir/qbittorrent.pdb\") { Remove-Item \"$dir/qbittorrent.pdb\" -Force }"
-    ],
+    "pre_install": "if (Test-Path \"$dir/qbittorrent.pdb\") { Remove-Item \"$dir/qbittorrent.pdb\" -Force }",
     "post_install": [
         "'install-associations', 'uninstall-associations' | ForEach-Object {",
         "    if (Test-Path \"$bucketsdir\\$bucket\\scripts\\$app\\$_.reg\") {",
