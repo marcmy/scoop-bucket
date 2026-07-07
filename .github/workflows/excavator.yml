@@ -3,6 +3,7 @@ on:
   repository_dispatch:
     types:
       - ffmpeg-build-released
+      - qbittorrent-custom-built
   push:
     branches:
       - master

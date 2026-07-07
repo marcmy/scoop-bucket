@@ -1,0 +1,101 @@
+{
+    "version": "28841875186",
+    "description": "Custom qBittorrent build paired with marcmy/libtorrent RC_2_1.",
+    "homepage": "https://github.com/marcmy/qBittorrent",
+    "license": {
+        "identifier": "GPL-2.0-only",
+        "url": "https://github.com/marcmy/qBittorrent/blob/master/COPYING"
+    },
+    "notes": [
+        "Tracks successful marcmy/qBittorrent master CI artifacts built against marcmy/libtorrent RC_2_1.",
+        "For file associations, run:",
+        "reg import \"$dir\\install-associations.reg\""
+    ],
+    "suggest": {
+        "vcredist": "extras/vcredist2022"
+    },
+    "architecture": {
+        "64bit": {
+            "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/28841875186/qBittorrent-Custom_Windows-x64_libtorrent-RC_2_1-2d53c61070c6.zip",
+            "hash": "caf631f2df26b93c0e4a7d0ce5e7aa32c2c0d7766d20cb37d26e3ff4bb406997",
+            "extract_dir": "qBittorrent"
+        }
+    },
+    "pre_install": [
+        "if (Test-Path \"$dir/qbittorrent.pdb\") { Remove-Item \"$dir/qbittorrent.pdb\" -Force }",
+        "if (!(Test-Path \"$persist_dir/profile\")) {",
+        "    $source = @(",
+        "        \"$persist_dir/../qbittorrent-nightly-lt21/profile\",",
+        "        \"$persist_dir/../qbittorrent-nightly/profile\",",
+        "        \"$persist_dir/../qbittorrent-portable/profile\"",
+        "    ) | Where-Object { Test-Path \"$_/qBittorrent\" } | Select-Object -First 1",
+        "    if ($source) {",
+        "        Write-Host \"Importing existing qBittorrent profile from $source\" -ForegroundColor Yellow",
+        "        New-Item \"$persist_dir/profile\" -ItemType Directory -Force | Out-Null",
+        "        Copy-Item \"$source/qBittorrent\" \"$persist_dir/profile/qBittorrent\" -Recurse -Force | Out-Null",
+        "    } elseif (Test-Path \"$env:APPDATA/qBittorrent\") {",
+        "        Write-Host \"Importing existing non-portable qBittorrent profile from AppData\" -ForegroundColor Yellow",
+        "        New-Item \"$persist_dir/profile/qBittorrent/config\" -ItemType Directory -Force | Out-Null",
+        "        New-Item \"$persist_dir/profile/qBittorrent/data\" -ItemType Directory -Force | Out-Null",
+        "        Copy-Item \"$env:APPDATA/qBittorrent\" \"$persist_dir/profile/qBittorrent/config\" -Recurse -Force | Out-Null",
+        "        if (Test-Path \"$env:LOCALAPPDATA/qBittorrent\") {",
+        "            Copy-Item \"$env:LOCALAPPDATA/qBittorrent\" \"$persist_dir/profile/qBittorrent/data\" -Recurse -Force | Out-Null",
+        "        }",
+        "    }",
+        "}"
+    ],
+    "post_install": [
+        "'install-associations', 'uninstall-associations' | ForEach-Object {",
+        "    if (Test-Path \"$bucketsdir\\$bucket\\scripts\\$app\\$_.reg\") {",
+        "        $qbitPath = \"$dir\".Replace('\\', '\\\\')",
+        "        $content = (Get-Content \"$bucketsdir\\$bucket\\scripts\\$app\\$_.reg\").Replace('$qbit', $qbitPath)",
+        "        if ($global) { $content = $content.Replace('HKEY_CURRENT_USER', 'HKEY_LOCAL_MACHINE') }",
+        "        Set-Content \"$dir\\$_.reg\" $content -Encoding Ascii -Force",
+        "    }",
+        "}"
+    ],
+    "bin": [
+        [
+            "qbittorrent.exe",
+            "qbittorrent-custom"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "qbittorrent.exe",
+            "qBittorrent custom"
+        ]
+    ],
+    "persist": "profile",
+    "uninstaller": {
+        "script": "if ($cmd -eq 'uninstall') { reg import \"$dir\\uninstall-associations.reg\" }"
+    },
+    "checkver": {
+        "url": "https://api.github.com/repos/marcmy/qBittorrent/actions/artifacts?per_page=100",
+        "script": [
+            "$repoId = 1291473014",
+            "$namePattern = '^qBittorrent-Custom_Windows-x64_libtorrent-RC_2_1-[0-9a-f]{12}$'",
+            "$artifact = (($page | ConvertFrom-Json).artifacts | Where-Object {",
+            "    ($_.name -match $namePattern) -and",
+            "    (-not $_.expired) -and",
+            "    ($_.workflow_run.head_repository_id -eq $repoId) -and",
+            "    ($_.workflow_run.head_branch -eq 'master')",
+            "} | Sort-Object created_at -Descending | Select-Object -First 1)",
+            "if (-not $artifact) { throw 'No matching non-expired marcmy/qBittorrent master artifacts found' }",
+            "\"{0} {1}\" -f $artifact.workflow_run.id, $artifact.name"
+        ],
+        "regex": "^(?<version>\\d+) (?<artifact>.+)$"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/$version/$matchArtifact.zip",
+                "hash": {
+                    "mode": "json",
+                    "url": "https://api.github.com/repos/marcmy/qBittorrent/actions/runs/$version/artifacts",
+                    "jsonpath": "$..artifacts[?(@.name=='$matchArtifact')].digest"
+                }
+            }
+        }
+    }
+}
