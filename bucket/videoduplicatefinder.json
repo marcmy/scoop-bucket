@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/0x90d/videoduplicatefinder",
     "description": "Video Duplicate Finder is a cross-platform software to find duplicated video (and image) files on hard disk based on similiarity",
-    "version": "4.0.0-git-20260706-0918",
+    "version": "4.1.0-git-20260707-1826",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/4.0.x/GUI-win-x64.zip",
-            "hash": "e3d49aa11f4f9844002500da6ff39c8d31959b28207e0689a81cb76a9f7a847e"
+            "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/4.1.x/GUI-win-x64.zip",
+            "hash": "3f156cc6369749d0fc0e9cc5a4a7a87113939ab124505e9e64b546b389a02241"
         }
     },
     "shortcuts": [
@@ -22,7 +22,7 @@
         ]
     ],
     "notes": [
-        "This upstream release tag is always 4.0.x and the asset is replaced in-place.",
+        "This upstream release tag is always 4.1.x and the asset is replaced in-place.",
         "Only VDF state files that exist in the active install are retained during updates or reinstalls; missing files are removed from persisted state."
     ],
     "pre_install": [
@@ -79,16 +79,16 @@
         "script": [
             "$ErrorActionPreference='Stop'",
             "$h=@{ 'User-Agent'='Scoop-Checkver'; 'Accept'='application/vnd.github+json'; 'Authorization'=(\"Bearer {0}\" -f $env:GITHUB_TOKEN); 'X-GitHub-Api-Version'='2022-11-28' }",
-            "$r=Invoke-RestMethod -Headers $h -Uri 'https://api.github.com/repos/0x90d/videoduplicatefinder/releases/tags/4.0.x'",
+            "$r=Invoke-RestMethod -Headers $h -Uri 'https://api.github.com/repos/0x90d/videoduplicatefinder/releases/tags/4.1.x'",
             "([datetimeoffset]$r.updated_at).UtcDateTime.ToString('yyyy-MM-ddTHH:mm')"
         ],
         "regex": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2})",
-        "replace": "4.0.0-git-$1$2$3-$4$5"
+        "replace": "4.1.0-git-$1$2$3-$4$5"
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/4.0.x/GUI-win-x64.zip"
+                "url": "https://github.com/0x90d/videoduplicatefinder/releases/download/4.1.x/GUI-win-x64.zip"
             }
         }
     }
