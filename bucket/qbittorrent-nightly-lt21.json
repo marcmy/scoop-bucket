@@ -8,6 +8,8 @@
     },
     "notes": [
         "This manifest tracks CI artifacts that include libtorrent 2.1.0-rc1.",
+        "Uses its own isolated persisted profile and never imports another qBittorrent profile automatically.",
+        "Existing qbittorrent-nightly-lt21 profile data is preserved across updates.",
         "For file associations, run:",
         "reg import \"$dir\\install-associations.reg\""
     ],
@@ -22,26 +24,7 @@
         }
     },
     "pre_install": [
-        "if (Test-Path \"$dir/qbittorrent.pdb\") { Remove-Item \"$dir/qbittorrent.pdb\" -Force }",
-        "if (!(Test-Path \"$persist_dir/profile\")) {",
-        "    $source = @(",
-        "        \"$persist_dir/../qbittorrent-nightly/profile\",",
-        "        \"$persist_dir/../qbittorrent-portable/profile\"",
-        "    ) | Where-Object { Test-Path \"$_/qBittorrent\" } | Select-Object -First 1",
-        "    if ($source) {",
-        "        Write-Host \"Importing existing qBittorrent profile from $source\" -ForegroundColor Yellow",
-        "        New-Item \"$persist_dir/profile\" -ItemType Directory -Force | Out-Null",
-        "        Copy-Item \"$source/qBittorrent\" \"$persist_dir/profile/qBittorrent\" -Recurse -Force | Out-Null",
-        "    } elseif (Test-Path \"$env:APPDATA/qBittorrent\") {",
-        "        Write-Host \"Importing existing non-portable qBittorrent profile from AppData\" -ForegroundColor Yellow",
-        "        New-Item \"$persist_dir/profile/qBittorrent/config\" -ItemType Directory -Force | Out-Null",
-        "        New-Item \"$persist_dir/profile/qBittorrent/data\" -ItemType Directory -Force | Out-Null",
-        "        Copy-Item \"$env:APPDATA/qBittorrent\" \"$persist_dir/profile/qBittorrent/config\" -Recurse -Force | Out-Null",
-        "        if (Test-Path \"$env:LOCALAPPDATA/qBittorrent\") {",
-        "            Copy-Item \"$env:LOCALAPPDATA/qBittorrent\" \"$persist_dir/profile/qBittorrent/data\" -Recurse -Force | Out-Null",
-        "        }",
-        "    }",
-        "}"
+        "if (Test-Path \"$dir/qbittorrent.pdb\") { Remove-Item \"$dir/qbittorrent.pdb\" -Force }"
     ],
     "post_install": [
         "'install-associations', 'uninstall-associations' | ForEach-Object {",
