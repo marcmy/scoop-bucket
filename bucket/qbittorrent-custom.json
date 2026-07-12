@@ -1,5 +1,5 @@
 {
-    "version": "28994437895",
+    "version": "0",
     "description": "Custom qBittorrent build paired with marcmy/libtorrent custom/qbittorrent-2.1.",
     "homepage": "https://github.com/marcmy/qBittorrent",
     "license": {
