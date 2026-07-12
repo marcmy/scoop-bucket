@@ -1,13 +1,13 @@
 {
     "version": "28994437895",
-    "description": "Custom qBittorrent build paired with marcmy/libtorrent RC_2_1.",
+    "description": "Custom qBittorrent build paired with marcmy/libtorrent custom/qbittorrent-2.1.",
     "homepage": "https://github.com/marcmy/qBittorrent",
     "license": {
         "identifier": "GPL-2.0-only",
-        "url": "https://github.com/marcmy/qBittorrent/blob/master/COPYING"
+        "url": "https://github.com/marcmy/qBittorrent/blob/custom/master/COPYING"
     },
     "notes": [
-        "Tracks successful marcmy/qBittorrent master CI artifacts built against marcmy/libtorrent RC_2_1.",
+        "Tracks successful marcmy/qBittorrent custom/master CI artifacts built against marcmy/libtorrent custom/qbittorrent-2.1.",
         "Uses its own isolated persisted profile and never imports another qBittorrent profile automatically.",
         "Existing qbittorrent-custom profile data is preserved across updates.",
         "For file associations, run:",
@@ -54,14 +54,14 @@
         "url": "https://api.github.com/repos/marcmy/qBittorrent/actions/artifacts?per_page=100",
         "script": [
             "$repoId = 1291473014",
-            "$namePattern = '^qBittorrent-Custom_Windows-x64_libtorrent-RC_2_1-[0-9a-f]{12}$'",
+            "$namePattern = '^qBittorrent-Custom_Windows-x64_libtorrent-custom-qbittorrent-2\\.1-[0-9a-f]{12}$'",
             "$artifact = (($page | ConvertFrom-Json).artifacts | Where-Object {",
             "    ($_.name -match $namePattern) -and",
             "    (-not $_.expired) -and",
             "    ($_.workflow_run.head_repository_id -eq $repoId) -and",
-            "    ($_.workflow_run.head_branch -eq 'master')",
+            "    ($_.workflow_run.head_branch -eq 'custom/master')",
             "} | Sort-Object created_at -Descending | Select-Object -First 1)",
-            "if (-not $artifact) { return }",
+            "if (-not $artifact) { throw 'No matching non-expired marcmy/qBittorrent custom/master artifacts found' }",
             "\"{0} {1}\" -f $artifact.workflow_run.id, $artifact.name"
         ],
         "regex": "^(?<version>\\d+) (?<artifact>.+)$"
