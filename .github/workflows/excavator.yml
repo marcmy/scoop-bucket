@@ -10,7 +10,6 @@ on:
     paths:
       - 'bucket/*.json'
       - 'scripts/**/*.reg'
-      - '.github/workflows/excavator.yml'
   schedule:
     # run every 30 minutes
     - cron: '13 * * * *'
@@ -23,73 +22,8 @@ jobs:
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@main
-      - name: Migrate qbittorrent-custom artifact pin
-        shell: pwsh
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          @'
-          import json
-          import os
-          import pathlib
-          import re
-          import urllib.request
-
-          api_url = "https://api.github.com/repos/marcmy/qBittorrent/actions/artifacts?per_page=100"
-          request = urllib.request.Request(
-              api_url,
-              headers={
-                  "Accept": "application/vnd.github+json",
-                  "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
-                  "User-Agent": "scoop-bucket-qbittorrent-migration",
-                  "X-GitHub-Api-Version": "2022-11-28",
-              },
-          )
-          with urllib.request.urlopen(request) as response:
-              artifacts = json.load(response)["artifacts"]
-
-          pattern = re.compile(
-              r"^qBittorrent-Custom_Windows-x64_libtorrent-custom-qbittorrent-2\.1-[0-9a-f]{12}$"
-          )
-          matches = [
-              artifact
-              for artifact in artifacts
-              if pattern.fullmatch(artifact["name"])
-              and not artifact["expired"]
-              and artifact["workflow_run"]["head_repository_id"] == 1291473014
-              and artifact["workflow_run"]["head_branch"] == "custom/master"
-          ]
-          if not matches:
-              raise RuntimeError("No matching non-expired marcmy/qBittorrent custom/master artifact found")
-
-          artifact = max(matches, key=lambda item: item["created_at"])
-          run_id = str(artifact["workflow_run"]["id"])
-          digest = artifact["digest"].removeprefix("sha256:")
-          manifest_path = pathlib.Path("bucket/qbittorrent-custom.json")
-          manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-          manifest["version"] = run_id
-          manifest["architecture"]["64bit"]["url"] = (
-              f"https://nightly.link/marcmy/qBittorrent/actions/runs/{run_id}/{artifact['name']}.zip"
-          )
-          manifest["architecture"]["64bit"]["hash"] = digest
-          with manifest_path.open("w", encoding="utf-8", newline="\r\n") as output:
-              json.dump(manifest, output, indent=4, ensure_ascii=False)
-              output.write("\n")
-          print(f"Selected {artifact['name']} from run {run_id} with SHA-256 {digest}")
-          '@ | Set-Content migrate-qbittorrent.py -Encoding utf8NoBOM
-          python migrate-qbittorrent.py
-          Remove-Item migrate-qbittorrent.py -Force
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add bucket/qbittorrent-custom.json
-          git diff --cached --quiet
-          if ($LASTEXITCODE -ne 0) {
-              git commit -m "Migrate qbittorrent-custom artifact pin"
-              git push
-          }
       - name: Excavate
         uses: ScoopInstaller/GithubActions@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SKIP_UPDATED: 1
-          SPECIAL_SNOWFLAKES: qbittorrent-custom
