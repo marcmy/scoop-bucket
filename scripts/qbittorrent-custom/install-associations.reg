@@ -3,7 +3,7 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\qBittorrent]
 "InstallLocation"="$qbit"
 
-; Register qBittorrent as possible default program for .torrent files and magnet links
+; Register the custom qBittorrent build as a possible default program for .torrent files and magnet links
 [HKEY_CURRENT_USER\Software\qBittorrent\Capabilities]
 "ApplicationDescription"="A BitTorrent client in Qt"
 "ApplicationName"="qBittorrent"
