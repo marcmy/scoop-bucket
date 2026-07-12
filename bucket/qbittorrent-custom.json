@@ -61,7 +61,7 @@
             "    ($_.workflow_run.head_repository_id -eq $repoId) -and",
             "    ($_.workflow_run.head_branch -eq 'master')",
             "} | Sort-Object created_at -Descending | Select-Object -First 1)",
-            "if (-not $artifact) { throw 'No matching non-expired marcmy/qBittorrent master artifacts found' }",
+            "if (-not $artifact) { return }",
             "\"{0} {1}\" -f $artifact.workflow_run.id, $artifact.name"
         ],
         "regex": "^(?<version>\\d+) (?<artifact>.+)$"
