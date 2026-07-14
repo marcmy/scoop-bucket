@@ -1,12 +1,12 @@
 {
-    "version": "2026.07.13.22",
+    "version": "2026.07.14.15",
     "description": "Quake III engine fork focused on performance, fixes and QoL (Quake3e).",
     "homepage": "https://github.com/ec-/Quake3e",
     "license": "GPL-2.0-or-later",
     "architecture": {
         "64bit": {
             "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-mingw-x86_64.zip",
-            "hash": "f68a789f3da15fd4a2f1e1e303f60f7159f06742a63562e3183fde077aa2d78f",
+            "hash": "434eab1ce519ecd0269ba060742b6c8f0dc2d60059c1d2c3c253b127c225bc64",
             "bin": [
                 [
                     "quake3e.x64.exe",
@@ -24,7 +24,7 @@
         },
         "32bit": {
             "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-mingw-x86.zip",
-            "hash": "1fcc05c3a2cfcdfb43e29e50ac99b2ea1b80ae5746b2992c6ff71fd390c04ebd",
+            "hash": "db405fe1925d97bdee689805ed088e87d331e6b308f26d858a3e4a75c2f8c5ef",
             "bin": [
                 [
                     "quake3e.exe",
