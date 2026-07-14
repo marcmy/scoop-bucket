@@ -19,6 +19,7 @@ permissions:
 jobs:
   excavate:
     name: Excavate
+    if: github.event_name != 'push' || github.actor != 'github-actions[bot]'
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@main
