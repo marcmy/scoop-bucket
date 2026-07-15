@@ -29,6 +29,7 @@
         "script": [
             "$ErrorActionPreference='Stop'",
             "$headers=@{ 'User-Agent'='Scoop-Checkver'; 'Accept'='application/vnd.github+json'; 'X-GitHub-Api-Version'='2022-11-28' }",
+            "if ($env:GITHUB_TOKEN) { $headers['Authorization'] = \"Bearer $env:GITHUB_TOKEN\" }",
             "$releases=Invoke-RestMethod -Headers $headers -Uri 'https://api.github.com/repos/marcmy/FFmpeg-Builds/releases?per_page=50'",
             "$release=$releases | Where-Object { $_.tag_name -match '^ffmpeg-[0-9]{8}\\.[0-9]{6}-win64-marc-shared$' } | Select-Object -First 1",
             "if ($null -eq $release) { 'ffmpeg-00000000.000000-win64-marc-shared' } else { $release.tag_name }"
