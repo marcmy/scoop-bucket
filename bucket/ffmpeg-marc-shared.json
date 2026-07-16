@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/marcmy/FFmpeg-Builds",
     "description": "Hourly FFmpeg master win64 GPLv3 shared build from Marc's FFmpeg-Builds fork",
-    "version": "20260715.160301",
+    "version": "20260716.121026",
     "license": "GPL-3.0-or-later",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-20260715.160301-win64-marc-shared/ffmpeg-20260715.160301-win64-marc-shared.zip",
-            "hash": "a782aa0ddf1d2f40301ee7912f850f1a1eafe7ede4112a3415614e351a33685e"
+            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-20260716.121026-win64-marc-shared/ffmpeg-20260716.121026-win64-marc-shared.zip",
+            "hash": "ce5a1329e75754648f7038eb38666bf24881de3d3bcd2b98a6ed554e6d8a6c0f"
         }
     },
     "pre_install": [
@@ -29,7 +29,6 @@
         "script": [
             "$ErrorActionPreference='Stop'",
             "$headers=@{ 'User-Agent'='Scoop-Checkver'; 'Accept'='application/vnd.github+json'; 'X-GitHub-Api-Version'='2022-11-28' }",
-            "if ($env:GITHUB_TOKEN) { $headers['Authorization'] = \"Bearer $env:GITHUB_TOKEN\" }",
             "$releases=Invoke-RestMethod -Headers $headers -Uri 'https://api.github.com/repos/marcmy/FFmpeg-Builds/releases?per_page=50'",
             "$release=$releases | Where-Object { $_.tag_name -match '^ffmpeg-[0-9]{8}\\.[0-9]{6}-win64-marc-shared$' } | Select-Object -First 1",
             "if ($null -eq $release) { 'ffmpeg-00000000.000000-win64-marc-shared' } else { $release.tag_name }"
