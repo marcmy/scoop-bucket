@@ -43,11 +43,9 @@
     },
     "persist": "config",
     "checkver": {
+        "url": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
         "script": [
-            "$ErrorActionPreference='Stop'",
-            "$h=@{ 'User-Agent'='Scoop-Checkver'; 'Accept'='application/vnd.github+json'; 'X-GitHub-Api-Version'='2022-11-28' }",
-            "if ($env:GITHUB_TOKEN) { $h['Authorization'] = \"Bearer $env:GITHUB_TOKEN\" }",
-            "$r=Invoke-RestMethod -Headers $h -Uri 'https://api.github.com/repos/ec-/Quake3e/releases/latest'",
+            "$r=$page | ConvertFrom-Json",
             "$assets=$r.assets",
             "$win64=($assets.name | ?{$_ -match 'win.*(?:x86_64|64).*\\.zip$'} | Select-Object -First 1)",
             "$win32=($assets.name | ?{$_ -match 'win.*(?:x86(?!_64)|32).*\\.zip$'} | Select-Object -First 1)",
