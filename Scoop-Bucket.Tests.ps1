@@ -22,6 +22,6 @@ Describe 'Repository manifest policy' {
             }
         }
 
-        Should -ActualValue $violations -BeNullOrEmpty -Because 'GitHub API endpoints belong in checkver.url; checkver.script should only parse $page.'
+        @($violations).Count | Should -Be 0 -Because 'GitHub API endpoints belong in checkver.url; checkver.script should only parse $page.'
     }
 }
