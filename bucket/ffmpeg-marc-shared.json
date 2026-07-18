@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/marcmy/FFmpeg-Builds",
     "description": "Hourly FFmpeg master win64 GPLv3 shared build from Marc's FFmpeg-Builds fork",
-    "version": "20260717.140811",
+    "version": "20260718.171854",
     "license": "GPL-3.0-or-later",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-20260717.140811-win64-marc-shared/ffmpeg-20260717.140811-win64-marc-shared.zip",
-            "hash": "d42000ae3a5948d6ac2fd15af9092eeec7df320e6820071badd6c344a839fe67"
+            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-20260718.171854-win64-marc-shared/ffmpeg-20260718.171854-win64-marc-shared.zip",
+            "hash": "b651d957f993ba5e45b1d453c438316732f34b66c4b15438f18b8f008bc864c9"
         }
     },
     "pre_install": [
@@ -26,9 +26,10 @@
         "Provides the regular ffmpeg, ffprobe, and ffplay shims. This will conflict with another Scoop package that also owns those shims."
     ],
     "checkver": {
-        "url": "https://api.github.com/repos/marcmy/FFmpeg-Builds/releases?per_page=50",
         "script": [
-            "$releases=$page | ConvertFrom-Json",
+            "$ErrorActionPreference='Stop'",
+            "$headers=@{ 'User-Agent'='Scoop-Checkver'; 'Accept'='application/vnd.github+json'; 'X-GitHub-Api-Version'='2022-11-28' }",
+            "$releases=Invoke-RestMethod -Headers $headers -Uri 'https://api.github.com/repos/marcmy/FFmpeg-Builds/releases?per_page=50'",
             "$release=$releases | Where-Object { $_.tag_name -match '^ffmpeg-[0-9]{8}\\.[0-9]{6}-win64-marc-shared$' } | Select-Object -First 1",
             "if ($null -eq $release) { 'ffmpeg-00000000.000000-win64-marc-shared' } else { $release.tag_name }"
         ],
