@@ -5,8 +5,18 @@ Describe 'Repository manifest policy' {
     It 'keeps GitHub API requests in checkver.url' {
         $violations = foreach ($file in Get-ChildItem "$PSScriptRoot\bucket\*.json") {
             $manifest = Get-Content $file.FullName -Raw | ConvertFrom-Json
-            $scriptText = @($manifest.checkver.script) -join "`n"
+            $checkver = $manifest.checkver
 
+            if ($null -eq $checkver -or $checkver -is [string]) {
+                continue
+            }
+
+            $scriptProperty = $checkver.PSObject.Properties['script']
+            if ($null -eq $scriptProperty) {
+                continue
+            }
+
+            $scriptText = @($scriptProperty.Value) -join "`n"
             if ($scriptText -match 'api\.github\.com') {
                 $file.Name
             }
