@@ -4,7 +4,7 @@
     "homepage": "https://github.com/marcmy/HandBrake",
     "license": "GPL-2.0-only",
     "suggest": {
-        ".NET Desktop Runtime 8.0": "versions/windowsdesktop-runtime-8.0"
+        ".NET Desktop Runtime 10.0": "versions/windowsdesktop-runtime-10.0"
     },
     "architecture": {
         "64bit": {
@@ -40,8 +40,8 @@
             "64bit": {
                 "url": "https://github.com/marcmy/HandBrake/releases/download/custom-win/HandBrake-$version-x86_64-Win_GUI.zip",
                 "hash": {
-                    "url": "https://github.com/marcmy/HandBrake/releases/tag/custom-win",
-                    "regex": "([a-fA-F0-9]{64})\\s+HandBrake-$version-x86_64-Win_GUI.zip"
+                    "url": "https://github.com/marcmy/HandBrake/releases/download/custom-win/sha256.txt",
+                    "regex": "$sha256\\s+HandBrake-$version-x86_64-Win_GUI.zip"
                 }
             }
         }
