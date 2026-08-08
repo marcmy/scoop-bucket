@@ -4,6 +4,7 @@ on:
     types:
       - ffmpeg-build-released
       - qbittorrent-custom-built
+      - handbrake-custom-built
   push:
     branches:
       - master
