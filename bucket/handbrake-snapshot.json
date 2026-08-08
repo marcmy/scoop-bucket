@@ -1,7 +1,7 @@
 {
     "version": "20260807-cd61f113a",
-    "description": "Snapshot releases of the tool for converting video from nearly any format to a selection of modern, widely supported codecs.",
-    "homepage": "https://handbrake.fr",
+    "description": "Custom HandBrake snapshot tracking upstream master with NVENC 13.0 headers for compatibility with pre-R610 NVIDIA drivers.",
+    "homepage": "https://github.com/marcmy/HandBrake",
     "license": "GPL-2.0-only",
     "suggest": {
         ".NET Desktop Runtime 8.0": "versions/windowsdesktop-runtime-8.0"
@@ -32,16 +32,16 @@
         ]
     ],
     "checkver": {
-        "url": "https://github.com/HandBrake/handbrake-snapshots/releases/tag/win",
-        "regex": "<td>HandBrake-([\\d]+-[\\w]+)-x86_64-Win_GUI.zip</td>"
+        "url": "https://github.com/marcmy/HandBrake/releases/tag/custom-win",
+        "regex": "HandBrake-([\\d]{8}-[\\w]+)-x86_64-Win_GUI.zip"
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/HandBrake/HandBrake-snapshots/releases/download/win/HandBrake-$version-x86_64-Win_GUI.zip",
+                "url": "https://github.com/marcmy/HandBrake/releases/download/custom-win/HandBrake-$version-x86_64-Win_GUI.zip",
                 "hash": {
-                    "url": "https://github.com/HandBrake/handbrake-snapshots/releases/tag/win",
-                    "regex": "<td>$sha256</td>\\s+<td>HandBrake-([\\d]+-[\\w]+)-x86_64-Win_GUI.zip</td>"
+                    "url": "https://github.com/marcmy/HandBrake/releases/tag/custom-win",
+                    "regex": "([a-fA-F0-9]{64})\\s+HandBrake-$version-x86_64-Win_GUI.zip"
                 }
             }
         }
