@@ -1,19 +1,19 @@
 {
-    "version": "0.7.2",
+    "version": "0.10.0",
     "description": "GPU-accelerated mosaic restoration tool for modern NVIDIA GPUs.",
     "homepage": "https://github.com/Kruk2/jasna",
     "license": "AGPL-3.0-or-later",
     "architecture": {
         "64bit": {
             "url": [
-                "https://github.com/Kruk2/jasna/releases/download/v0.7.2/jasna-windows-v0.7.2.7z.001",
-                "https://github.com/Kruk2/jasna/releases/download/v0.7.2/jasna-windows-v0.7.2.7z.002",
-                "https://github.com/Kruk2/jasna/releases/download/v0.7.2/jasna-windows-v0.7.2.7z.003"
+                "https://github.com/Kruk2/jasna/releases/download/v0.10.0/jasna-windows-0.10.0.7z.001",
+                "https://github.com/Kruk2/jasna/releases/download/v0.10.0/jasna-windows-0.10.0.7z.002",
+                "https://github.com/Kruk2/jasna/releases/download/v0.10.0/jasna-windows-0.10.0.7z.003"
             ],
             "hash": [
-                "7ae61d5f58452b848073aadc334ba0c36efd9593a04012e1f60084667db8e73e",
-                "d18af0f6513d067993259af0a68e7019d7742df0d6a271f8f8b1778a3db87561",
-                "a484a6c0eb5355e5423b45707634392538cbb5cfbd3141717604a181481c1c9a"
+                "e21e16e9d4b094f4d2a315ed5a1ed9314914e01b7e772e4b511c4e3fccaa44c5",
+                "741d6929b490adebdc73b53b4dc98aabbbfff355cfd3295918052143b90d1045",
+                "5d3cada0ca552393de0c44de7c65006d50b2b9f74d2ca43061808bc1245cd266"
             ]
         }
     },
@@ -46,32 +46,36 @@
         "model_weights is persisted so compiled engines survive updates.",
         "Jasna settings are stored by the app under $env:APPDATA\\jasna, outside Scoop's install dir, so they are not managed by this manifest."
     ],
-    "checkver": "github",
+    "checkver": {
+        "url": "https://api.github.com/repos/Kruk2/jasna/releases/latest",
+        "regex": "\"tag_name\"\\s*:\\s*\"(?<tag>v?(?<version>[^\"]+))\"[\\s\\S]*?\"name\"\\s*:\\s*\"(?<asset>(?![^\"]*amd)[^\"]*windows[^\"]*\\.7z)\\.001\"",
+        "replace": "${version}"
+    },
     "autoupdate": {
         "architecture": {
             "64bit": {
                 "url": [
-                    "https://github.com/Kruk2/jasna/releases/download/v$version/jasna-windows-v$version.7z.001",
-                    "https://github.com/Kruk2/jasna/releases/download/v$version/jasna-windows-v$version.7z.002",
-                    "https://github.com/Kruk2/jasna/releases/download/v$version/jasna-windows-v$version.7z.003"
+                    "https://github.com/Kruk2/jasna/releases/download/$matchTag/$matchAsset.001",
+                    "https://github.com/Kruk2/jasna/releases/download/$matchTag/$matchAsset.002",
+                    "https://github.com/Kruk2/jasna/releases/download/$matchTag/$matchAsset.003"
                 ],
                 "hash": [
                     {
                         "mode": "json",
-                        "url": "https://api.github.com/repos/Kruk2/jasna/releases/tags/v$version",
-                        "jsonpath": "$..assets[?(@.name=='jasna-windows-v$version.7z.001')].digest",
+                        "url": "https://api.github.com/repos/Kruk2/jasna/releases/tags/$matchTag",
+                        "jsonpath": "$.assets[?(@.name=='$basename')].digest",
                         "regex": "sha256:([a-f0-9]{64})"
                     },
                     {
                         "mode": "json",
-                        "url": "https://api.github.com/repos/Kruk2/jasna/releases/tags/v$version",
-                        "jsonpath": "$..assets[?(@.name=='jasna-windows-v$version.7z.002')].digest",
+                        "url": "https://api.github.com/repos/Kruk2/jasna/releases/tags/$matchTag",
+                        "jsonpath": "$.assets[?(@.name=='$basename')].digest",
                         "regex": "sha256:([a-f0-9]{64})"
                     },
                     {
                         "mode": "json",
-                        "url": "https://api.github.com/repos/Kruk2/jasna/releases/tags/v$version",
-                        "jsonpath": "$..assets[?(@.name=='jasna-windows-v$version.7z.003')].digest",
+                        "url": "https://api.github.com/repos/Kruk2/jasna/releases/tags/$matchTag",
+                        "jsonpath": "$.assets[?(@.name=='$basename')].digest",
                         "regex": "sha256:([a-f0-9]{64})"
                     }
                 ]
