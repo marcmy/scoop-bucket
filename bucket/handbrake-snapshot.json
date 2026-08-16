@@ -1,5 +1,5 @@
 {
-    "version": "20260816-98d8cbddb",
+    "version": "20260816-96e81a6d8",
     "description": "Custom HandBrake snapshot tracking upstream master with NVENC 13.0 headers for compatibility with pre-R610 NVIDIA drivers.",
     "homepage": "https://github.com/marcmy/HandBrake",
     "license": "GPL-2.0-only",
@@ -8,8 +8,8 @@
     },
     "architecture": {
         "64bit": {
-            "url": "https://github.com/marcmy/HandBrake/releases/download/custom-win/HandBrake-20260816-98d8cbddb-x86_64-Win_GUI.zip",
-            "hash": "a0a37e93a0067e2420be1a8cbfa35f769126effc60195d60e24d76e448c79b12"
+            "url": "https://github.com/marcmy/HandBrake/releases/download/custom-win/HandBrake-20260816-96e81a6d8-x86_64-Win_GUI.zip",
+            "hash": "a42bf9d19bb32ed8e75197dae93861d62f4cbc3830110066149d67751503c1c9"
         }
     },
     "extract_dir": "HandBrake",
