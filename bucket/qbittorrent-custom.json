@@ -1,5 +1,5 @@
 {
-    "version": "31965748802",
+    "version": "31986503784",
     "description": "Custom qBittorrent build paired with marcmy/libtorrent custom/qbittorrent-2.1.",
     "homepage": "https://github.com/marcmy/qBittorrent",
     "license": {
@@ -18,8 +18,8 @@
     },
     "architecture": {
         "64bit": {
-            "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/31965748802/qBittorrent-Custom_Windows-x64_libtorrent-custom-qbittorrent-2.1-995a81875dfe.zip",
-            "hash": "2049958c145b9bf4c17354225ce440dee2a74b08ca4208534371afa985fb611c",
+            "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/31986503784/qBittorrent-Custom_Windows-x64_libtorrent-custom-qbittorrent-2.1-1379f7393101.zip",
+            "hash": "6505273e736ca59b59029e8d26d0ce71f05be1866c66c91ba74b3020e9c465cb",
             "extract_dir": "qBittorrent"
         }
     },
