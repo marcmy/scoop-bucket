@@ -25,7 +25,7 @@ Windows Registry Editor Version 5.00
 @="\"$qbit\\qbittorrent.exe\",1"
 
 [HKEY_CURRENT_USER\Software\Classes\qBittorrent.File.Torrent\shell\open\command]
-@="\"$qbit\\qbittorrent.exe\" \"%1\""
+@="\"$qbitlauncher\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\qBittorrent.Url.Magnet]
 @="Magnet URI"
@@ -34,7 +34,7 @@ Windows Registry Editor Version 5.00
 @="\"$qbit\\qbittorrent.exe\",1"
 
 [HKEY_CURRENT_USER\Software\Classes\qBittorrent.Url.Magnet\shell\open\command]
-@="\"$qbit\\qbittorrent.exe\" \"%1\""
+@="\"$qbitlauncher\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\.torrent]
 "Content Type"="application/x-bittorrent"
@@ -47,4 +47,4 @@ Windows Registry Editor Version 5.00
 "URL Protocol"=""
 
 [HKEY_CURRENT_USER\Software\Classes\magnet\shell\open\command]
-@="\"$qbit\\qbittorrent.exe\" \"%1\""
+@="\"$qbitlauncher\" \"%1\""
