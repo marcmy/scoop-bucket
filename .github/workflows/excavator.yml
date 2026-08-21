@@ -6,19 +6,23 @@ on:
       - qbittorrent-custom-built
       - handbrake-custom-built
   schedule:
-    # run every 30 minutes
+    # run every hour at :13
     - cron: '13 * * * *'
 name: Excavator
 permissions:
   contents: write
+concurrency:
+  group: excavator
+  cancel-in-progress: false
 jobs:
   excavate:
     name: Excavate
     runs-on: windows-2022
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Excavate
-        uses: ScoopInstaller/GithubActions@main
+        uses: ScoopInstaller/GithubActions@c7991707e8da67be80e913b642d86e05632e1c95 # main 2026-08-21
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SKIP_UPDATED: 1
