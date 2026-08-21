@@ -10,10 +10,11 @@ jobs:
   pullRequestHandler:
     name: PullRequestHandler
     runs-on: windows-2022
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: PullRequestHandler
-        uses: ScoopInstaller/GithubActions@main
+        uses: ScoopInstaller/GithubActions@c7991707e8da67be80e913b642d86e05632e1c95 # main 2026-08-21
         if: startsWith(github.event.comment.body, '/verify')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
