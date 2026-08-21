@@ -11,23 +11,30 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test_powershell:
     name: WindowsPowerShell
     runs-on: windows-2022
+    timeout-minutes: 15
     steps:
       - name: Checkout Bucket
-        uses: actions/checkout@main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 2
           path: my_bucket
+          persist-credentials: false
       - name: Checkout Scoop
-        uses: actions/checkout@main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: ScoopInstaller/Scoop
           path: scoop_core
+          persist-credentials: false
       - name: Init Test Suite
-        uses: potatoqualitee/psmodulecache@main
+        uses: potatoqualitee/psmodulecache@8c76bdb3559f63eb2f65d2b77b7126a34121fbe1 # main 2026-06-18
         with:
           modules-to-cache: BuildHelpers
           shell: powershell
@@ -41,19 +48,22 @@ jobs:
   test_pwsh:
     name: PowerShell
     runs-on: windows-2022
+    timeout-minutes: 15
     steps:
       - name: Checkout Bucket
-        uses: actions/checkout@main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 2
           path: my_bucket
+          persist-credentials: false
       - name: Checkout Scoop
-        uses: actions/checkout@main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: ScoopInstaller/Scoop
           path: scoop_core
+          persist-credentials: false
       - name: Init Test Suite
-        uses: potatoqualitee/psmodulecache@main
+        uses: potatoqualitee/psmodulecache@8c76bdb3559f63eb2f65d2b77b7126a34121fbe1 # main 2026-06-18
         with:
           modules-to-cache: BuildHelpers
           shell: pwsh
