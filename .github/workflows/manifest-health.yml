@@ -1,0 +1,45 @@
+name: Manifest health
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every Sunday at 08:17 UTC
+    - cron: "17 8 * * 0"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: manifest-health
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: windows-2022
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out bucket
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: my_bucket
+          persist-credentials: false
+
+      - name: Check out Scoop
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ScoopInstaller/Scoop
+          path: scoop_core
+          persist-credentials: false
+
+      - name: Verify manifest URLs
+        shell: pwsh
+        run: |
+          $env:SCOOP_HOME = Convert-Path '.\scoop_core'
+          .\my_bucket\bin\checkurls.ps1
+
+      - name: Verify manifest hashes
+        shell: pwsh
+        run: |
+          $env:SCOOP_HOME = Convert-Path '.\scoop_core'
+          .\my_bucket\bin\checkhashes.ps1
