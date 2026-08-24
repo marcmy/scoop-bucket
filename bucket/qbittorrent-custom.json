@@ -1,5 +1,5 @@
 {
-    "version": "32772662123",
+    "version": "32771827707",
     "description": "Custom qBittorrent build paired with marcmy/libtorrent custom/qbittorrent-2.1.",
     "homepage": "https://github.com/marcmy/qBittorrent",
     "license": {
@@ -7,7 +7,8 @@
         "url": "https://github.com/marcmy/qBittorrent/blob/custom/master/COPYING"
     },
     "notes": [
-        "TEMPORARY TEST PIN: selective file recheck PR #24 build.",
+        "TEMPORARY TEST PIN: selective file recheck PR #24 + libtorrent crash hotfix PR #33.",
+        "Automatic checkver/autoupdate is temporarily disabled so Excavator cannot replace this test build.",
         "Uses its own isolated persisted profile and never imports another qBittorrent profile automatically.",
         "Existing qbittorrent-custom profile data is preserved across updates.",
         "For file associations, run:",
@@ -18,8 +19,8 @@
     },
     "architecture": {
         "64bit": {
-            "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/32772662123/qBittorrent-Custom_Windows-x64_libtorrent-custom-qbittorrent-2.1-b6f0807db603.zip",
-            "hash": "74b8fbebd87ec985e295ca6faa4dcfeae3d862fe451529c964ea1d4fc829610f",
+            "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/32771827707/qBittorrent-Custom_Windows-x64_libtorrent-fix-selective-recheck-crash-b4c50a50e022.zip",
+            "hash": "721b703bb854c74c88856e4558f452eb57beb7db606c4d9ecbfe89316d62b052",
             "extract_dir": "qBittorrent"
         }
     },
@@ -50,29 +51,5 @@
     "persist": "profile",
     "uninstaller": {
         "script": "if ($cmd -eq 'uninstall') { reg import \"$dir\\uninstall-associations.reg\" }"
-    },
-    "checkver": {
-        "url": "https://api.github.com/repos/marcmy/qBittorrent/actions/artifacts?per_page=100",
-        "script": [
-            "$repoId = 1291473014",
-            "$namePattern = '^qBittorrent-Custom_Windows-x64_libtorrent-custom-qbittorrent-2\\.1-[0-9a-f]{12}$'",
-            "$response = $page | ConvertFrom-Json",
-            "$artifact = ($response.artifacts | Where-Object {",
-            "    ($_.name -match $namePattern) -and",
-            "    (-not $_.expired) -and",
-            "    ($_.workflow_run.head_repository_id -eq $repoId) -and",
-            "    ($_.workflow_run.head_branch -eq 'custom/master')",
-            "} | Sort-Object created_at -Descending | Select-Object -First 1)",
-            "if (-not $artifact) { throw 'No matching non-expired marcmy/qBittorrent custom/master artifacts found' }",
-            "\"{0} {1}\" -f $artifact.workflow_run.id, $artifact.name"
-        ],
-        "regex": "^(?<version>\\d+) (?<artifact>.+)$"
-    },
-    "autoupdate": {
-        "architecture": {
-            "64bit": {
-                "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/$version/$matchArtifact.zip"
-            }
-        }
     }
 }
