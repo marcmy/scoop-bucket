@@ -1,5 +1,5 @@
 {
-    "version": "32763556468",
+    "version": "32760512469",
     "description": "Custom qBittorrent build paired with marcmy/libtorrent custom/qbittorrent-2.1.",
     "homepage": "https://github.com/marcmy/qBittorrent",
     "license": {
@@ -7,7 +7,7 @@
         "url": "https://github.com/marcmy/qBittorrent/blob/custom/master/COPYING"
     },
     "notes": [
-        "Tracks successful marcmy/qBittorrent custom/master CI artifacts built against marcmy/libtorrent custom/qbittorrent-2.1.",
+        "TEMPORARY TEST PIN: selective file recheck PR #24 build.",
         "Uses its own isolated persisted profile and never imports another qBittorrent profile automatically.",
         "Existing qbittorrent-custom profile data is preserved across updates.",
         "For file associations, run:",
@@ -18,8 +18,8 @@
     },
     "architecture": {
         "64bit": {
-            "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/32763556468/qBittorrent-Custom_Windows-x64_libtorrent-custom-qbittorrent-2.1-09a121f8120d.zip",
-            "hash": "883925097cd0490d67245b1077e562af4cf0e32a5f364e92c70978188d8825aa",
+            "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/32760512469/qBittorrent-Custom_Windows-x64_libtorrent-custom-qbittorrent-2.1-09a121f8120d.zip",
+            "hash": "152569df96e768850b79bba98bea73b006086b970e995f8da10daaa246ea3fcd",
             "extract_dir": "qBittorrent"
         }
     },
