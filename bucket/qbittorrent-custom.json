@@ -1,5 +1,5 @@
 {
-    "version": "32804631112",
+    "version": "32808484534",
     "description": "Custom qBittorrent build paired with marcmy/libtorrent custom/qbittorrent-2.1.",
     "homepage": "https://github.com/marcmy/qBittorrent",
     "license": {
@@ -7,7 +7,7 @@
         "url": "https://github.com/marcmy/qBittorrent/blob/custom/master/COPYING"
     },
     "notes": [
-        "TEMPORARY TEST PIN: selective file recheck PR #24 + libtorrent PR #33 with two-way recheck, bounded hashing, and visible progress reporting.",
+        "TEMPORARY TEST PIN: selective file recheck PR #24 + libtorrent PR #33 with two-way recheck, bounded hashing, visible progress reporting, and mixed-torrent state refresh.",
         "Automatic checkver/autoupdate is temporarily disabled so Excavator cannot replace this test build.",
         "Uses its own isolated persisted profile and never imports another qBittorrent profile automatically.",
         "Existing qbittorrent-custom profile data is preserved across updates.",
@@ -19,8 +19,8 @@
     },
     "architecture": {
         "64bit": {
-            "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/32804631112/qBittorrent-Custom_Windows-x64_libtorrent-fix-selective-recheck-crash-6d99e44c5043.zip",
-            "hash": "bb279f6146ab0175cf89c6681ab702054cbaa588aff550535c862ba004f26989",
+            "url": "https://nightly.link/marcmy/qBittorrent/actions/runs/32808484534/qBittorrent-Custom_Windows-x64_libtorrent-custom-qbittorrent-2.1-fc01ceb2947a.zip",
+            "hash": "fd167e0eae657d08a2c0f085f779692be40cce531fc113f7c6fba724cb7002ca",
             "extract_dir": "qBittorrent"
         }
     },
