@@ -2,9 +2,6 @@ name: Manifest health
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
   schedule:
     # Every Sunday at 08:17 UTC
     - cron: "17 8 * * 0"
