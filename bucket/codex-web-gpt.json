@@ -1,0 +1,40 @@
+{
+    "version": "5.0.3",
+    "description": "Use ChatGPT Web (including Pro) as a native model in the Codex app, with context, tools, streaming and images beyond Codex usage limits.",
+    "homepage": "https://github.com/miuuyy/codex-chatgpt-web",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/miuuyy/codex-chatgpt-web/releases/download/v5.0.3/codex-web-gpt-5.0.3-win-x64.exe",
+            "hash": "8bfb5901d9828a6d0f04c0c161c2a583d8c5bbd0b4d1657beb5594847c97ed46"
+        }
+    },
+    "installer": {
+        "args": [
+            "/S",
+            "/currentuser"
+        ]
+    },
+    "uninstaller": {
+        "script": [
+            "$installKey = 'HKCU:\\Software\\d1a6026a-6210-588e-9a2b-da3936f94e02'",
+            "$installLocation = Get-ItemPropertyValue -LiteralPath $installKey -Name 'InstallLocation' -ErrorAction SilentlyContinue",
+            "if ($installLocation) {",
+            "    $uninstaller = Join-Path $installLocation 'Uninstall Codex Web GPT.exe'",
+            "    if (Test-Path -LiteralPath $uninstaller) { Start-Process -FilePath $uninstaller -ArgumentList '/S' -Wait }",
+            "}"
+        ]
+    },
+    "checkver": {
+        "url": "https://api.github.com/repos/miuuyy/codex-chatgpt-web/releases/latest",
+        "jsonpath": "$.tag_name",
+        "regex": "v([\\d.]+)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/miuuyy/codex-chatgpt-web/releases/download/v$version/codex-web-gpt-$version-win-x64.exe"
+            }
+        }
+    }
+}
