@@ -5,6 +5,7 @@ on:
       - ffmpeg-build-released
       - qbittorrent-custom-built
       - handbrake-custom-built
+      - flaresolverr-custom-built
   schedule:
     # run every hour at :13
     - cron: '13 * * * *'
