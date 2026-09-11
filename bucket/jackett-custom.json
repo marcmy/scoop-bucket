@@ -1,0 +1,46 @@
+{
+    "version": "34636732419",
+    "description": "Custom Jackett build automatically tracking Jackett/Jackett upstream master.",
+    "homepage": "https://github.com/marcmy/Jackett",
+    "license": {
+        "identifier": "GPL-2.0-or-later",
+        "url": "https://github.com/marcmy/Jackett/blob/master/LICENSE"
+    },
+    "url": "https://nightly.link/marcmy/Jackett/actions/runs/34636732419/Jackett-Custom_Windows-x86-8104248a6cca.zip",
+    "hash": "fb06f40615b4d68cf19e35fc9e8873a32151c080aeb2ef0f21a6ac5d2f52d457",
+    "extract_dir": "Jackett",
+    "shortcuts": [
+        [
+            "JackettTray.exe",
+            "Jackett custom"
+        ]
+    ],
+    "uninstaller": {
+        "script": [
+            "'JackettTray', 'JackettConsole', 'JackettService' | ForEach-Object {",
+            "    Stop-Process -Name $_ -Force -ErrorAction SilentlyContinue",
+            "}",
+            "Start-Sleep -Milliseconds 1500"
+        ]
+    },
+    "checkver": {
+        "url": "https://api.github.com/repos/marcmy/Jackett/actions/artifacts?per_page=100",
+        "script": [
+            "$repoId = 1366580145",
+            "$namePattern = '^Jackett-Custom_Windows-x86-[0-9a-f]{12}$'",
+            "$response = $page | ConvertFrom-Json",
+            "$artifact = ($response.artifacts | Where-Object {",
+            "    ($_.name -match $namePattern) -and",
+            "    (-not $_.expired) -and",
+            "    ($_.workflow_run.head_repository_id -eq $repoId) -and",
+            "    ($_.workflow_run.head_branch -eq 'master')",
+            "} | Sort-Object created_at -Descending | Select-Object -First 1)",
+            "if (-not $artifact) { throw 'No matching non-expired marcmy/Jackett master artifacts found' }",
+            "\"{0} {1}\" -f $artifact.workflow_run.id, $artifact.name"
+        ],
+        "regex": "^(?<version>\\d+) (?<artifact>.+)$"
+    },
+    "autoupdate": {
+        "url": "https://nightly.link/marcmy/Jackett/actions/runs/$version/$matchArtifact.zip"
+    }
+}
