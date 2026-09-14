@@ -17,13 +17,26 @@
         ]
     ],
     "checkver": {
-        "url": "https://github.com/marcmy/RazerAutoPollingRate/releases",
-        "regex": "/releases/tag/v([\\d.]+)"
+        "url": "https://api.github.com/repos/marcmy/RazerAutoPollingRate/actions/artifacts?per_page=100",
+        "script": [
+            "$repoId = 1230978983",
+            "$namePattern = '^RazerAutoPollingRate-Scoop-main-[0-9a-f]{40}$'",
+            "$response = $page | ConvertFrom-Json",
+            "$artifact = ($response.artifacts | Where-Object {",
+            "    ($_.name -match $namePattern) -and",
+            "    (-not $_.expired) -and",
+            "    ($_.workflow_run.head_repository_id -eq $repoId) -and",
+            "    ($_.workflow_run.head_branch -eq 'main')",
+            "} | Sort-Object created_at -Descending | Select-Object -First 1)",
+            "if (-not $artifact) { throw 'No matching non-expired marcmy/RazerAutoPollingRate main Scoop artifacts found' }",
+            "\"{0} {1}\" -f $artifact.workflow_run.id, $artifact.name"
+        ],
+        "regex": "^(?<version>\\d+) (?<artifact>.+)$"
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/marcmy/RazerAutoPollingRate/releases/download/v$version/razerautopollingrate-$version-full.nupkg"
+                "url": "https://nightly.link/marcmy/RazerAutoPollingRate/actions/runs/$version/$matchArtifact.zip"
             }
         }
     }
