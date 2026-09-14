@@ -1,5 +1,5 @@
 {
-    "version": "34812139767",
+    "version": "20260914.0610",
     "description": "Tray app that automatically adjusts Razer HyperPolling dongle polling rate based on foreground or running processes.",
     "homepage": "https://github.com/marcmy/RazerAutoPollingRate",
     "license": "ISC",
@@ -29,14 +29,15 @@
             "    ($_.workflow_run.head_branch -eq 'main')",
             "} | Sort-Object created_at -Descending | Select-Object -First 1)",
             "if (-not $artifact) { throw 'No matching non-expired marcmy/RazerAutoPollingRate main Scoop artifacts found' }",
-            "\"{0} {1}\" -f $artifact.workflow_run.id, $artifact.name"
+            "$rollingVersion = ([DateTimeOffset]$artifact.created_at).UtcDateTime.ToString('yyyyMMdd.HHmm')",
+            "\"{0} {1} {2}\" -f $rollingVersion, $artifact.workflow_run.id, $artifact.name"
         ],
-        "regex": "^(?<version>\\d+) (?<artifact>.+)$"
+        "regex": "^(?<version>\\d{8}\\.\\d{4}) (?<run>\\d+) (?<artifact>.+)$"
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://nightly.link/marcmy/RazerAutoPollingRate/actions/runs/$version/$matchArtifact.zip"
+                "url": "https://nightly.link/marcmy/RazerAutoPollingRate/actions/runs/$matchRun/$matchArtifact.zip"
             }
         }
     }
