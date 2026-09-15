@@ -20,7 +20,7 @@
         "url": "https://api.github.com/repos/marcmy/RazerAutoPollingRate/actions/artifacts?per_page=100",
         "script": [
             "$repoId = 1230978983",
-            "$namePattern = '^RazerAutoPollingRate-Scoop-main-[0-9a-f]{40}$'",
+            "$namePattern = '^RazerAutoPollingRate-Scoop-main-(?:(?<version>\\d{8}\\.\\d{4})-)?[0-9a-f]{40}$'",
             "$response = $page | ConvertFrom-Json",
             "$artifact = ($response.artifacts | Where-Object {",
             "    ($_.name -match $namePattern) -and",
@@ -29,7 +29,8 @@
             "    ($_.workflow_run.head_branch -eq 'main')",
             "} | Sort-Object created_at -Descending | Select-Object -First 1)",
             "if (-not $artifact) { throw 'No matching non-expired marcmy/RazerAutoPollingRate main Scoop artifacts found' }",
-            "$rollingVersion = ([DateTimeOffset]$artifact.created_at).UtcDateTime.ToString('yyyyMMdd.HHmm')",
+            "$nameMatch = [regex]::Match($artifact.name, $namePattern)",
+            "$rollingVersion = if ($nameMatch.Groups['version'].Success) { $nameMatch.Groups['version'].Value } else { ([DateTimeOffset]$artifact.created_at).UtcDateTime.ToString('yyyyMMdd.HHmm') }",
             "\"{0} {1} {2}\" -f $rollingVersion, $artifact.workflow_run.id, $artifact.name"
         ],
         "regex": "^(?<version>\\d{8}\\.\\d{4}) (?<run>\\d+) (?<artifact>.+)$"
