@@ -6,7 +6,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-mingw-x86_64.zip",
-            "hash": "5be8ac0e27dd26ebcbdebb0439d8b1b71177daf71aecb04a9f512ca1248e844d",
+            "hash": "8e5ab9d5373730af699233a7af2e53a935f28855f63c5a392a35c94fb371bb62",
             "bin": [
                 [
                     "quake3e.x64.exe",
@@ -24,7 +24,7 @@
         },
         "32bit": {
             "url": "https://github.com/ec-/Quake3e/releases/download/latest/quake3e-windows-mingw-x86.zip",
-            "hash": "5eeaed27459918c15ca6f3ecaadbf3474bc551417f6e327080842427652963b9",
+            "hash": "67816373ee19f8d5176709fa1268407ddbafb517fa824d69c29d1869e3a123a0",
             "bin": [
                 [
                     "quake3e.exe",
