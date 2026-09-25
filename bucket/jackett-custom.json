@@ -1,13 +1,13 @@
 {
-    "version": "36136674945",
+    "version": "36200522797",
     "description": "Custom Jackett build automatically tracking Jackett/Jackett upstream master.",
     "homepage": "https://github.com/marcmy/Jackett",
     "license": {
         "identifier": "GPL-2.0-or-later",
         "url": "https://github.com/marcmy/Jackett/blob/master/LICENSE"
     },
-    "url": "https://nightly.link/marcmy/Jackett/actions/runs/36136674945/Jackett-Custom_Windows-x86-610d26b80220.zip",
-    "hash": "4d7da1ee80a551614d92beb083de39c4f4d189ca1fc066303c659b90becbb8c3",
+    "url": "https://nightly.link/marcmy/Jackett/actions/runs/36200522797/Jackett-Custom_Windows-x86-bc7f8fc0c4cf.zip",
+    "hash": "b41f4f3b862396e3a1c37dfbb3276a86e3b0e3a13971c2ca90c038ce2379e7a2",
     "extract_dir": "Jackett",
     "shortcuts": [
         [
