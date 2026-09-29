@@ -1,13 +1,13 @@
 {
-    "version": "21.0.0.1616",
+    "version": "21.0.0.1620",
     "description": "Screen capture, file sharing and productivity tool. Portable development build.",
     "homepage": "https://getsharex.com/",
     "license": "GPL-3.0-only",
     "notes": "Tracks portable development builds published to ShareX/DevBuilds.",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/ShareX/DevBuilds/releases/download/v21.0.0.1616/ShareX-21.0.0.1616-portable-x64.zip",
-            "hash": "fc488804c1636475f568cf38b9fb68d1d4e2c7e43dc4072a11ce0fb090334069"
+            "url": "https://github.com/ShareX/DevBuilds/releases/download/v21.0.0.1620/ShareX-21.0.0.1620-portable-x64.zip",
+            "hash": "b904c973787a2a364aa059278dc9ecc514271c26599d90d107b107d7930ce2d9"
         }
     },
     "pre_install": "if (!(Test-Path \"$persist_dir\\PersonalPath.cfg\")) { New-Item \"$dir\\PersonalPath.cfg\" | Out-Null }",
