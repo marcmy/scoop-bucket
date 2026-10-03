@@ -1,5 +1,5 @@
 {
-    "version": "2026.03.17",
+    "version": "2026.10.03",
     "description": "USB mouse and controller polling rate overclocking utility for Windows.",
     "homepage": "https://github.com/LordOfMice/hidusbf",
     "license": {
@@ -7,7 +7,7 @@
         "url": "https://github.com/LordOfMice/hidusbf"
     },
     "url": "https://raw.githubusercontent.com/LordOfMice/hidusbf/master/hidusbf.zip",
-    "hash": "bd8d1fb0545d8df88d9cef0c67682daef7d304561bc64acfee5c0d8c12d0f797",
+    "hash": "f895c5935c6363afa00b20557b6096cef2b29daa97c1b399dceb85e5af855229",
     "notes": [
         "HIDUSBF is installed into Scoop's usual app directory.",
         "A Start Menu shortcut (Scoop Apps\\HIDUSBF Setup) points to DRIVER\\Setup.exe.",
