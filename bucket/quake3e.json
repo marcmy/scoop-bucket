@@ -43,7 +43,7 @@
     },
     "persist": "config",
     "checkver": {
-        "url": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
+        "github": "https://api.github.com/repos/ec-/Quake3e/releases/latest",
         "script": [
             "$r=$page | ConvertFrom-Json",
             "$assets=$r.assets",
