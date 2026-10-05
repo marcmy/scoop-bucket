@@ -32,7 +32,8 @@
         ]
     ],
     "checkver": {
-        "url": "https://api.github.com/repos/marcmy/HandBrake/releases/tags/custom-win",
+        "github": "https://api.github.com/repos/marcmy/HandBrake/releases/tags/custom-win",
+        "script": "$page",
         "regex": "HandBrake-([\\d]{8}-[\\w]+)-x86_64-Win_GUI\\.zip"
     },
     "autoupdate": {
