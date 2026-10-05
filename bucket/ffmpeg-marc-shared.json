@@ -26,7 +26,7 @@
         "Provides the regular ffmpeg, ffprobe, and ffplay shims. This will conflict with another Scoop package that also owns those shims."
     ],
     "checkver": {
-        "url": "https://api.github.com/repos/marcmy/FFmpeg-Builds/releases?per_page=50",
+        "github": "https://api.github.com/repos/marcmy/FFmpeg-Builds/releases?per_page=50",
         "script": [
             "$releases=$page | ConvertFrom-Json",
             "$release=$releases | Where-Object { $_.tag_name -match '^ffmpeg-[0-9]{8}\\.[0-9]{6}-win64-marc-shared$' } | Select-Object -First 1",
