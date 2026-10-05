@@ -8,7 +8,7 @@
     "extract_dir": "flaresolverr",
     "bin": "flaresolverr.exe",
     "checkver": {
-        "url": "https://api.github.com/repos/marcmy/FlareSolverr/actions/artifacts?per_page=100",
+        "github": "https://api.github.com/repos/marcmy/FlareSolverr/actions/artifacts?per_page=100",
         "script": [
             "$repoId = 1366568088",
             "$namePattern = '^FlareSolverr-Custom_Windows-x64-[0-9a-f]{12}$'",
