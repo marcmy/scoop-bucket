@@ -47,7 +47,8 @@
         "Jasna settings are stored by the app under $env:APPDATA\\jasna, outside Scoop's install dir, so they are not managed by this manifest."
     ],
     "checkver": {
-        "url": "https://api.github.com/repos/Kruk2/jasna/releases/latest",
+        "github": "https://api.github.com/repos/Kruk2/jasna/releases/latest",
+        "script": "$page",
         "regex": "\"tag_name\"\\s*:\\s*\"(?<tag>v?(?<version>[^\"]+))\"[\\s\\S]*?\"name\"\\s*:\\s*\"(?<asset>(?![^\"]*amd)[^\"]*windows[^\"]*\\.7z)\\.001\"",
         "replace": "${version}"
     },
