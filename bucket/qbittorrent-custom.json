@@ -51,7 +51,7 @@
         "script": "if ($cmd -eq 'uninstall') { reg import \"$dir\\uninstall-associations.reg\" }"
     },
     "checkver": {
-        "url": "https://api.github.com/repos/marcmy/qBittorrent/actions/artifacts?per_page=100",
+        "github": "https://api.github.com/repos/marcmy/qBittorrent/actions/artifacts?per_page=100",
         "script": [
             "$repoId = 1291473014",
             "$namePattern = '^qBittorrent-Custom_Windows-x64_libtorrent-custom-qbittorrent-2\\.1-[0-9a-f]{12}$'",
