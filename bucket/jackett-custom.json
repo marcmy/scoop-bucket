@@ -24,7 +24,7 @@
         ]
     },
     "checkver": {
-        "url": "https://api.github.com/repos/marcmy/Jackett/actions/artifacts?per_page=100",
+        "github": "https://api.github.com/repos/marcmy/Jackett/actions/artifacts?per_page=100",
         "script": [
             "$repoId = 1366580145",
             "$namePattern = '^Jackett-Custom_Windows-x86-[0-9a-f]{12}$'",
