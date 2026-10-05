@@ -76,7 +76,7 @@
         "}"
     ],
     "checkver": {
-        "url": "https://api.github.com/repos/0x90d/videoduplicatefinder/releases/tags/4.1.x",
+        "github": "https://api.github.com/repos/0x90d/videoduplicatefinder/releases/tags/4.1.x",
         "jsonpath": "$.updated_at",
         "regex": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2})",
         "replace": "4.1.0-git-$1$2$3-$4$5"
