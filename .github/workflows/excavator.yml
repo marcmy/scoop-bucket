@@ -23,34 +23,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: master
-
       - name: Excavate
-        id: excavate
-        continue-on-error: true
         uses: ScoopInstaller/GithubActions@5bceeda181721d9d10a18fdcc3ddca6f33467ae6 # main 2026-08-21
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SCOOP_GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SKIP_UPDATED: 1
-
-      - name: Back off after a failed Excavator attempt
-        if: steps.excavate.outcome == 'failure'
-        shell: pwsh
-        run: Start-Sleep -Seconds 120
-
-      - name: Refresh checkout before retry
-        if: steps.excavate.outcome == 'failure'
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: master
-          clean: true
-
-      - name: Retry Excavator once
-        if: steps.excavate.outcome == 'failure'
-        uses: ScoopInstaller/GithubActions@5bceeda181721d9d10a18fdcc3ddca6f33467ae6 # main 2026-08-21
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SCOOP_GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SKIP_UPDATED: 1
