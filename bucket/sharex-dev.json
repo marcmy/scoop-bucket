@@ -62,7 +62,7 @@
         ]
     ],
     "checkver": {
-        "url": "https://api.github.com/repos/ShareX/DevBuilds/releases?per_page=100",
+        "github": "https://api.github.com/repos/ShareX/DevBuilds/releases?per_page=100",
         "script": [
             "$release = @($page | ConvertFrom-Json) | Where-Object {",
             "    if ($_.draft -or $_.tag_name -notmatch '^v\\d+(?:\\.\\d+){3}$') { return $false }",
