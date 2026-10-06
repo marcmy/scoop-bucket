@@ -7,6 +7,7 @@ on:
       - handbrake-custom-built
       - flaresolverr-custom-built
       - jackett-custom-built
+      - exllamav3-released
   schedule:
     # run every hour at :13
     - cron: '13 * * * *'
