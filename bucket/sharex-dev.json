@@ -1,13 +1,13 @@
 {
-    "version": "21.0.0.1730",
+    "version": "21.0.0.1732",
     "description": "Screen capture, file sharing and productivity tool. Development build using the native installer.",
     "homepage": "https://getsharex.com/",
     "license": "GPL-3.0-only",
     "notes": "Tracks installer builds published to ShareX/DevBuilds.",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/ShareX/DevBuilds/releases/download/v21.0.0.1730/ShareX-21.0.0.1730-setup-x64.exe",
-            "hash": "6bf60c22149a56f48b0d51a1f72a0af722a4edb706c59f4a5cbd1ec52cff515d"
+            "url": "https://github.com/ShareX/DevBuilds/releases/download/v21.0.0.1732/ShareX-21.0.0.1732-setup-x64.exe",
+            "hash": "190b541b9fa6f44564c821e7f8a386bd27b0117c20075909a51c107e43b2d75a"
         }
     },
     "installer": {
