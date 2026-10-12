@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/marcmy/FFmpeg-Builds",
     "description": "Hourly FFmpeg master win64 GPLv3 shared build from Marc's FFmpeg-Builds fork",
-    "version": "20260929.234715",
+    "version": "20261012.125614",
     "license": "GPL-3.0-or-later",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-20260929.234715-win64-marc-shared/ffmpeg-20260929.234715-win64-marc-shared.zip",
-            "hash": "a2107fdc84e66647bb34c2d27dbd82842ded66cc778daeeeb959d0a75631c996"
+            "url": "https://github.com/marcmy/FFmpeg-Builds/releases/download/ffmpeg-20261012.125614-win64-marc-shared/ffmpeg-20261012.125614-win64-marc-shared.zip",
+            "hash": "5358eed8b38e6fc808e45dc372c60a82f68c10cd970ac1fc398416d089a00c3e"
         }
     },
     "pre_install": [
@@ -26,7 +26,7 @@
         "Provides the regular ffmpeg, ffprobe, and ffplay shims. This will conflict with another Scoop package that also owns those shims."
     ],
     "checkver": {
-        "github": "https://api.github.com/repos/marcmy/FFmpeg-Builds/releases?per_page=50",
+        "url": "https://api.github.com/repos/marcmy/FFmpeg-Builds/releases?per_page=50",
         "script": [
             "$releases=$page | ConvertFrom-Json",
             "$release=$releases | Where-Object { $_.tag_name -match '^ffmpeg-[0-9]{8}\\.[0-9]{6}-win64-marc-shared$' } | Select-Object -First 1",
