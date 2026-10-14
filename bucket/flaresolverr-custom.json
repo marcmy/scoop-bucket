@@ -1,10 +1,10 @@
 {
-    "version": "37764621813",
+    "version": "38509239906",
     "description": "Custom FlareSolverr build automatically tracking FlareSolverr/FlareSolverr upstream master.",
     "homepage": "https://github.com/marcmy/FlareSolverr",
     "license": "MIT",
-    "url": "https://nightly.link/marcmy/FlareSolverr/actions/runs/37764621813/FlareSolverr-Custom_Windows-x64-519f647d9fb7.zip",
-    "hash": "da8dc5200438f863c674395523c7166b4e048013201db0e72208943a030ee937",
+    "url": "https://nightly.link/marcmy/FlareSolverr/actions/runs/38509239906/FlareSolverr-Custom_Windows-x64-0413f75ad676.zip",
+    "hash": "5220eecb5cd1c088bf0a07095619f36185420335f5675f9427c2396c965675f7",
     "extract_dir": "flaresolverr",
     "bin": "flaresolverr.exe",
     "checkver": {
