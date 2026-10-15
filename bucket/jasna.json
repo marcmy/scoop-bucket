@@ -1,19 +1,19 @@
 {
-    "version": "0.10.0",
+    "version": "0.11.1",
     "description": "GPU-accelerated mosaic restoration tool for modern NVIDIA GPUs.",
     "homepage": "https://github.com/Kruk2/jasna",
     "license": "AGPL-3.0-or-later",
     "architecture": {
         "64bit": {
             "url": [
-                "https://github.com/Kruk2/jasna/releases/download/v0.10.0/jasna-windows-0.10.0.7z.001",
-                "https://github.com/Kruk2/jasna/releases/download/v0.10.0/jasna-windows-0.10.0.7z.002",
-                "https://github.com/Kruk2/jasna/releases/download/v0.10.0/jasna-windows-0.10.0.7z.003"
+                "https://github.com/Kruk2/jasna/releases/download/v0.11.1/jasna-windows-0.11.1.7z.001",
+                "https://github.com/Kruk2/jasna/releases/download/v0.11.1/jasna-windows-0.11.1.7z.002",
+                "https://github.com/Kruk2/jasna/releases/download/v0.11.1/jasna-windows-0.11.1.7z.003"
             ],
             "hash": [
-                "e21e16e9d4b094f4d2a315ed5a1ed9314914e01b7e772e4b511c4e3fccaa44c5",
-                "741d6929b490adebdc73b53b4dc98aabbbfff355cfd3295918052143b90d1045",
-                "5d3cada0ca552393de0c44de7c65006d50b2b9f74d2ca43061808bc1245cd266"
+                "d3e7bbab56700a9f3553c9c401cf1d5f571dd547a60273566b9a3aa783f02921",
+                "1a8e4ca977cce8c4bee29848ee0c0f43d8b554d2c04bd7a5a19665a39785895a",
+                "8b5643c7159ea1c84cc3eb2f9a856a800b6026793ec16b7bdbc3047e79be1380"
             ]
         }
     },
