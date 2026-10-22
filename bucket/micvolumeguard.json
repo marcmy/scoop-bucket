@@ -1,0 +1,29 @@
+{
+    "version": "1.0.1",
+    "description": "PowerShell guard that keeps the default microphone volume at a chosen level.",
+    "homepage": "https://github.com/marcmy/MicVolumeGuard",
+    "license": "Proprietary",
+    "url": "https://github.com/marcmy/MicVolumeGuard/archive/refs/tags/v1.0.1.zip",
+    "hash": "8023ad01b60f63350b86564dafa8a1571fc7751b4371d867c7fba3c66f0c0776",
+    "extract_dir": "MicVolumeGuard-1.0.1",
+    "bin": [
+        [
+            "MicVolumeGuard.ps1",
+            "micvolumeguard"
+        ]
+    ],
+    "notes": [
+        "Run micvolumeguard -TargetPercent 100 to start the guard in the current console. Stop it with Ctrl+C.",
+        "Scoop does not create a scheduled task or start microphone monitoring during installation.",
+        "The upstream Install.cmd/Uninstall.cmd are optional manual task setup; remove any manually created task before uninstalling this package."
+    ],
+    "checkver": {
+        "github": "https://api.github.com/repos/marcmy/MicVolumeGuard/releases/latest",
+        "jsonpath": "$.tag_name",
+        "regex": "^v([\\d][\\w.-]*)$"
+    },
+    "autoupdate": {
+        "url": "https://github.com/marcmy/MicVolumeGuard/archive/refs/tags/v$version.zip",
+        "extract_dir": "MicVolumeGuard-$version"
+    }
+}

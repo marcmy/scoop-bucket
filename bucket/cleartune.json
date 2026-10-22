@@ -1,0 +1,36 @@
+{
+    "version": "0.1.0",
+    "description": "Native Windows ClearType calibration wizard with light and dark previews.",
+    "homepage": "https://github.com/marcmy/ClearTune",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/marcmy/ClearTune/releases/download/v0.1.0/ClearTune-windows-x64.zip",
+            "hash": "b8108286dca850af69300e8568f5207a1f8845b38c9877ae6216ae0b56d0ba24"
+        }
+    },
+    "bin": [
+        [
+            "ClearTune.exe",
+            "cleartune"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "ClearTune.exe",
+            "ClearTune"
+        ]
+    ],
+    "checkver": {
+        "github": "https://api.github.com/repos/marcmy/ClearTune/releases/latest",
+        "jsonpath": "$.tag_name",
+        "regex": "^v([\\d][\\w.-]*)$"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/marcmy/ClearTune/releases/download/v$version/ClearTune-windows-x64.zip"
+            }
+        }
+    }
+}

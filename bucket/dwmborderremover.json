@@ -1,0 +1,42 @@
+{
+    "version": "0.1.1",
+    "description": "Windows 11 tray utility for controlling DWM window borders and corners.",
+    "homepage": "https://github.com/marcmy/DwmBorderRemover",
+    "license": "Proprietary",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/marcmy/DwmBorderRemover/releases/download/v0.1.1/DwmBorderRemover-Setup-0.1.1.exe",
+            "hash": "a350771ca32ca3711dbb48b40f7607094291d1c16c8d42b4db0f214773de7452"
+        }
+    },
+    "innosetup": true,
+    "bin": [
+        [
+            "DwmBorderRemover.exe",
+            "dwmborderremover"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "DwmBorderRemover.exe",
+            "DWM Border Remover"
+        ]
+    ],
+    "notes": [
+        "Requires Windows 11. Exit the tray app before updating or uninstalling.",
+        "Uses portable extraction; the upstream installer is not run. Settings remain in %LOCALAPPDATA%\\DwmBorderRemover.",
+        "Inno Setup 6.7 archives require a current unpacker; run scoop update innounp if extraction fails."
+    ],
+    "checkver": {
+        "github": "https://api.github.com/repos/marcmy/DwmBorderRemover/releases/latest",
+        "jsonpath": "$.tag_name",
+        "regex": "^v([\\d][\\w.-]*)$"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/marcmy/DwmBorderRemover/releases/download/v$version/DwmBorderRemover-Setup-$version.exe"
+            }
+        }
+    }
+}

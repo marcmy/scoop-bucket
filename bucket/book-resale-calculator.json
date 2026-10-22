@@ -1,0 +1,37 @@
+{
+    "version": "2.0.0-alpha.1",
+    "description": "Portable desktop calculator for book resale fees, shipping and return on investment.",
+    "homepage": "https://github.com/marcmy/book-resale-calculator",
+    "license": "Proprietary",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/marcmy/book-resale-calculator/releases/download/v2.0.0-alpha.1/BookResaleCalculator-2.0.0-alpha.1-Windows-x64.exe#/BookResaleCalculator.exe",
+            "hash": "e502df8007315f5cf082dc404d8e93f74c240edfac3ffaeed5820cdf14fc6de3"
+        }
+    },
+    "bin": [
+        [
+            "BookResaleCalculator.exe",
+            "book-resale-calculator"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "BookResaleCalculator.exe",
+            "Book Resale Calculator"
+        ]
+    ],
+    "notes": "The current release is an alpha. Uses the portable EXE; no setup program is run.",
+    "checkver": {
+        "github": "https://api.github.com/repos/marcmy/book-resale-calculator/releases/latest",
+        "jsonpath": "$.tag_name",
+        "regex": "^v([\\d][\\w.-]*)$"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/marcmy/book-resale-calculator/releases/download/v$version/BookResaleCalculator-$version-Windows-x64.exe#/BookResaleCalculator.exe"
+            }
+        }
+    }
+}
