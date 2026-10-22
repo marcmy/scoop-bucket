@@ -1,0 +1,64 @@
+{
+    "version": "1.0.0",
+    "description": "Switch the primary Windows display between two configured resolutions.",
+    "homepage": "https://github.com/marcmy/resolution-toggle",
+    "license": "MIT",
+    "url": "https://github.com/marcmy/resolution-toggle/archive/refs/tags/v1.0.0.zip",
+    "hash": "6c53c1a504b30b14ba3e7e4e82a48884bfde0cf2f676bba669f9a3176bbe6b53",
+    "extract_dir": "resolution-toggle-1.0.0",
+    "pre_install": [
+        "$launcher = @('@echo off', '\"%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"%~dp0Toggle-Resolution.ps1\" %*')",
+        "Set-Content -LiteralPath \"$dir\\resolution-toggle.cmd\" -Value $launcher -Encoding Ascii"
+    ],
+    "installer": {
+        "script": [
+            "foreach ($name in @('settings.json', 'ResolutionToggle.log')) {",
+            "    $saved = Join-Path $persist_dir $name",
+            "    if (Test-Path -LiteralPath $saved -PathType Leaf) { Copy-Item -LiteralPath $saved -Destination (Join-Path $dir $name) -Force }",
+            "}"
+        ]
+    },
+    "uninstaller": {
+        "script": [
+            "# Save on updates and uninstalls. File.Replace in the app would break a persisted hard link.",
+            "New-Item -ItemType Directory -Path $persist_dir -Force | Out-Null",
+            "foreach ($name in @('settings.json', 'ResolutionToggle.log')) {",
+            "    $current = Join-Path $dir $name",
+            "    if (Test-Path -LiteralPath $current -PathType Leaf) { Copy-Item -LiteralPath $current -Destination (Join-Path $persist_dir $name) -Force }",
+            "}"
+        ]
+    },
+    "bin": [
+        [
+            "resolution-toggle.cmd",
+            "resolution-toggle"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "resolution-toggle.cmd",
+            "Resolution Toggle",
+            "",
+            "ToggleResolution.ico"
+        ],
+        [
+            "resolution-toggle.cmd",
+            "Resolution Toggle Settings",
+            "-Configure",
+            "ToggleResolution.ico"
+        ]
+    ],
+    "notes": [
+        "Run resolution-toggle -Configure to choose the two resolutions before toggling.",
+        "Settings and logs are saved on update/uninstall under $persist_dir. scoop uninstall -p resolution-toggle also purges that backup."
+    ],
+    "checkver": {
+        "github": "https://api.github.com/repos/marcmy/resolution-toggle/releases/latest",
+        "jsonpath": "$.tag_name",
+        "regex": "^v([\\d][\\w.-]*)$"
+    },
+    "autoupdate": {
+        "url": "https://github.com/marcmy/resolution-toggle/archive/refs/tags/v$version.zip",
+        "extract_dir": "resolution-toggle-$version"
+    }
+}

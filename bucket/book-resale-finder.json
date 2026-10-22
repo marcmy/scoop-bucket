@@ -1,0 +1,44 @@
+{
+    "version": "1.1.14",
+    "description": "Desktop eBay book price finder with CSV and XLSX output.",
+    "homepage": "https://github.com/marcmy/book-resale-finder",
+    "license": "Proprietary",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/marcmy/book-resale-finder/releases/download/v1.1.14/BookResaleFinder-1.1.14-Windows-x64.zip",
+            "hash": "45c8e28397477ecd9cba6bc51784d6211acca01c43c92560b89b532a271ff660"
+        }
+    },
+    "extract_dir": "BookResaleFinder-1.1.14",
+    "bin": [
+        [
+            "BookResaleFinder.exe",
+            "book-resale-finder"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "BookResaleFinder.exe",
+            "Book Resale Finder"
+        ]
+    ],
+    "persist": [
+        "config.yaml",
+        "masterlist.csv",
+        "output"
+    ],
+    "notes": "eBay API credentials are configured by the app and stored in Windows Credential Manager.",
+    "checkver": {
+        "github": "https://api.github.com/repos/marcmy/book-resale-finder/releases/latest",
+        "jsonpath": "$.tag_name",
+        "regex": "^v([\\d][\\w.-]*)$"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/marcmy/book-resale-finder/releases/download/v$version/BookResaleFinder-$version-Windows-x64.zip"
+            }
+        },
+        "extract_dir": "BookResaleFinder-$version"
+    }
+}
