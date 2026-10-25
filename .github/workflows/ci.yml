@@ -33,6 +33,15 @@ jobs:
           repository: ScoopInstaller/Scoop
           path: scoop_core
           persist-credentials: false
+      - name: Restore default PowerShell module repository
+        shell: pwsh
+        run: |
+          if (-not (Get-PSRepository -Name PSGallery -ErrorAction SilentlyContinue)) {
+            Register-PSRepository -Default -ErrorAction Stop
+          }
+          if (-not (Get-PSRepository -Name PSGallery -ErrorAction SilentlyContinue)) {
+            throw 'PSGallery registration is required for module caching'
+          }
       - name: Init Test Suite
         uses: potatoqualitee/psmodulecache@8c76bdb3559f63eb2f65d2b77b7126a34121fbe1 # main 2026-06-18
         with:
