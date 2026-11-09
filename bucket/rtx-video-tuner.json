@@ -1,11 +1,11 @@
 {
-    "version": "20261109.074909",
+    "version": "20261109.080226",
     "description": "Portable GUI for NVIDIA RTX Video Super Resolution and HDR settings.",
     "homepage": "https://github.com/marcmy/RTX-Video-Tuner",
     "license": "MIT",
-    "url": "https://github.com/marcmy/RTX-Video-Tuner/archive/36042b8bc03660c5936642c0fbd8a951e543ea06.zip",
-    "hash": "8215a6a82c8194ee68ac631264db5a886ecd61505969f6ad7e4523953c5cea89",
-    "extract_dir": "RTX-Video-Tuner-36042b8bc03660c5936642c0fbd8a951e543ea06",
+    "url": "https://github.com/marcmy/RTX-Video-Tuner/archive/c41d62c9ce73bdfe9adee4a4d231bb47fb84443a.zip",
+    "hash": "ad12ec15bb69346417d38b0d56e168295e35b71aa544ca4ded132323e70d725b",
+    "extract_dir": "RTX-Video-Tuner-c41d62c9ce73bdfe9adee4a4d231bb47fb84443a",
     "bin": [
         [
             "Launch-RTX-Video-Tuner.cmd",
