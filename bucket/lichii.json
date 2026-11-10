@@ -1,0 +1,38 @@
+{
+    "version": "130",
+    "description": "Experimental open-source Nintendo Switch and Switch 2 emulator (Windows x64 PGO build).",
+    "homepage": "https://github.com/zortos293/Lichii",
+    "license": "GPL-3.0-or-later",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/zortos293/Lichii/releases/download/build-130/lichii-windows-x86_64-pgo.zip",
+            "hash": "e71515cea8009022b41f285d42483280f913869f0809869cfcd720da1a5de0b5"
+        }
+    },
+    "bin": [
+        "lichii.exe",
+        "eden-cli.exe"
+    ],
+    "shortcuts": [
+        [
+            "lichii.exe",
+            "Lichii"
+        ]
+    ],
+    "notes": [
+        "Build 130 introduces shader cache v2. If upgrading from an older build, remove old pipeline caches from inside Lichii before playing.",
+        "Lichii stores settings and saves under the existing Eden data directories."
+    ],
+    "checkver": {
+        "github": "https://api.github.com/repos/zortos293/Lichii/releases/latest",
+        "jsonpath": "$.tag_name",
+        "regex": "^build-(\\d+)$"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/zortos293/Lichii/releases/download/build-$version/lichii-windows-x86_64-pgo.zip"
+            }
+        }
+    }
+}
