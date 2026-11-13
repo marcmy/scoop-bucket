@@ -1,12 +1,12 @@
 {
-    "version": "160",
+    "version": "177",
     "description": "Experimental open-source Nintendo Switch and Switch 2 emulator (Windows x64 PGO build).",
     "homepage": "https://github.com/zortos293/Lichii",
     "license": "GPL-3.0-or-later",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/zortos293/Lichii/releases/download/build-160/lichii-windows-x86_64-pgo.zip",
-            "hash": "77871df6b219a232df0c2da45f8229dc9ba854e74fe1d916d437fed92abb97ba"
+            "url": "https://github.com/zortos293/Lichii/releases/download/build-177/lichii-windows-x86_64-pgo.zip",
+            "hash": "48aecaf20d3db48afd1174a812f9ac4384dc4535b8969be0e11c9237d7984291"
         }
     },
     "bin": [
