@@ -1,12 +1,12 @@
 {
     "homepage": "https://github.com/marcmy/videoduplicatefinder",
     "description": "Video Duplicate Finder 4.1 performance GUI from Marc's native FFmpeg branch (Native AOT)",
-    "version": "4.1.0-perf-git-20261112-1913",
+    "version": "4.1.0-perf-git-20261113-0606",
     "license": "AGPL-3.0-or-later",
     "architecture": {
         "64bit": {
             "url": "https://github.com/marcmy/videoduplicatefinder/releases/download/4.1.x/GUI-win-x64.zip",
-            "hash": "7504c1eab1494d7555ea25a3c860ec86d447bbd56a5a4d8b1906f950ae2602be"
+            "hash": "228d84129a7cb903013e0a64077b8a52c5c00aa0fdd27e863ddc9f8c059dc245"
         }
     },
     "shortcuts": [
