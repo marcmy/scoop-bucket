@@ -27,6 +27,7 @@
         "`videoduplicatefinder-perf-full` remains retired; existing VDF state is preserved during updates, reinstalls, or migration."
     ],
     "pre_install": [
+        "if (Test-Path -LiteralPath (Join-Path $persist_dir 'vdf-data-migration.txt') -PathType Leaf) { Write-Host 'VDF manages its data in persist directly (vdf-data-migration.txt); skipping state mirroring.'; return }",
         "$stateFiles = @('Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'ScannedFiles.fpheal1', 'UnionEmbeddings.db', 'DenseEmbeddings.db', 'backup.scanresults', 'log.txt')",
         "$stateDirs = @('ai')",
         "$siblingApps = @('videoduplicatefinder-perf-full')",
@@ -77,6 +78,7 @@
         "}"
     ],
     "pre_uninstall": [
+        "if (Test-Path -LiteralPath (Join-Path $persist_dir 'vdf-data-migration.txt') -PathType Leaf) { Write-Host 'VDF manages its data in persist directly (vdf-data-migration.txt); skipping state mirroring.'; return }",
         "$stateFiles = @('Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'ScannedFiles.fpheal1', 'UnionEmbeddings.db', 'DenseEmbeddings.db', 'backup.scanresults', 'log.txt')",
         "$stateDirs = @('ai')",
         "foreach ($name in $stateFiles) {",
@@ -100,6 +102,7 @@
         "}"
     ],
     "post_install": [
+        "if (Test-Path -LiteralPath (Join-Path $persist_dir 'vdf-data-migration.txt') -PathType Leaf) { Write-Host 'VDF manages its data in persist directly (vdf-data-migration.txt); skipping state mirroring.'; return }",
         "$stateFiles = @('Settings.json', 'BlacklistedGroups.json', 'ScannedFiles.db', 'ScannedFiles.db-wal', 'ScannedFiles.db-shm', 'ScannedFiles.fpheal1', 'UnionEmbeddings.db', 'DenseEmbeddings.db', 'backup.scanresults', 'log.txt')",
         "$stateDirs = @('ai')",
         "foreach ($name in $stateFiles) {",
