@@ -6,7 +6,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/marcmy/book-resale-calculator/releases/download/v2.0.0-alpha.1/BookResaleCalculator-2.0.0-alpha.1-Windows-x64.exe#/BookResaleCalculator.exe",
-            "hash": "e502df8007315f5cf082dc404d8e93f74c240edfac3ffaeed5820cdf14fc6de3"
+            "hash": "710822f96e7afc9fe79dda66a63bbbf768bf72991ad2b0346de44962b34248d4"
         }
     },
     "bin": [
