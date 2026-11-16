@@ -4,7 +4,6 @@ on:
     types:
       - ffmpeg-build-released
       - qbittorrent-custom-built
-      - handbrake-custom-built
       - flaresolverr-custom-built
       - jackett-custom-built
       - exllamav3-released
