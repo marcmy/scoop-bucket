@@ -1,8 +1,10 @@
 name: Pull Requests
 
+# The Scoop handler recognizes pull_request (opened), not pull_request_target.
+# Updates can be rechecked through the separate /verify issue_comment workflow.
 on:
-  pull_request_target:
-    types: [opened, reopened, synchronize]
+  pull_request:
+    types: [opened]
 
 permissions:
   contents: read
@@ -11,12 +13,16 @@ permissions:
 jobs:
   pullRequestHandler:
     name: PullRequestHandler
+    # Never run a write-capable third-party PR handler against fork code.
+    # The read-only Tests workflow separately validates all pull requests.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: windows-2022
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: PullRequestHandler
         uses: ScoopInstaller/GithubActions@5bceeda181721d9d10a18fdcc3ddca6f33467ae6 # main 2026-08-21
         env:
