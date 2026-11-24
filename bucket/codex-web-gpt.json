@@ -1,12 +1,12 @@
 {
-    "version": "6.1.19",
+    "version": "6.2.0",
     "description": "Use ChatGPT Web (including Pro) as a native model in the Codex app, with context, tools, streaming and images beyond Codex usage limits.",
     "homepage": "https://github.com/miuuyy/codex-chatgpt-web",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/miuuyy/codex-chatgpt-web/releases/download/v6.1.19/codex-web-gpt-6.1.19-win-x64.exe",
-            "hash": "67e4743e4dbd4813408eee455dd7dc6769a882142f7b47b712787231967cb00b"
+            "url": "https://github.com/miuuyy/codex-chatgpt-web/releases/download/v6.2.0/codex-web-gpt-6.2.0-win-x64.exe",
+            "hash": "078d5427ac740ec404e5c1e53b13d34b5a43811db07635415523a098ce278a79"
         }
     },
     "installer": {
